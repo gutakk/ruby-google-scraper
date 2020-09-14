@@ -2,7 +2,7 @@ name: CI
 
 env:
   COMPOSE_FILE: docker-compose.test.yml
-  CR_PAT: ${{ secret.CR_PAT }} # Github container registry personal access token
+  CR_PAT: ${{ secrets.CR_PAT }} # Github container registry personal access token
   CR_USERNAME: ${{ github.repository_owner }} # Github container registry username
 
 on: push
