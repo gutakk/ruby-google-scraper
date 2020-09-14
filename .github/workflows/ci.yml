@@ -4,11 +4,12 @@ on: push
 
 jobs:
   build:
+    name: Build docker image
     runs-on: ubuntu-latest
-
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+      
+      - uses: nimblehq/branch-tag-action@v1
 
       - name: Run a one-line script
         run: echo Hello, world!
