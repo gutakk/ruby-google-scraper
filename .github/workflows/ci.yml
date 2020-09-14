@@ -17,7 +17,7 @@ jobs:
       - uses: nimblehq/branch-tag-action@v1
 
       - name: Docker login to Github Container registry
-        run: "echo $CR_PAT | docker login ghcr.io -u $CR_USERNAMEC --password-stdin"
+        run: "echo $CR_PAT | docker login ghcr.io -u $CR_USERNAME --password-stdin"
 
       - name: Run a one-line script
         run: echo Hello, world!
