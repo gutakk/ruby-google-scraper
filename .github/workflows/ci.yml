@@ -1,5 +1,10 @@
 name: CI
 
+env:
+  COMPOSE_FILE: docker-compose.test.yml
+  CR_PAT: ${{ secret.CR_PAT }} # Github container registry personal access token
+  CR_USERNAME: ${{ github.repository_owner }} # Github container registry username
+
 on: push
 
 jobs:
@@ -8,8 +13,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      
+
       - uses: nimblehq/branch-tag-action@v1
+
+      - name: Docker login to Github Container registry
+        run: "echo $CR_PAT | docker login ghcr.io -u $CR_USERNAMEC --password-stdin"
 
       - name: Run a one-line script
         run: echo Hello, world!
