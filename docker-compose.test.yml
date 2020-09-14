@@ -1,0 +1,48 @@
+version: '3.2'
+
+services:
+  db:
+    image: postgres:12.1
+    container_name: ruby_google_scraper_db
+    environment:
+      - POSTGRES_DB=ruby_google_scraper_test
+    ports:
+      - "5432"
+
+  redis:
+    image: redis:5.0.7
+    container_name: ruby_google_scraper_redis
+    ports:
+      - "6379"
+
+  test:
+    build:
+      context: .
+      cache_from:
+        - ${DOCKER_IMAGE}:${BRANCH_TAG}
+      args:
+        - BUILD_ENV=test
+        - RUBY_ENV=test
+        - NODE_ENV=test
+    image: ${DOCKER_IMAGE}:${BRANCH_TAG}
+    container_name: ruby_google_scraper_test
+    command: bin/test.sh
+    stdin_open: true
+    tty: true
+    depends_on:
+      - db
+    volumes:
+      - "ruby-bundle:/bundle"
+      - "${PWD}/tmp/screenshots:/ruby_google_scraper/tmp/screenshots"
+      - "${PWD}/log:/ruby_google_scraper/log"
+    environment:
+      - RACK_ENV=test
+      - RAILS_ENV=test
+      - NODE_ENV=test
+      - DB_HOST=db
+      - CI=$CI
+      - TEST_RETRY=$TEST_RETRY
+      - DANGER_GITHUB_API_TOKEN=$DANGER_GITHUB_API_TOKEN
+      
+volumes:
+  ruby-bundle:

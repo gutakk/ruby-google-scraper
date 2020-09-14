@@ -1,0 +1,20 @@
+{
+  "name": "ruby_google_scraper",
+  "private": true,
+  "scripts": {
+    "lint": "eslint . --color",
+    "lint:fix": "eslint . --color --fix"
+  },
+  "dependencies": {
+    "@rails/actioncable": "^6.0.0",
+    "@rails/activestorage": "^6.0.0",
+    "@rails/ujs": "^6.0.0",
+    "@rails/webpacker": "5.2.1",
+    "i18n-js": "3.5.1"
+  },
+  "devDependencies": {
+    "@nimblehq/eslint-config-nimble": "2.1.1",
+    "webpack-dev-server": "3.11.0"
+  },
+  "version": "0.1.0"
+}
