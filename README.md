@@ -101,3 +101,5 @@ docker-compose -f docker-compose.test.yml run test bin/bundle exec spec [rspec-p
 
 - Create a [Personal Access Token](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token)
 from bot account with `public_repo` scope, and set it as `DANGER_GITHUB_API_TOKEN` secret on Semaphore Environment Settings.
+
+ddd
