@@ -24,7 +24,7 @@ services:
         - BUILD_ENV=test
         - RUBY_ENV=test
         - NODE_ENV=test
-    image: ${DOCKER_IMAGE}:${BRANCH_TAG}
+    image: ${REGISTRY_HOST}/${DOCKER_IMAGE}:${BRANCH_TAG}
     container_name: ruby_google_scraper_test
     command: bin/test.sh
     stdin_open: true
