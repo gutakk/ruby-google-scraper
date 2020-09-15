@@ -30,7 +30,7 @@ jobs:
       - name: Heroku login
         run: heroku container:login
   
-        - name: Heroku release
-          run: |
-            heroku container:push --arg REGISTRY_HOST=$REGISTRY_HOST,DOCKER_IMAGE=$DOCKER_IMAGE,BRANCH_TAG=$BRANCH_TAG --recursive
-            heroku container:release web worker
+      - name: Heroku release
+        run: |
+          heroku container:push --arg REGISTRY_HOST=$REGISTRY_HOST,DOCKER_IMAGE=$DOCKER_IMAGE,BRANCH_TAG=$BRANCH_TAG --recursive
+          heroku container:release web worker
