@@ -1,4 +1,6 @@
 ARG BRANCH_TAG=latest
-FROM nimblehq/ruby_google_scraper:${BRANCH_TAG}
+ARG DOCKER_IMAGE=nimblehq/ruby_google_scraper
+ARG REGISTRY_HOST=docker.io
+FROM ${REGISTRY_HOST}/${DOCKER_IMAGE}:${BRANCH_TAG}
 
 CMD ./bin/sidekiq.sh
