@@ -19,7 +19,7 @@ services:
     build:
       context: .
       cache_from:
-        - ${DOCKER_IMAGE}:${BRANCH_TAG}
+        - ${REGISTRY_HOST}/${DOCKER_IMAGE}:${BRANCH_TAG}
       args:
         - BUILD_ENV=test
         - RUBY_ENV=test
