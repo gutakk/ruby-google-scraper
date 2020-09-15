@@ -19,7 +19,7 @@ jobs:
       - uses: nimblehq/branch-tag-action@v1
 
       - name: Docker login to Github Container registry
-        run: "echo $CR_PAT | docker login ghcr.io -u $CR_USERNAME --password-stdin"
+        run: "echo $CR_PAT | docker login $REGISTRY_HOST -u $CR_USERNAME --password-stdin"
 
       - name: Docker pull
         if: env.BRANCH_TAG != 'master' && env.BRANCH_TAG != 'development'
