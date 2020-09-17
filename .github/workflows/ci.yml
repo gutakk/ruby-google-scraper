@@ -24,7 +24,7 @@ jobs:
         if: env.BRANCH_TAG != 'master' && env.BRANCH_TAG != 'development'
         run: | 
           echo Pulling built image for the branch
-          docker-compose pull test
+          docker-compose pull test || true
 
       - name: Docker build
         run: |
