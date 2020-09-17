@@ -2,11 +2,10 @@ name: CI
 
 env:
   COMPOSE_FILE: docker-compose.test.yml
-  CR_PAT: ${{ secrets.CR_PAT }} # Github container registry personal access token
-  CR_USERNAME: ${{ github.repository_owner }} # Github container registry username
+  DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
   DOCKER_IMAGE: ${{ github.repository }}/ruby_google_scraper
   DOCKER_REGISTRY: docker.pkg.github.com
-
+  DOCKER_USERNAME: ${{ github.repository_owner }}
 on: push
 
 jobs:
@@ -19,7 +18,7 @@ jobs:
       - uses: nimblehq/branch-tag-action@v1
 
       - name: Docker login to Github package registry
-        run: "echo $CR_PAT | docker login $DOCKER_REGISTRY -u $CR_USERNAME --password-stdin"
+        run: "echo $DOCKER_TOKEN | docker login $DOCKER_REGISTRY -u $DOCKER_USERNAME --password-stdin"
 
       - name: Docker pull
         if: env.BRANCH_TAG != 'master' && env.BRANCH_TAG != 'development'
@@ -43,7 +42,7 @@ jobs:
       - uses: nimblehq/branch-tag-action@v1
 
       - name: Docker login to Github package registry
-        run: "echo $CR_PAT | docker login $DOCKER_REGISTRY -u $CR_USERNAME --password-stdin"
+        run: "echo $DOCKER_TOKEN | docker login $DOCKER_REGISTRY -u $DOCKER_USERNAME --password-stdin"
 
       - name: Docker pull
         run: docker-compose pull

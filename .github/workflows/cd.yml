@@ -1,10 +1,10 @@
 name: Deploy
 
 env:
-  CR_PAT: ${{ secrets.CR_PAT }} # Github container registry personal access token
-  CR_USERNAME: ${{ github.repository_owner }} # Github container registry username
   DOCKER_IMAGE: ${{ github.repository }}/ruby_google_scraper
   DOCKER_REGISTRY: docker.pkg.github.com
+  DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
+  DOCKER_USERNAME: ${{ github.repository_owner }}
   HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
   HEROKU_APP: ruby-google-scraper-staging
 
@@ -19,7 +19,7 @@ jobs:
       - uses: nimblehq/branch-tag-action@v1
 
       - name: Docker login to Github package registry
-        run: "echo $CR_PAT | docker login $DOCKER_REGISTRY -u $CR_USERNAME --password-stdin"
+        run: "echo $DOCKER_TOKEN | docker login $DOCKER_REGISTRY -u $DOCKER_USERNAME --password-stdin"
 
       - name: Docker build
         run: |
