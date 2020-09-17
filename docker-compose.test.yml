@@ -19,12 +19,12 @@ services:
     build:
       context: .
       cache_from:
-        - ${REGISTRY_HOST}/${DOCKER_IMAGE}:${BRANCH_TAG}
+        - ${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${BRANCH_TAG}
       args:
         - BUILD_ENV=test
         - RUBY_ENV=test
         - NODE_ENV=test
-    image: ${REGISTRY_HOST}/${DOCKER_IMAGE}:${BRANCH_TAG}
+    image: ${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${BRANCH_TAG}
     container_name: ruby_google_scraper_test
     command: bin/test.sh
     stdin_open: true

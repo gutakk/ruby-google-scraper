@@ -5,7 +5,7 @@ env:
   CR_PAT: ${{ secrets.CR_PAT }} # Github container registry personal access token
   CR_USERNAME: ${{ github.repository_owner }} # Github container registry username
   DOCKER_IMAGE: ${{ github.repository }}/ruby_google_scraper
-  REGISTRY_HOST: docker.pkg.github.com
+  DOCKER_REGISTRY: docker.pkg.github.com
 
 on: push
 
@@ -19,7 +19,7 @@ jobs:
       - uses: nimblehq/branch-tag-action@v1
 
       - name: Docker login to Github package registry
-        run: "echo $CR_PAT | docker login $REGISTRY_HOST -u $CR_USERNAME --password-stdin"
+        run: "echo $CR_PAT | docker login $DOCKER_REGISTRY -u $CR_USERNAME --password-stdin"
 
       - name: Docker pull
         if: env.BRANCH_TAG != 'master' && env.BRANCH_TAG != 'development'
@@ -43,7 +43,7 @@ jobs:
       - uses: nimblehq/branch-tag-action@v1
 
       - name: Docker login to Github package registry
-        run: "echo $CR_PAT | docker login $REGISTRY_HOST -u $CR_USERNAME --password-stdin"
+        run: "echo $CR_PAT | docker login $DOCKER_REGISTRY -u $CR_USERNAME --password-stdin"
 
       - name: Docker pull
         run: docker-compose pull
