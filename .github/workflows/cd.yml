@@ -1,5 +1,12 @@
 name: Deploy
 
+on:
+  push:
+    branches:
+      - master
+      - development
+  workflow_dispatch:
+
 env:
   DOCKER_IMAGE: ${{ github.repository }}
   DOCKER_REGISTRY: ghcr.io
@@ -7,8 +14,6 @@ env:
   DOCKER_USERNAME: ${{ github.repository_owner }}
   HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
   HEROKU_APP: ruby-google-scraper-staging
-
-on: push
 
 jobs:
   deploy:

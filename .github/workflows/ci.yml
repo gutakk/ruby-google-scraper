@@ -1,12 +1,13 @@
 name: CI
 
+on: push
+
 env:
   COMPOSE_FILE: docker-compose.test.yml
   DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
   DOCKER_IMAGE: ${{ github.repository }}
   DOCKER_REGISTRY: ghcr.io
   DOCKER_USERNAME: ${{ github.repository_owner }}
-on: push
 
 jobs:
   build:
