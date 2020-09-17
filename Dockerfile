@@ -1,31 +1,29 @@
 FROM ruby:2.7.1-slim
 
-ARG BUILD_ENV=development
-ARG RUBY_ENV=development
 ARG APP_HOME=/ruby_google_scraper
-
-ARG SECRET_KEY_BASE=secret_key_base
-ARG NODE_ENV=development
 ARG ASSET_HOST=http://localhost
+ARG BUILD_ENV=development
+ARG NODE_ENV=development
+ARG RUBY_ENV=development
+ARG SECRET_KEY_BASE=secret_key_base
 # Set environment varaibles required in the initializers in order to precompile the assets.
 # Because it initializes the app, so all variables need to exist in the build stage.
 ARG MAILER_DEFAULT_HOST=http://localhost
 ARG MAILER_DEFAULT_PORT=3000
 
 # Define all the envs here
-ENV BUILD_ENV=$BUILD_ENV \
-    RACK_ENV=$RUBY_ENV \
-    RAILS_ENV=$RUBY_ENV \
-    PORT=80 \
-    ASSET_HOST=$ASSET_HOST \
-    APP_HOME=$APP_HOME \
+ENV ASSET_HOST=$ASSET_HOST \
+    BUILD_ENV=$BUILD_ENV \
+    BUNDLE_JOBS=4 \
+    BUNDLE_PATH="/bundle"\
+    LANG="en_US.UTF-8" \
+    LANGUAGE="en_US:en" \
+    LC_ALL="en_US.UTF-8" \
     NODE_ENV=$NODE_ENV \
     NODE_SOURCE_VERSION=12 \
-    LANG="en_US.UTF-8" \
-    LC_ALL="en_US.UTF-8" \
-    LANGUAGE="en_US:en" \
-    BUNDLE_JOBS=4 \
-    BUNDLE_PATH="/bundle"
+    PORT=80 \
+    RACK_ENV=$RUBY_ENV \
+    RAILS_ENV=$RUBY_ENV
 
 RUN apt-get update -qq && \
     apt-get install -y --no-install-recommends apt-transport-https curl gnupg net-tools && \
