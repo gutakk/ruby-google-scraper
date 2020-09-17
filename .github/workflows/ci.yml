@@ -3,8 +3,8 @@ name: CI
 env:
   COMPOSE_FILE: docker-compose.test.yml
   DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
-  DOCKER_IMAGE: ${{ github.repository }}/ruby_google_scraper
-  DOCKER_REGISTRY: docker.pkg.github.com
+  DOCKER_IMAGE: ${{ github.repository }}
+  DOCKER_REGISTRY: ghcr.io
   DOCKER_USERNAME: ${{ github.repository_owner }}
 on: push
 
