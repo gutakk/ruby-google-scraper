@@ -2,7 +2,7 @@
 
 <%= form_with(model: @user, local: true) do |form| %>
   <% if @user.errors.any? %>
-    <div id="error_explanation">
+    <div id="errorExplanation">
       <ul>
         <% @user.errors.full_messages.each do |message| %>
           <li><%= message %></li>
@@ -27,6 +27,6 @@
   </div>
 
   <div class="actions">
-    <%= form.submit :Signup, class: 'btn btn-primary' %>
+    <%= form.submit :Signup, class: "btn btn-primary" %>
   </div>
 <% end %>
