@@ -56,3 +56,4 @@ jobs:
 
       - name: System tests
         run: docker-compose run test bundle exec rspec spec/systems --profile
+        
