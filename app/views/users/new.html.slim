@@ -1,7 +1,7 @@
 
 h1 class="text-secondary mt-5" Signup
 
-= form_with(model: @user, local: true, class: "col-4") do |form|
+= form_with(model: @user, local: true) do |form|
   - if @user.errors.any?
     div id="errorExplanation" class="alert alert-danger text-danger"
       = @user.errors.full_messages[0]
