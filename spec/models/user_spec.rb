@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  describe 'validation test' do
+  describe 'validation test', :aggregate_failures do
     it 'username presence' do
       user = User.new(password: 'password', password_confirmation: 'password').save
       expect(user).to eq(false)
