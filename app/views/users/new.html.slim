@@ -3,9 +3,7 @@ h1 Signup
 = form_with(model: @user, local: true) do |form|
   - if @user.errors.any?
     #errorExplanation
-      ul
-        - @user.errors.full_messages.each do |message|
-          li = message
+      li = @user.errors.full_messages[0]
   .field
     = form.label :username
     = form.text_field :username, required: true
