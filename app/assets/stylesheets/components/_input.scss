@@ -1,6 +1,8 @@
-input[type="text"], input[type="password"] {
+[type="text"],
+[type="password"] {
   width: 100%;
-  border: 1px solid #dee2e6;
-  font-size: small;
   padding: 0.4rem 0.5rem;
+  font-size: small;
+  border: 1px solid $border-color;
+  border-radius: 0.25rem;
 }
