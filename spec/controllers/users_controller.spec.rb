@@ -68,14 +68,14 @@ RSpec.describe UsersController, type: :controller do
   end
 
   describe 'GET#new' do
-    it "renders a successful response" do
+    it 'renders a successful response' do
       get :new
       expect(response).to be_successful
     end
   end
 
-  describe "GET#index" do
-    it "renders a successful response" do
+  describe 'GET#index' do
+    it 'renders a successful response' do
       get :index
       expect(response).to be_successful
     end
