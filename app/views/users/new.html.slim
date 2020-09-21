@@ -1,18 +1,20 @@
-h1 Signup
 
-= form_with(model: @user, local: true) do |form|
+h1 class="text-secondary mt-5" Signup
+
+= form_with(model: @user, local: true, class: "col-4 border rounded p-4 mt-4") do |form|
   - if @user.errors.any?
-    #errorExplanation
-      li = @user.errors.full_messages[0]
-  .field
+    div id="errorExplanation" class="text-danger"
+      = @user.errors.full_messages[0]
+
+  .form-group
     = form.label :username
     = form.text_field :username, required: true
 
-  .field
+  .form-group
     = form.label :password
     = form.password_field :password, required: true
 
-  .field
+  .form-group
     = form.label :password_confirmation
     = form.password_field :password_confirmation, required: true
 
