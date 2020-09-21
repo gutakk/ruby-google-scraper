@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  resources :users, path: '/signup'
+  resources :users, only: :index
+  resource :users, only: :create, path: '/signup'
+  get '/signup', to: 'users#new'
 end
