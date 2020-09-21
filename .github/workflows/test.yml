@@ -1,4 +1,4 @@
-name: CI
+name: Test
 
 on: push
 
@@ -16,13 +16,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: nimblehq/branch-tag-action@v1
+      - name: Branch Tag Action
+        uses: nimblehq/branch-tag-action@v1.1
 
       - name: Docker login to Github package registry
         run: "echo $DOCKER_TOKEN | docker login $DOCKER_REGISTRY -u $DOCKER_USERNAME --password-stdin"
 
       - name: Docker pull
-        if: env.BRANCH_TAG != 'master' && env.BRANCH_TAG != 'development'
+        if: env.BRANCH_TAG != 'latest' && env.BRANCH_TAG != 'development'
         run: | 
           echo Pulling built image for the branch
           docker-compose pull test || true
@@ -40,7 +41,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: nimblehq/branch-tag-action@v1
+      - name: Branch Tag Action
+        uses: nimblehq/branch-tag-action@v1.1
 
       - name: Docker login to Github package registry
         run: "echo $DOCKER_TOKEN | docker login $DOCKER_REGISTRY -u $DOCKER_USERNAME --password-stdin"
