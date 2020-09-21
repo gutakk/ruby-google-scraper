@@ -4,7 +4,7 @@ require 'rails_helper'
 
 describe 'Signup', type: :system do
   it 'displays signup screen' do
-    visit new_user_path
+    visit signup_path
 
     expect(page).to have_content('Signup')
 
@@ -17,7 +17,7 @@ describe 'Signup', type: :system do
 
   context 'given valid data' do
     it 'redirects to index page and show username that just signed up' do
-      visit new_user_path
+      visit signup_path
 
       within 'form' do
         fill_in('Username', with: 'nimblehq')
@@ -36,7 +36,7 @@ describe 'Signup', type: :system do
 
   context 'given invalid data' do
     it 'displays password not match message when password and password confirmation are not match' do
-      visit new_user_path
+      visit signup_path
 
       within 'form' do
         fill_in('Username', with: 'nimblehq')
@@ -53,7 +53,7 @@ describe 'Signup', type: :system do
     end
 
     it 'displays duplicate user when signup using existing username' do
-      visit new_user_path
+      visit signup_path
 
       within 'form' do
         fill_in('Username', with: 'nimblehq')
@@ -63,7 +63,7 @@ describe 'Signup', type: :system do
         click_button('Signup')
       end
 
-      visit new_user_path
+      visit signup_path
 
       within 'form' do
         fill_in('Username', with: 'nimblehq')
@@ -80,7 +80,7 @@ describe 'Signup', type: :system do
     end
 
     it 'displays duplicate user when signup using existing username' do
-      visit new_user_path
+      visit signup_path
 
       within 'form' do
         fill_in('Username', with: 'nimblehq')
@@ -90,7 +90,7 @@ describe 'Signup', type: :system do
         click_button('Signup')
       end
 
-      visit new_user_path
+      visit signup_path
 
       within 'form' do
         fill_in('Username', with: 'nimblehq')
@@ -107,7 +107,7 @@ describe 'Signup', type: :system do
     end
 
     it 'shows required message at username when submit empty string' do
-      visit new_user_path
+      visit signup_path
 
       within 'form' do
         click_button('Signup')
@@ -119,7 +119,7 @@ describe 'Signup', type: :system do
     end
 
     it 'shows required message at password when submit empty string' do
-      visit new_user_path
+      visit signup_path
 
       within 'form' do
         fill_in('Username', with: 'nimblehq')
@@ -133,7 +133,7 @@ describe 'Signup', type: :system do
     end
 
     it 'shows required message at password_confirmation when submit empty string' do
-      visit new_user_path
+      visit signup_path
 
       within 'form' do
         fill_in('Username', with: 'nimblehq')
