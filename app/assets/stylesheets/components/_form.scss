@@ -1,6 +1,6 @@
-input[type="text"], input[type="password"] {
-  width: 100%;
+form {
   border: 1px solid #dee2e6;
-  font-size: small;
-  padding: 0.35rem 0.5rem;
+  border-radius: 0.5rem;
+  margin-top: 1.5rem;
+  padding: 2rem !important;
 }
