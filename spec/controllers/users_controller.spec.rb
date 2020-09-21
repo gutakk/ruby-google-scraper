@@ -13,7 +13,7 @@ RSpec.describe UsersController, type: :controller do
 
       it 'redirect to signup index' do
         post :create, params: { user: { username: 'nimblehq', password: 'password', password_confirmation: 'password' } }
-        expect(response).to redirect_to(action: 'index', notice: 'User was successfully created.')
+        expect(response).to redirect_to(users_path)
       end
     end
 
