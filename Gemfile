@@ -18,6 +18,9 @@ gem 'i18n-js', '3.5.1' # A library to provide the I18n translations on the Javas
 gem 'devise' # Authentication solution for Rails with Warden
 gem 'pundit' # Minimal authorization through OO design and pure Ruby classes
 
+# Templating
+gem 'slim'
+
 # Assets
 gem 'webpacker', '~>5.2.0' # Transpile app-like JavaScript
 gem 'sass-rails' # SASS
