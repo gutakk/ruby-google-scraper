@@ -2,20 +2,22 @@ h1 class="text-secondary mt-5" Signup
 
 = form_with(model: @user, local: true, url: signup_path) do |form|
   - if @user.errors.any?
-    div id="errorExplanation" class="alert alert-danger text-danger"
-      = @user.errors.full_messages[0]
+    ul id="errorExplanation" class="alert alert-danger text-danger pl-5"
+      - @user.errors.values.each do |value|
+        - value.each do |error_msg|
+          li = error_msg
 
   .form-group
-    = form.label :username
+    = form.label t('auth.username')
     = form.text_field :username, required: true, value: nil
 
   .form-group
-    = form.label :password
+    = form.label t('auth.password')
     = form.password_field :password, required: true
 
   .form-group
-    = form.label :password_confirmation
+    = form.label t('auth.confirm_password')
     = form.password_field :password_confirmation, required: true
 
   .actions
-    = form.submit :Signup, class: "btn btn-primary"
+    = form.submit t('auth.signup'), class: "btn btn-primary"
