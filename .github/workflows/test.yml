@@ -19,7 +19,7 @@ jobs:
       - name: Branch Tag Action
         uses: nimblehq/branch-tag-action@v1.1
 
-      - name: Docker login to Github package registry
+      - name: Docker login to docker container registry
         run: "echo $DOCKER_TOKEN | docker login $DOCKER_REGISTRY -u $DOCKER_USERNAME --password-stdin"
 
       - name: Docker pull
@@ -44,7 +44,7 @@ jobs:
       - name: Branch Tag Action
         uses: nimblehq/branch-tag-action@v1.1
 
-      - name: Docker login to Github package registry
+      - name: Docker login to docker container registry
         run: "echo $DOCKER_TOKEN | docker login $DOCKER_REGISTRY -u $DOCKER_USERNAME --password-stdin"
 
       - name: Docker pull
