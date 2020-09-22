@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
+  layout 'auth'
+
   def index
     @users = User.all
   end
