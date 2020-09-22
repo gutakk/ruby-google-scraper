@@ -1,4 +1,6 @@
 ARG BRANCH_TAG=latest
-FROM nimblehq/ruby_google_scraper:${BRANCH_TAG}
+ARG DOCKER_IMAGE=nimblehq/ruby_google_scraper
+ARG DOCKER_REGISTRY=docker.io
+FROM ${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${BRANCH_TAG}
 
 CMD ./bin/start.sh
