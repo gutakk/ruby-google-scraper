@@ -16,7 +16,7 @@ describe 'Signup', type: :system do
   end
 
   context 'given valid data' do
-    it 'redirects to index page and show username that just signed up' do
+    it 'redirects to index page and show flash message' do
       visit signup_path
 
       within 'form' do
@@ -27,10 +27,7 @@ describe 'Signup', type: :system do
         click_button('Signup')
       end
       expect(current_path).to eql(users_path)
-
-      visit users_path
-      expect(page).to have_content('Users')
-      expect(page).to have_content('nimblehq')
+      expect(page).to have_content('Account was successfully created.')
     end
   end
 
