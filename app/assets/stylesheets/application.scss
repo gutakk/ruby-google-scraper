@@ -9,11 +9,11 @@
 // Mixins
 
 // Base
+@import '../../../node_modules/bootstrap/scss/bootstrap';
+@import 'base/forms';
 
 // Layouts
 
 // Components
-@import '../../../node_modules/bootstrap/scss/bootstrap';
-@import 'components/*';
 
 // Screens
