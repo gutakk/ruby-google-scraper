@@ -3,15 +3,29 @@
 require 'rails_helper'
 
 describe 'Signup', type: :system do
-  it 'displays signup screen' do
-    visit signup_path
+  context 'validates screen' do
+    it 'displays signup screen should show correct field' do
+      visit signup_path
 
-    expect(page).to have_content('Signup')
+      expect(page).to have_content('Signup')
 
-    within 'form' do
-      expect(page).to have_field('user[username]')
-      expect(page).to have_field('user[password]')
-      expect(page).to have_field('user[password_confirmation]')
+      within 'form' do
+        expect(page).to have_field('user[username]')
+        expect(page).to have_field('user[password]')
+        expect(page).to have_field('user[password_confirmation]')
+      end
+    end
+
+    it 'displays signup screen show correct label' do
+      visit signup_path
+
+      expect(page).to have_content('Signup')
+
+      within 'form' do
+        expect(page).to have_field('user[username]')
+        expect(page).to have_field('user[password]')
+        expect(page).to have_field('user[password_confirmation]')
+      end
     end
   end
 
@@ -20,42 +34,42 @@ describe 'Signup', type: :system do
       visit signup_path
 
       within 'form' do
-        fill_in('Username', with: 'nimblehq')
-        fill_in('Password', with: 'password')
-        fill_in('Password confirmation', with: 'password')
+        fill_in('user[username]', with: 'nimblehq')
+        fill_in('user[password]', with: 'password')
+        fill_in('user[password_confirmation]', with: 'password')
 
         click_button('Signup')
       end
       expect(current_path).to eql(users_path)
-      expect(page).to have_content('Account was successfully created.')
+      expect(page).to have_content('Account was successfully created')
     end
   end
 
   context 'given invalid data' do
-    it 'displays password not match message when password and password confirmation are not match' do
+    it 'displays password not match error when password and password confirmation are not match' do
       visit signup_path
 
       within 'form' do
-        fill_in('Username', with: 'nimblehq')
-        fill_in('Password', with: 'password')
-        fill_in('Password confirmation', with: 'drowssap')
+        fill_in('user[username]', with: 'nimblehq')
+        fill_in('user[password]', with: 'password')
+        fill_in('user[password_confirmation]', with: 'drowssap')
 
         click_button('Signup')
 
         expect(page).to have_selector('#errorExplanation')
         within '#errorExplanation' do
-          expect(page).to have_content('Password confirmation doesn\'t match Password')
+          expect(page).to have_content('Password not match')
         end
       end
     end
 
-    it 'displays duplicate user when signup using existing username' do
+    it 'displays duplicate user error when signup using existing username' do
       visit signup_path
 
       within 'form' do
-        fill_in('Username', with: 'nimblehq')
-        fill_in('Password', with: 'password')
-        fill_in('Password confirmation', with: 'password')
+        fill_in('user[username]', with: 'nimblehq')
+        fill_in('user[password]', with: 'password')
+        fill_in('user[password_confirmation]', with: 'password')
 
         click_button('Signup')
       end
@@ -63,36 +77,9 @@ describe 'Signup', type: :system do
       visit signup_path
 
       within 'form' do
-        fill_in('Username', with: 'nimblehq')
-        fill_in('Password', with: 'password')
-        fill_in('Password confirmation', with: 'password')
-
-        click_button('Signup')
-      end
-
-      expect(page).to have_selector('#errorExplanation')
-      within '#errorExplanation' do
-        expect(page).to have_content('Username has already been taken')
-      end
-    end
-
-    it 'displays duplicate user when signup using existing username' do
-      visit signup_path
-
-      within 'form' do
-        fill_in('Username', with: 'nimblehq')
-        fill_in('Password', with: 'password')
-        fill_in('Password confirmation', with: 'password')
-
-        click_button('Signup')
-      end
-
-      visit signup_path
-
-      within 'form' do
-        fill_in('Username', with: 'nimblehq')
-        fill_in('Password', with: 'password')
-        fill_in('Password confirmation', with: 'password')
+        fill_in('user[username]', with: 'nimblehq')
+        fill_in('user[password]', with: 'password')
+        fill_in('user[password_confirmation]', with: 'password')
 
         click_button('Signup')
       end
@@ -103,7 +90,7 @@ describe 'Signup', type: :system do
       end
     end
 
-    it 'shows required message at username when submit empty string' do
+    it 'displays required message at username when submit empty string' do
       visit signup_path
 
       within 'form' do
@@ -115,11 +102,11 @@ describe 'Signup', type: :system do
       end
     end
 
-    it 'shows required message at password when submit empty string' do
+    it 'displays required message at password when submit empty string' do
       visit signup_path
 
       within 'form' do
-        fill_in('Username', with: 'nimblehq')
+        fill_in('user[username]', with: 'nimblehq')
 
         click_button('Signup')
 
@@ -129,12 +116,12 @@ describe 'Signup', type: :system do
       end
     end
 
-    it 'shows required message at password_confirmation when submit empty string' do
+    it 'displays required message at password_confirmation when submit empty string' do
       visit signup_path
 
       within 'form' do
-        fill_in('Username', with: 'nimblehq')
-        fill_in('Password', with: 'password')
+        fill_in('user[username]', with: 'nimblehq')
+        fill_in('user[password]', with: 'password')
 
         click_button('Signup')
 
