@@ -30,4 +30,18 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            username:
+              taken: "Username has already been taken"
+            password_confirmation:
+              confirmation: "Password not match"
+
+  auth:
+    signup: "Signup"
+    username: "Username"
+    password: "Password"
+    confirm_password: "Confirm Password"
