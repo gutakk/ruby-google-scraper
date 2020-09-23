@@ -3,6 +3,20 @@
 require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
+  describe 'GET#index' do
+    it 'renders a successful response' do
+      get :index
+      expect(response).to be_successful
+    end
+  end
+
+  describe 'GET#new' do
+    it 'renders a successful response' do
+      get :new
+      expect(response).to be_successful
+    end
+  end
+
   describe 'POST#create' do
     context 'with valid parameters' do
       it 'creates a new user' do
@@ -13,7 +27,7 @@ RSpec.describe UsersController, type: :controller do
 
       it 'redirect to signup index' do
         post :create, params: { user: { username: 'nimblehq', password: 'password', password_confirmation: 'password' } }
-        expect(response).to redirect_to(users_path)
+        expect(response).to redirect_to(root_path)
       end
     end
 
@@ -64,20 +78,6 @@ RSpec.describe UsersController, type: :controller do
         post :create, params: { user: { username: nil, password: nil, password_confirmation: nil } }
         expect(response).to be_successful
       end
-    end
-  end
-
-  describe 'GET#new' do
-    it 'renders a successful response' do
-      get :new
-      expect(response).to be_successful
-    end
-  end
-
-  describe 'GET#index' do
-    it 'renders a successful response' do
-      get :index
-      expect(response).to be_successful
     end
   end
 end

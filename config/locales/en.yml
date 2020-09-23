@@ -35,6 +35,8 @@ en:
       models:
         user:
           attributes:
+            password:
+              too_short: 'Password is too short (min is %{count} characters)'
             password_confirmation:
               confirmation: "Password not match"
             username:
@@ -45,6 +47,6 @@ en:
     login: "Login"
     logged_in_failed: "Username or password is invalid" 
     password: "Password"
-    signup: "Signup"
     signed_up_successfully: "Account was successfully created"
+    signup: "Signup"
     username: "Username"
