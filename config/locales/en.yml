@@ -42,6 +42,9 @@ en:
             username:
               taken: "Username has already been taken"
 
+  app:
+    name: "Ruby Google Scraper"
+
   auth:
     confirm_password: "Confirm Password"
     login: "Login"
