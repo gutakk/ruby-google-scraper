@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  layout 'auth'
-
   def new
     @user = User.new
+    render layout: 'auth'
   end
 
   def create
