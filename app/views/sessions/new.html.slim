@@ -1,0 +1,16 @@
+h1 class="text-secondary mt-5" = t('auth.login')
+
+= form_with(local: true, url: sessions_path) do |form|
+  - if alert.present?
+    div class="alert alert-danger text-danger" = alert
+
+  .form-group
+    = form.label t('auth.username')
+    = form.text_field :username, required: true, value: nil
+
+  .form-group
+    = form.label t('auth.password')
+    = form.password_field :password, required: true
+
+  .actions
+    = form.submit t('auth.login'), class: "btn btn-primary"
