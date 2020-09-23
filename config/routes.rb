@@ -3,4 +3,7 @@ Rails.application.routes.draw do
   resources :users, only: :index, path: '/'
   resource :users, only: :create, path: '/signup'
   get '/signup', to: 'users#new'
+
+  resource :sessions, only: :create, path: '/login'
+  get '/login', to: 'sessions#new'
 end
