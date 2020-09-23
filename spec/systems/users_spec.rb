@@ -2,29 +2,30 @@
 
 require 'rails_helper'
 
-describe 'Signup', type: :system do
+describe I18n.t('auth.signup'), type: :system do
   context 'validates screen' do
-    it 'displays signup screen should show correct field' do
+    it 'displays signup screen should show correct field and button' do
       visit signup_path
 
-      expect(page).to have_content('Signup')
+      expect(page).to have_content(I18n.t('auth.signup'))
 
       within 'form' do
         expect(page).to have_field('user[username]')
         expect(page).to have_field('user[password]')
         expect(page).to have_field('user[password_confirmation]')
+        expect(page).to have_button(I18n.t('auth.signup'))
       end
     end
 
     it 'displays signup screen show correct label' do
       visit signup_path
 
-      expect(page).to have_content('Signup')
+      expect(page).to have_content(I18n.t('auth.signup'))
 
       within 'form' do
-        expect(page).to have_field('user[username]')
-        expect(page).to have_field('user[password]')
-        expect(page).to have_field('user[password_confirmation]')
+        expect(page).to have_content(I18n.t('auth.username'))
+        expect(page).to have_content(I18n.t('auth.password'))
+        expect(page).to have_content(I18n.t('auth.confirm_password'))
       end
     end
   end
@@ -38,10 +39,10 @@ describe 'Signup', type: :system do
         fill_in('user[password]', with: 'password')
         fill_in('user[password_confirmation]', with: 'password')
 
-        click_button('Signup')
+        click_button(I18n.t('auth.signup'))
       end
       expect(current_path).to eql(users_path)
-      expect(page).to have_content('Account was successfully created')
+      expect(page).to have_content(I18n.t('auth.signed_up_successfully'))
     end
   end
 
@@ -54,11 +55,11 @@ describe 'Signup', type: :system do
         fill_in('user[password]', with: 'password')
         fill_in('user[password_confirmation]', with: 'drowssap')
 
-        click_button('Signup')
+        click_button(I18n.t('auth.signup'))
 
         expect(page).to have_selector('#errorExplanation')
         within '#errorExplanation' do
-          expect(page).to have_content('Password not match')
+          expect(page).to have_content(I18n.t('activerecord.errors.models.user.attributes.password_confirmation.confirmation'))
         end
       end
     end
@@ -71,7 +72,7 @@ describe 'Signup', type: :system do
         fill_in('user[password]', with: 'password')
         fill_in('user[password_confirmation]', with: 'password')
 
-        click_button('Signup')
+        click_button(I18n.t('auth.signup'))
       end
 
       visit signup_path
@@ -81,12 +82,12 @@ describe 'Signup', type: :system do
         fill_in('user[password]', with: 'password')
         fill_in('user[password_confirmation]', with: 'password')
 
-        click_button('Signup')
+        click_button(I18n.t('auth.signup'))
       end
 
       expect(page).to have_selector('#errorExplanation')
       within '#errorExplanation' do
-        expect(page).to have_content('Username has already been taken')
+        expect(page).to have_content(I18n.t('activerecord.errors.models.user.attributes.username.taken'))
       end
     end
 
@@ -98,7 +99,7 @@ describe 'Signup', type: :system do
         fill_in('user[password]', with: 'password')
         fill_in('user[password_confirmation]', with: 'password')
 
-        click_button('Signup')
+        click_button(I18n.t('auth.signup'))
       end
 
       visit signup_path
@@ -108,13 +109,13 @@ describe 'Signup', type: :system do
         fill_in('user[password]', with: 'password')
         fill_in('user[password_confirmation]', with: 'drowssap')
 
-        click_button('Signup')
+        click_button(I18n.t('auth.signup'))
       end
 
       expect(page).to have_selector('#errorExplanation')
       within '#errorExplanation' do
-        expect(page).to have_content('Username has already been taken')
-        expect(page).to have_content('Password not match')
+        expect(page).to have_content(I18n.t('activerecord.errors.models.user.attributes.username.taken'))
+        expect(page).to have_content(I18n.t('activerecord.errors.models.user.attributes.password_confirmation.confirmation'))
       end
     end
 
@@ -122,7 +123,7 @@ describe 'Signup', type: :system do
       visit signup_path
 
       within 'form' do
-        click_button('Signup')
+        click_button(I18n.t('auth.signup'))
 
         message = page.find('#user_username').native.attribute('validationMessage')
 
@@ -136,7 +137,7 @@ describe 'Signup', type: :system do
       within 'form' do
         fill_in('user[username]', with: 'nimblehq')
 
-        click_button('Signup')
+        click_button(I18n.t('auth.signup'))
 
         message = page.find('#user_password').native.attribute('validationMessage')
 
@@ -151,7 +152,7 @@ describe 'Signup', type: :system do
         fill_in('user[username]', with: 'nimblehq')
         fill_in('user[password]', with: 'password')
 
-        click_button('Signup')
+        click_button(I18n.t('auth.signup'))
 
         message = page.find('#user_password_confirmation').native.attribute('validationMessage')
 
