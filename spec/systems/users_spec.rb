@@ -41,7 +41,7 @@ describe I18n.t('auth.signup'), type: :system do
 
         click_button(I18n.t('auth.signup'))
       end
-      expect(current_path).to eql(users_path)
+      expect(current_path).to eql(root_path)
       expect(page).to have_content(I18n.t('auth.signed_up_successfully'))
     end
   end
