@@ -43,6 +43,8 @@ en:
               taken: "Username has already been taken"
 
   app:
+    already_have_account: "Already have account?"
+    do_not_have_account_yet: "Don't have account yet?"
     name: "Ruby Google Scraper"
 
   auth:
