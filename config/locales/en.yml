@@ -35,6 +35,8 @@ en:
       models:
         user:
           attributes:
+            password:
+              too_short: 'Password is too short (min is %{count} characters)'
             password_confirmation:
               confirmation: "Password not match"
             username:
