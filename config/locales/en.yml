@@ -35,13 +35,16 @@ en:
       models:
         user:
           attributes:
-            username:
-              taken: "Username has already been taken"
             password_confirmation:
               confirmation: "Password not match"
+            username:
+              taken: "Username has already been taken"
 
   auth:
-    signup: "Signup"
-    username: "Username"
-    password: "Password"
     confirm_password: "Confirm Password"
+    login: "Login"
+    logged_in_failed: "Username or password is invalid" 
+    password: "Password"
+    signup: "Signup"
+    signed_up_successfully: "Account was successfully created"
+    username: "Username"
