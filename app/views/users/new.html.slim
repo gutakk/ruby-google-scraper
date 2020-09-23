@@ -1,4 +1,4 @@
-h1 class="text-secondary mt-5" Signup
+h1 class="text-secondary mt-5" = t('auth.signup')
 
 = form_with(model: @user, local: true, url: signup_path) do |form|
   - if @user.errors.any?
