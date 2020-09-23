@@ -25,5 +25,9 @@ RSpec.describe User, type: :model do
     context 'has secure password' do
       it { should have_secure_password }
     end
+
+    context 'length' do
+      it { should validate_length_of(:password) }
+    end
   end
 end
