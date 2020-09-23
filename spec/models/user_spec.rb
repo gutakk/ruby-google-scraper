@@ -26,9 +26,9 @@ RSpec.describe User, type: :model do
 
     it 'username uniqueness' do
       user1 = User.new(username: 'nimblehq', password: 'password', password_confirmation: 'password').save
-      expect(user1).to eq(true)
-
       user2 = User.new(username: 'nimblehq', password: 'drowssap', password_confirmation: 'drowssap').save
+
+      expect(user1).to eq(true)
       expect(user2).to eq(false)
     end
 
