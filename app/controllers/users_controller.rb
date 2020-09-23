@@ -3,8 +3,6 @@
 class UsersController < ApplicationController
   layout 'auth'
 
-  def index; end
-
   def new
     @user = User.new
   end
