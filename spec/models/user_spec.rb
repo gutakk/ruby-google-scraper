@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  describe 'validation', :aggregate_failures do
+  describe 'validation' do
     context 'presence' do
       it { should validate_presence_of(:username) }
 
