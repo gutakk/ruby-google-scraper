@@ -3,38 +3,27 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  describe 'validation test', :aggregate_failures do
-    it 'username presence' do
-      user = User.new(password: 'password', password_confirmation: 'password').save
-      expect(user).to eq(false)
+  describe 'validation', :aggregate_failures do
+    context 'presence' do
+      it { should validate_presence_of(:username) }
+
+      it { should validate_presence_of(:password) }
+
+      it { should validate_presence_of(:password_confirmation) }
     end
 
-    it 'password presence' do
-      user = User.new(username: 'nimblehq', password_confirmation: 'password').save
-      expect(user).to eq(false)
+    context 'uniqueness' do
+      subject { User.new(username: 'nimblehq', password: 'password', password_confirmation: 'password') }
+
+      it { should validate_uniqueness_of(:username) }
     end
 
-    it 'password confirmation presence' do
-      user = User.new(username: 'nimblehq', password: 'password').save
-      expect(user).to eq(false)
+    context 'confirmation' do
+      it { should validate_confirmation_of(:password).with_message(I18n.t('activerecord.errors.models.user.attributes.password_confirmation.confirmation')) }
     end
 
-    it 'password and password confirmation don\'t match' do
-      user = User.new(username: 'nimblehq', password: 'password', password_confirmation: 'password1').save
-      expect(user).to eq(false)
-    end
-
-    it 'username uniqueness' do
-      user1 = User.new(username: 'nimblehq', password: 'password', password_confirmation: 'password').save
-      user2 = User.new(username: 'nimblehq', password: 'drowssap', password_confirmation: 'drowssap').save
-
-      expect(user1).to eq(true)
-      expect(user2).to eq(false)
-    end
-
-    it 'password digest' do
-      user = User.new
-      assert_respond_to user, :password_digest
+    context 'has secure password' do
+      it { should have_secure_password }
     end
   end
 end
