@@ -3,13 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :system do
-  describe 'Signup feature' do
+  describe 'signup' do
     context 'validates screen' do
       it 'displays signup screen should show correct field and button' do
         visit signup_path
-
-        expect(page).to have_selector('nav')
-        expect(page).to have_content(I18n.t('auth.signup'))
 
         within 'form' do
           expect(page).to have_field('user[username]')
@@ -19,9 +16,10 @@ RSpec.describe User, type: :system do
         end
       end
 
-      it 'displays signup screen show correct label' do
+      it 'displays signup screen show correct label and components' do
         visit signup_path
 
+        expect(page).to have_selector('nav')
         expect(page).to have_content(I18n.t('auth.signup'))
 
         within 'form' do
@@ -32,7 +30,7 @@ RSpec.describe User, type: :system do
       end
     end
 
-    context 'given valid data' do
+    context 'happy path' do
       it 'redirects to index page and show flash message' do
         visit signup_path
 
