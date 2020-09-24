@@ -8,6 +8,7 @@ RSpec.describe User, type: :system do
       it 'displays signup screen should show correct field and button' do
         visit signup_path
 
+        expect(page).to have_selector('nav')
         expect(page).to have_content(I18n.t('auth.signup'))
 
         within 'form' do
