@@ -36,7 +36,7 @@ en:
         user:
           attributes:
             password:
-              too_short: 'Password is too short (min is %{count} characters)'
+              too_short: "Password is too short (min is %{count} characters)"
             password_confirmation:
               confirmation: "Password not match"
             username:
@@ -45,7 +45,7 @@ en:
   app:
     already_have_account: "Already have account?"
     do_not_have_account_yet: "Don't have account yet?"
-    name: "Ruby Google Scraper"
+    title: "Ruby Google Scraper"
 
   auth:
     confirm_password: "Confirm Password"

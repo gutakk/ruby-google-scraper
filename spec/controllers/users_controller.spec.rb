@@ -6,6 +6,7 @@ RSpec.describe UsersController, type: :controller do
   describe 'GET#index' do
     it 'renders a successful response' do
       get :index
+
       expect(response).to be_successful
     end
   end
@@ -13,6 +14,7 @@ RSpec.describe UsersController, type: :controller do
   describe 'GET#new' do
     it 'renders a successful response' do
       get :new
+
       expect(response).to be_successful
     end
   end
@@ -27,6 +29,7 @@ RSpec.describe UsersController, type: :controller do
 
       it 'redirect to signup index' do
         post :create, params: { user: { username: 'nimblehq', password: 'password', password_confirmation: 'password' } }
+
         expect(response).to redirect_to(root_path)
       end
     end
@@ -76,6 +79,7 @@ RSpec.describe UsersController, type: :controller do
 
       it 'renders a successful response' do
         post :create, params: { user: { username: nil, password: nil, password_confirmation: nil } }
+
         expect(response).to be_successful
       end
     end
