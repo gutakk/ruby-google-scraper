@@ -82,6 +82,12 @@ RSpec.describe UsersController, type: :controller do
 
         expect(response).to be_successful
       end
+
+      it 'renders correct template' do
+        post :create, params: { user: { username: nil, password: nil, password_confirmation: nil } }
+
+        expect(response).to render_template(:new)
+      end
     end
   end
 end

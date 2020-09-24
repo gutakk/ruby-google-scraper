@@ -74,6 +74,7 @@ group :test do
   gem 'simplecov', require: false # code coverage analysis tool for Ruby
   gem 'vcr' # Gem for recording test suite's HTTP interactions
   gem 'timecop' # Gem for time travel
+  gem 'rails-controller-testing' # Brings back assigns to your controller tests as well as assert_template to both controller and integration tests.
 end
 
 group :production do
