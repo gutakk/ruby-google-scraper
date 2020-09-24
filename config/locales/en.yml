@@ -45,6 +45,7 @@ en:
   app:
     already_have_account: "Already have account?"
     do_not_have_account_yet: "Don't have account yet?"
+    greeting: "Hi"
     title: "Ruby Google Scraper"
 
   auth:
