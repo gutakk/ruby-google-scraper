@@ -2,7 +2,7 @@
 
 module ApplicationHelper
   def page_title
-    return [t('app.title'), (content_for :title_subfix)].join(' | ') if (content_for :title_subfix).present?
+    return [t('app.title'), (content_for :title_suffix)].join(' | ') if (content_for :title_suffix).present?
 
     t('app.title')
   end
