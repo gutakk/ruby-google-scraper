@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :system do
-  describe 'Signup feature', :aggregate_failures do
+  describe 'Signup feature' do
     context 'validates screen' do
       it 'displays signup screen should show correct field and button' do
         visit signup_path
