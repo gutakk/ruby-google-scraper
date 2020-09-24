@@ -1,3 +1,5 @@
+/ - content_for(:title_subfix) { 'Signup' }
+
 h1 class="text-secondary mt-5" = t('auth.signup')
 
 = form_with(model: @user, local: true, url: signup_path) do |form|
