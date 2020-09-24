@@ -10,11 +10,7 @@ html
     == javascript_pack_tag 'application'
 
   body
-  nav class="navbar py-4 px-5 bg-dark"
-    == link_to t('app.name'), root_path, class: "text-white"
-    div
-      == link_to t('auth.login'), login_path, class: "text-white mr-4"
-      == link_to t('auth.signup'), signup_path, class: "text-white border px-3 py-2 rounded"
-  main class="vh-100"
-    div class="app-main__content d-flex flex-column align-items-center"
-      == yield
+    = render 'shared/nav'
+    main class="vh-100"
+      div class="app-main__content d-flex flex-column align-items-center"
+        == yield

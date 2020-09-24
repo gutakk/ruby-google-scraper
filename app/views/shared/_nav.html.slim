@@ -1,0 +1,5 @@
+nav class="navbar py-4 px-5 bg-dark"
+  == link_to t('app.title'), root_path, class: "text-white"
+  div
+    == link_to t('auth.login'), login_path, class: "text-white mr-4"
+    == link_to t('auth.signup'), signup_path, class: "text-white border px-3 py-2 rounded"
