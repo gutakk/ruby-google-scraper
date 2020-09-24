@@ -27,10 +27,10 @@ RSpec.describe UsersController, type: :controller do
         end.to change(User, :count).by(1)
       end
 
-      it 'redirect to signup index' do
+      it 'redirect to login' do
         post :create, params: { user: { username: 'nimblehq', password: 'password', password_confirmation: 'password' } }
 
-        expect(response).to redirect_to(root_path)
+        expect(response).to redirect_to(login_path)
       end
     end
 
