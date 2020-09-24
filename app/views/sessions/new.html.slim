@@ -1,8 +1,7 @@
 h1 class="text-secondary mt-5" = t('auth.login')
 
 = form_with(local: true, url: sessions_path) do |form|
-  - if alert.present?
-    div class="alert alert-danger text-danger" = alert
+  = render 'sessions/shared/alert_messages'
 
   .form-group
     = form.label t('auth.username')
