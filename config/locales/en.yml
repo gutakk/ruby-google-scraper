@@ -48,7 +48,7 @@ en:
     title: "Ruby Google Scraper"
 
   auth:
-    confirm_password: "Confirm Password"
+    confirm_password: "Confirm password"
     login: "Login"
     logged_in_failed: "Username or password is invalid" 
     password: "Password"
