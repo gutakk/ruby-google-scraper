@@ -10,6 +10,7 @@ RSpec.describe ApplicationHelper, type: :helper do
 
     it 'returns page title with suffix' do
       content_for(:title_suffix) { I18n.t('auth.signup') }
+      
       expect(page_title).to eq("#{I18n.t('app.title')} | #{I18n.t('auth.signup')}")
     end
   end
