@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id
       redirect_to root_path, notice: 'Logged in'
     else
-      flash[:alert] = t('auth.logged_in_failed')
+      flash.now[:alert] = t('auth.logged_in_failed')
       render :new
     end
   end
