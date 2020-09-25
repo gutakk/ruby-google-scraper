@@ -31,7 +31,7 @@ RSpec.describe User, type: :system do
     end
 
     context 'happy path' do
-      it 'redirects to index page and show flash message' do
+      it 'redirects to login page and show flash message' do
         visit signup_path
 
         within 'form' do
@@ -44,6 +44,16 @@ RSpec.describe User, type: :system do
 
         expect(current_path).to eql(login_path)
         expect(page).to have_content(I18n.t('auth.signed_up_successfully'))
+      end
+
+      it 'clicks at login link should redirect to correct page' do
+        visit signup_path
+
+        within 'main' do
+          click_link(I18n.t('auth.login'))
+        end
+
+        expect(current_path).to eql(login_path)
       end
     end
   end
