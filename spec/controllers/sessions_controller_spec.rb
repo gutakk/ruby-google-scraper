@@ -15,6 +15,15 @@ RSpec.describe SessionsController, type: :controller do
 
       expect(response).to render_template(:new)
     end
+
+    it 'redirect to home when session exist' do
+      user = Fabricate(:user, username: 'nimblehq', password: 'password', password_confirmation: 'password')
+      session[:user_id] = user[:id]
+
+      get :new
+
+      expect(response).to redirect_to(root_path)
+    end
   end
 
   describe 'POST#create' do
