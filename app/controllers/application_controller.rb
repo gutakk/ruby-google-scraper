@@ -3,7 +3,7 @@
 class ApplicationController < ActionController::Base
   include Localization
 
-  helper_method :current_user, :logged_in?
+  helper_method :current_user
 
   private
 
