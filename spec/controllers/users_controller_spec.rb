@@ -3,19 +3,17 @@
 require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
-  describe 'GET#index' do
-    it 'renders a successful response' do
-      get :index
-
-      expect(response).to be_successful
-    end
-  end
-
   describe 'GET#new' do
     it 'renders a successful response' do
       get :new
 
       expect(response).to be_successful
+    end
+
+    it 'renders a correct template' do
+      get :new
+
+      expect(response).to render_template(:new)
     end
   end
 
