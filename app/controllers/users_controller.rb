@@ -2,7 +2,8 @@
 
 class UsersController < ApplicationController
   layout 'auth', only: %i[new create]
-  before_action :redirect?
+  
+  before_action :redirect_to_home
 
   def new
     @user = User.new
