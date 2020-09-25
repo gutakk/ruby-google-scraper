@@ -3,13 +3,15 @@
 class SessionsController < ApplicationController
   layout 'auth', only: :new
 
-  before_action :redirect_to_home
+  before_action :redirect_to_home, only: :new
+
+  def new; end
 
   def create
     user = User.find_by(username: params[:username])
 
     if user&.authenticate(params[:password])
-      session[:user_id] = user.id
+      session[:user_id] = user[:id]
 
       redirect_to root_path
     else
