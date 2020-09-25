@@ -2,6 +2,7 @@
 
 class UsersController < ApplicationController
   layout 'auth', only: %i[new create]
+  before_action :logged_in?
 
   def new
     @user = User.new
