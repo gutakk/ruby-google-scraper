@@ -51,8 +51,8 @@ en:
   auth:
     confirm_password: "Confirm password"
     login: "Login"
-    logged_in_failed: "Username or password is invalid" 
+    login_failed: "Username or password is invalid" 
     password: "Password"
-    signed_up_successfully: "Account was successfully created"
     signup: "Signup"
+    signup_successfully: "Account was successfully created"
     username: "Username"

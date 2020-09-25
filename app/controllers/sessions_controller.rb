@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
 
       redirect_to root_path
     else
-      flash.now[:alert] = t('auth.logged_in_failed')
+      flash.now[:alert] = t('auth.login_failed')
 
       render :new
     end

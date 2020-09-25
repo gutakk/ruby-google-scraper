@@ -43,7 +43,7 @@ RSpec.describe User, type: :system do
         end
 
         expect(current_path).to eql(login_path)
-        expect(page).to have_content(I18n.t('auth.signed_up_successfully'))
+        expect(page).to have_content(I18n.t('auth.signup_successfully'))
       end
 
       it 'clicks at login link should redirect to correct page' do
