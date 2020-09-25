@@ -43,7 +43,10 @@ RSpec.describe 'Sessions', type: :system do
         end
 
         expect(current_path).to eql(root_path)
-        expect(page).to have_content("#{I18n.t('app.greeting')} #{user[:username]}")
+
+        within 'nav' do
+          expect(page).to have_content("#{I18n.t('app.greeting')} #{user[:username]}")
+        end
       end
 
       it 'clicks at signup link should redirect to correct page' do
