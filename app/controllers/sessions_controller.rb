@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class SessionsController < ApplicationController
-  layout 'auth'
+  layout 'auth', only: :new
 
   def create
     user = User.find_by(username: params[:username])
