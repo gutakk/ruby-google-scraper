@@ -20,4 +20,10 @@ class SessionsController < ApplicationController
       render :new
     end
   end
+
+  def destroy
+    session[:user_id] = nil
+
+    redirect_to root_url, notice: t('auth.logout_successfully')
+  end
 end
