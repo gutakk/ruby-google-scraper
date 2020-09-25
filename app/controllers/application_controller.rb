@@ -13,11 +13,7 @@ class ApplicationController < ActionController::Base
     User.find(session[:user_id])
   end
 
-  def logged_in?
-    current_user != nil
-  end
-
-  def redirect_to_home?
-    redirect_to root_path if logged_in?
+  def redirect?
+    redirect_to root_path if current_user
   end
 end

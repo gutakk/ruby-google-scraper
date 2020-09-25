@@ -1,6 +1,6 @@
 nav class="navbar py-4 px-5 bg-dark"
   == link_to t('app.title'), root_path, class: "text-white"
-  - if logged_in?
+  - if current_user
     div
       span class="text-white mr-4"
         small = t('app.greeting')
