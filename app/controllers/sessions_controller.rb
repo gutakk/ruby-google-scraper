@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class SessionsController < ApplicationController
-  layout 'auth', only: :new
+  layout 'auth', only: %i[new create]
 
   before_action :redirect_to_home, only: :new
 
