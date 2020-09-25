@@ -6,7 +6,7 @@ nav class="navbar py-4 px-5 bg-dark"
         small = t('app.greeting')
         | &nbsp
         strong = current_user.username
-      == link_to t('auth.logout'), signup_path, class: "btn btn-outline-light align-baseline"
+      == link_to t('auth.logout'), sessions_path, method: :delete, class: "btn btn-outline-light align-baseline"
   - else
     div
       == link_to t('auth.login'), login_path, class: "text-white mr-4"
