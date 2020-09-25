@@ -1,0 +1,15 @@
+doctype html
+html
+  head
+    title
+      = page_title
+    == csrf_meta_tags
+    == csp_meta_tag
+
+    == stylesheet_link_tag 'application'
+    == javascript_pack_tag 'application'
+
+  body
+  main class="vh-100"
+    div class="app-main__content d-flex flex-column align-items-center"
+      == yield

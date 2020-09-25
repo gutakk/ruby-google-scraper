@@ -2,6 +2,7 @@
 @import 'variables';
 
 // Dependencies
+@import '../../../node_modules/bootstrap/scss/bootstrap';
 
 // Functions
 @import 'functions/sizing';
@@ -9,6 +10,7 @@
 // Mixins
 
 // Base
+@import 'base/forms';
 
 // Layouts
 

@@ -1,0 +1,16 @@
+form {
+  min-width: 35%;
+  padding: 2rem;
+  margin-top: 1.5rem;
+  border: 1px solid $border-color;
+  border-radius: 0.5rem;
+}
+
+[type="text"],
+[type="password"] {
+  width: 100%;
+  padding: 0.4rem 0.5rem;
+  font-size: small;
+  border: 1px solid $border-color;
+  border-radius: 0.25rem;
+}
