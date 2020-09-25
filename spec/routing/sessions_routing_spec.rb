@@ -9,7 +9,7 @@ RSpec.describe SessionsController, type: :routing do
     end
 
     it 'routes to #create' do
-      expect(post: '/login').to route_to('sessions#create')
+      expect(post: '/sessions').to route_to('sessions#create')
     end
   end
 end
