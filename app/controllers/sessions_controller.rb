@@ -2,7 +2,7 @@
 
 class SessionsController < ApplicationController
   layout 'auth', only: :new
-  before_action :logged_in?
+  before_action :redirect_to_home?
 
   def create
     user = User.find_by(username: params[:username])
