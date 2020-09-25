@@ -3,17 +3,21 @@
 class ApplicationController < ActionController::Base
   include Localization
 
-  helper_method :current_user
+  helper_method :current_user, :logged_in?
 
   private
 
   def current_user
     return unless session[:user_id]
 
-    @current_user ||= User.find(session[:user_id])
+    User.find(session[:user_id])
   end
 
   def logged_in?
-    redirect_to root_path if current_user
+    current_user != nil
+  end
+
+  def redirect_to_home?
+    redirect_to root_path if logged_in?
   end
 end
