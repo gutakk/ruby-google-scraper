@@ -13,7 +13,7 @@ RSpec.describe User, type: :model do
     end
 
     context 'uniqueness' do
-      subject { Fabricate(:user) }
+      subject { Fabricate(:user, username: 'nimblehq', password: 'password', password_confirmation: 'password') }
 
       it { is_expected.to validate_uniqueness_of(:username) }
     end
