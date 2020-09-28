@@ -5,9 +5,11 @@ require 'rails_helper'
 RSpec.describe 'Sessions', type: :system do
   describe 'login' do
     context 'validates screen' do
-      it 'login screen should show correct field and button' do
+      before(:each) do
         visit login_path
+      end
 
+      it 'login screen should show correct field and button' do
         within 'form' do
           expect(page).to have_field('username')
           expect(page).to have_field('password')
@@ -16,8 +18,6 @@ RSpec.describe 'Sessions', type: :system do
       end
 
       it 'login screen should show correct label and components' do
-        visit login_path
-
         expect(page).to have_selector('nav')
         expect(page).to have_content(I18n.t('auth.login'))
         expect(page).to have_content("#{I18n.t('app.do_not_have_account_yet')} #{I18n.t('auth.signup')}")
