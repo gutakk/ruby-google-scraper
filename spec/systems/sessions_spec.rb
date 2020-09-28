@@ -60,4 +60,48 @@ RSpec.describe 'Sessions', type: :system do
       end
     end
   end
+
+  describe 'logout' do
+    before(:each) do
+      Fabricate(:user, username: 'nimblehq', password: 'password', password_confirmation: 'password')
+
+      visit root_path
+
+      within 'nav' do
+        click_link(I18n.t('auth.login'))
+      end
+
+      within 'form' do
+        fill_in('username', with: 'nimblehq')
+        fill_in('password', with: 'password')
+
+        click_button(I18n.t('auth.login'))
+      end
+    end
+
+    it 'should have signout link in nav when session exist' do
+      within 'nav' do
+        expect(page).to have_selector('a', text: I18n.t('auth.logout'))
+      end
+    end
+
+    context 'logout clicked' do
+      before(:each) do
+        within 'nav' do
+          click_link(I18n.t('auth.logout'))
+        end
+      end
+
+      it 'clicks logout should show logged out message' do
+        expect(page).to have_content(I18n.t('auth.logout_successfully'))
+      end
+
+      it 'clicks logout should not show greeting message and logout link in nav' do
+        within 'nav' do
+          expect(page).not_to have_content(I18n.t('app.greeting'))
+          expect(page).not_to have_selector('a', text: I18n.t('auth.logout'))
+        end
+      end
+    end
+  end
 end
