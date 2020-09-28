@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
+require 'csv'
+
 class KeywordsController < ApplicationController
   def new
     @keyword = Keyword.new
   end
 
   def create
-    @keyword = Keyword.new(keyword_params)
-
-    if @keyword.save
-      redirect_to @keyword, notice: 'Keyword was successfully created.'
-    else
-      render :new
+    CSV.foreach(params[:keyword][:file].path, headers: true) do |row|
+      current_user.keywords.create(keyword: row[0])
     end
+
+    redirect_to keywords_path, notice: 'Keyword uploaded successfully'
   end
 end
