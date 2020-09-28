@@ -1,0 +1,6 @@
+= form_with(model: @country, url: keywords_path) do |form|
+  .form-group
+    = form.label :file, 'Upload CSV File'
+    = form.file_field :file, class: "form-control-file", required: true
+
+    = form.submit "Upload CSV", class: "btn btn-dark"
