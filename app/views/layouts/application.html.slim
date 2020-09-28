@@ -10,5 +10,7 @@ html
 
   body
     = render 'shared/nav'
-    == notice
-    == yield
+    main class="vh-100 p-3"
+      - if notice.present?
+        div class="alert alert-success" = notice
+      == yield
