@@ -71,6 +71,12 @@ RSpec.describe SessionsController, type: :controller do
       expect(response).to be_redirect
     end
 
+    it 'redirects to correct path' do
+      delete :destroy
+      
+      expect(response).to redirect_to(root_path)
+    end
+
     it 'session should be nil' do
       session[:user_id] = 'test'
 
