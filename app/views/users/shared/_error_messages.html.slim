@@ -1,5 +1,5 @@
-- if @user.errors.any?
+- if user.errors.any?
   ul id="errorExplanation" class="alert alert-danger pl-5"
-    - @user.errors.values.each do |value|
+    - user.errors.values.each do |value|
       - value.each do |error_msg|
         li = error_msg

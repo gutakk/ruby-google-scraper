@@ -6,16 +6,20 @@ class UsersController < ApplicationController
   before_action :redirect_to_home, only: :new
 
   def new
-    @user = User.new
+    render locals: {
+      user: User.new
+    }
   end
 
   def create
-    @user = User.new(user_params)
+    user = User.new(user_params)
 
-    if @user.save
+    if user.save
       redirect_to login_path, notice: t('auth.signup_successfully')
     else
-      render :new
+      render :new, locals: {
+        user: user
+      }
     end
   end
 
