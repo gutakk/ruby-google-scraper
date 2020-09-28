@@ -73,7 +73,7 @@ RSpec.describe SessionsController, type: :controller do
 
     it 'redirects to correct path' do
       delete :destroy
-      
+
       expect(response).to redirect_to(root_path)
     end
 
