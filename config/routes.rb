@@ -9,4 +9,8 @@ Rails.application.routes.draw do
   resource :sessions, only: [:create, :destroy]
   
   get '/login', to: 'sessions#new'
+
+  resource :keywords, only: :create
+
+  get '/keywords', to: 'keywords#new'
 end
