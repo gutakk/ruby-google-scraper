@@ -3,7 +3,7 @@
 require 'csv'
 
 class KeywordsController < ApplicationController
-  before_action :require_login, only: :new
+  before_action :login_required, only: :new
   before_action :fetch_file, only: :create
   before_action :csv?, only: :create
   before_action :csv_keyword_in_range?, only: :create

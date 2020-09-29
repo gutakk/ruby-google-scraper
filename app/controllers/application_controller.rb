@@ -25,7 +25,9 @@ class ApplicationController < ActionController::Base
     redirect_to login_path unless authenticated?
   end
 
-  def require_login
-    redirect_to login_path, alert: t('auth.require_login', page: t('keyword.page')) unless current_user
+  def login_required
+    redirect_to login_path, alert: t('auth.login_required', page: t('keyword.page')) unless current_user
   end
+
+  
 end
