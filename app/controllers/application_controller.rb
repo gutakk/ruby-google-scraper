@@ -26,8 +26,22 @@ class ApplicationController < ActionController::Base
   end
 
   def login_required
+    store_target_location
+
     redirect_to login_path, alert: t('auth.login_required', page: t('keyword.page')) unless current_user
   end
 
-  
+  def redirect_to_target_or_default(default)
+    redirect_to(session[:return_to] || default)
+
+    delete_target_location
+  end
+
+  def store_target_location
+    session[:return_to] = request.fullpath
+  end
+
+  def delete_target_location
+    session.delete(:return_to)
+  end
 end

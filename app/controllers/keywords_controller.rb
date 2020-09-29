@@ -8,6 +8,8 @@ class KeywordsController < ApplicationController
   before_action :csv?, only: :create
   before_action :csv_keyword_in_range?, only: :create
 
+  after_action :delete_target_location, only: :new
+
   def new
     render locals: {
       keyword: Keyword.new
