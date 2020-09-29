@@ -63,5 +63,5 @@ en:
   keyword:
     file_must_be_csv: 'File must be CSV format'
     keyword_range: 'CSV file must contain between 1 to 1000 keywords'
-    upload_csv_successfully: "CSV uploaded successfully"
     upload: 'Upload'
+    upload_csv_successfully: "CSV uploaded successfully"
