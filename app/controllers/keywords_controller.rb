@@ -10,7 +10,7 @@ class KeywordsController < ApplicationController
   def create
     file = params[:keyword][:file]
 
-    if CSV.read(file, headers: true).count.between?(666, 1000)
+    if CSV.read(file, headers: true).count.between?(1, 1000)
       CSV.foreach(file.path, headers: true) do |row|
         current_user.keywords.create(keyword: row[0])
       end
