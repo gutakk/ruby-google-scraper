@@ -3,6 +3,10 @@
 require 'csv'
 
 class KeywordsController < ApplicationController
+  before_action :fetch_file, only: :create
+  before_action :csv?, only: :create
+  before_action :csv_keyword_in_range?, only: :create
+
   def new
     render locals: {
       keyword: Keyword.new
@@ -10,18 +14,28 @@ class KeywordsController < ApplicationController
   end
 
   def create
-    @file = params[:keyword][:file]
+    import_keywords
 
-    if CSV.read(@file, headers: true).count.between?(1, 1000)
-      import_keywords
-
-      redirect_to keywords_path, notice: t('app.upload_csv_successfully')
-    else
-      redirect_to keywords_path, alert: t('app.invalid_csv')
-    end
+    redirect_to keywords_path, notice: t('app.upload_csv_successfully')
   end
 
   private
+
+  def fetch_file
+    @file = params[:keyword][:file]
+  end
+
+  def csv?
+    file_type = @file.content_type
+
+    redirect_to keywords_path, alert: 'File must be CSV format' unless file_type == 'text/csv'
+  end
+
+  def csv_keyword_in_range?
+    keyword_count = CSV.read(@file, headers: true).count
+
+    redirect_to keywords_path, alert: t('app.invalid_csv') unless keyword_count.between?(666, 1000)
+  end
 
   def import_keywords
     Keyword.transaction do
