@@ -14,7 +14,7 @@ class KeywordsController < ApplicationController
   end
 
   def create
-    import_keywords
+    Keyword.import(@file, current_user)
 
     redirect_to keywords_path, notice: t('app.upload_csv_successfully')
   end
@@ -34,14 +34,6 @@ class KeywordsController < ApplicationController
   def csv_keyword_in_range?
     keyword_count = CSV.read(@file, headers: true).count
 
-    redirect_to keywords_path, alert: t('app.invalid_csv') unless keyword_count.between?(666, 1000)
-  end
-
-  def import_keywords
-    Keyword.transaction do
-      CSV.foreach(@file.path, headers: true) do |row|
-        current_user.keywords.create(keyword: row[0])
-      end
-    end
+    redirect_to keywords_path, alert: t('app.invalid_csv') unless keyword_count.between?(1, 1000)
   end
 end
