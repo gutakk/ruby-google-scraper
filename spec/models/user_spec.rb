@@ -3,6 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+  describe 'association' do
+    context 'has many' do
+      it { is_expected.to have_many(:keywords) }
+    end
+  end
+
   describe 'validation' do
     context 'presence' do
       it { is_expected.to validate_presence_of(:username) }
