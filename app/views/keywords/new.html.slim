@@ -1,4 +1,4 @@
-= form_with(model: @keyword, local: true, url: keywords_path) do |form|
+= form_with(model: keyword, local: true, url: keywords_path) do |form|
   .form-group
     = form.label :file, 'Upload CSV File'
     = form.file_field :file, class: "form-control-file", required: true

@@ -4,7 +4,9 @@ require 'csv'
 
 class KeywordsController < ApplicationController
   def new
-    keyword = Keyword.new
+    render locals: {
+      keyword: Keyword.new
+    }
   end
 
   def create
