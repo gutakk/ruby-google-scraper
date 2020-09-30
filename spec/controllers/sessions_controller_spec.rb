@@ -77,6 +77,32 @@ RSpec.describe SessionsController, type: :controller do
         it 'shows an alert flash' do
           Fabricate(:user)
 
+          post :create, params: { username: 'nimblehq', password: 'drowssap' }
+
+          expect(flash[:alert]).to eql(I18n.t('auth.login_failed'))
+        end
+
+        it 'renders the template of :new action' do
+          Fabricate(:user)
+
+          post :create, params: { username: 'nimblehq', password: 'drowssap' }
+
+          expect(response).to render_template(:new)
+        end
+      end
+
+      context 'given both invalid username and password' do
+        it 'does NOT set user_id to session' do
+          Fabricate(:user)
+
+          post :create, params: { username: 'qhelbmin', password: 'drowssap' }
+
+          expect(session).to be_empty
+        end
+
+        it 'shows an alert flash' do
+          Fabricate(:user)
+
           post :create, params: { username: 'qhelbmin', password: 'drowssap' }
 
           expect(flash[:alert]).to eql(I18n.t('auth.login_failed'))
