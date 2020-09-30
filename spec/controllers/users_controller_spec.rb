@@ -4,29 +4,44 @@ require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
   describe 'GET#new' do
-    it 'returns a successful response' do
-      get :new
+    context 'when user_id session not exists' do
+      it 'returns a successful response' do
+        get :new
 
-      expect(response).to be_successful
+        expect(response).to be_successful
+      end
+
+      it 'renders a correct template' do
+        get :new
+
+        expect(response).to render_template(:new)
+      end
     end
 
-    it 'renders a correct template' do
-      get :new
+    context 'when user_id session exists' do
+      it 'redirects to home page' do
+        user = Fabricate(:user)
+        session[:user_id] = user[:id]
 
-      expect(response).to render_template(:new)
-    end
+        get :new
 
-    it 'redirects to home when session exists' do
-      user = Fabricate(:user)
-      session[:user_id] = user[:id]
-
-      get :new
-
-      expect(response).to redirect_to(root_path)
+        expect(response).to redirect_to(root_path)
+      end
     end
   end
 
   describe 'POST#create' do
+    context 'when user_id session exists' do
+      it 'redirects to home page' do
+        user = Fabricate(:user)
+        session[:user_id] = user[:id]
+
+        post :create, params: { user: { username: 'nimblehq', password: 'password', password_confirmation: 'password' } }
+
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
     context 'given valid parameters' do
       it 'creates a new user' do
         expect do
