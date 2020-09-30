@@ -3,7 +3,7 @@
 require 'csv'
 
 class KeywordsController < ApplicationController
-  before_action :login_required, only: :new
+  before_action :login_required, only: %i[new create]
   before_action :fetch_file, only: :create
   before_action :csv?, only: :create
   before_action :csv_keyword_in_range?, only: :create
@@ -15,7 +15,11 @@ class KeywordsController < ApplicationController
   end
 
   def create
-    Keyword.import(@file, current_user)
+    Keyword.transaction do
+      CSV.foreach(@file.path, headers: true) do |row|
+        current_user.keywords.create(keyword: row[0])
+      end
+    end
 
     redirect_to keywords_path, notice: t('keyword.upload_csv_successfully')
   end
