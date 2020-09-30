@@ -69,6 +69,8 @@ RSpec.describe KeywordsController, type: :controller do
     context 'given invalid parameters (file)' do
       context 'given invalid file type' do
         it 'redirects to keywords path' do
+          user = Fabricate(:user)
+          session[:user_id] = user[:id]
           file = fixture_file_upload('files/nimble.png')
 
           post :create, params: { keyword: { file: file } }
@@ -77,6 +79,8 @@ RSpec.describe KeywordsController, type: :controller do
         end
 
         it 'shows an alert flash' do
+          user = Fabricate(:user)
+          session[:user_id] = user[:id]
           file = fixture_file_upload('files/nimble.png')
 
           post :create, params: { keyword: { file: file } }
@@ -87,6 +91,8 @@ RSpec.describe KeywordsController, type: :controller do
 
       context 'given no keyword csv' do
         it 'redirects to keywords path' do
+          user = Fabricate(:user)
+          session[:user_id] = user[:id]
           file = fixture_file_upload('files/no_keywords.csv', 'text/csv')
 
           post :create, params: { keyword: { file: file } }
@@ -95,6 +101,8 @@ RSpec.describe KeywordsController, type: :controller do
         end
 
         it 'shows an alert flash' do
+          user = Fabricate(:user)
+          session[:user_id] = user[:id]
           file = fixture_file_upload('files/no_keywords.csv', 'text/csv')
 
           post :create, params: { keyword: { file: file } }
@@ -105,6 +113,8 @@ RSpec.describe KeywordsController, type: :controller do
 
       context 'given more than 1,000 keywords csv' do
         it 'redirects to keywords path' do
+          user = Fabricate(:user)
+          session[:user_id] = user[:id]
           file = fixture_file_upload('files/more_than_thoudsand_keywords.csv', 'text/csv')
 
           post :create, params: { keyword: { file: file } }
@@ -113,6 +123,8 @@ RSpec.describe KeywordsController, type: :controller do
         end
 
         it 'shows an alert flash' do
+          user = Fabricate(:user)
+          session[:user_id] = user[:id]
           file = fixture_file_upload('files/more_than_thoudsand_keywords.csv', 'text/csv')
 
           post :create, params: { keyword: { file: file } }
