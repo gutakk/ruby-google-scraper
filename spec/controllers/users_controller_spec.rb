@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
   describe 'GET#new' do
-    it 'renders a successful response' do
+    it 'returns a successful response' do
       get :new
 
       expect(response).to be_successful
@@ -16,8 +16,8 @@ RSpec.describe UsersController, type: :controller do
       expect(response).to render_template(:new)
     end
 
-    it 'redirect to home when session exist' do
-      user = Fabricate(:user, username: 'nimblehq', password: 'password', password_confirmation: 'password')
+    it 'redirects to home when session exists' do
+      user = Fabricate(:user)
       session[:user_id] = user[:id]
 
       get :new
@@ -27,58 +27,58 @@ RSpec.describe UsersController, type: :controller do
   end
 
   describe 'POST#create' do
-    context 'with valid parameters' do
+    context 'given valid parameters' do
       it 'creates a new user' do
         expect do
           post :create, params: { user: { username: 'nimblehq', password: 'password', password_confirmation: 'password' } }
         end.to change(User, :count).by(1)
       end
 
-      it 'redirect to login' do
+      it 'redirects to login' do
         post :create, params: { user: { username: 'nimblehq', password: 'password', password_confirmation: 'password' } }
 
         expect(response).to redirect_to(login_path)
       end
     end
 
-    context 'with invalid parameters' do
-      it 'does not create a new user when username is nil' do
+    context 'given invalid parameters' do
+      it 'does NOT create a new user when username is nil' do
         expect do
           post :create, params: { user: { username: nil, password: 'password', password_confirmation: 'password' } }
         end.to change(User, :count).by(0)
       end
 
-      it 'does not create a new user when username is empty string' do
+      it 'does NOT create a new user when username is empty string' do
         expect do
           post :create, params: { user: { username: '', password: 'password', password_confirmation: 'password' } }
         end.to change(User, :count).by(0)
       end
 
-      it 'does not create a new user when password and password confirmation are not match' do
+      it 'does NOT create a new user when password and password confirmation are NOT match' do
         expect do
           post :create, params: { user: { username: 'nimblehq', password: 'password', password_confirmation: 'drowssap' } }
         end.to change(User, :count).by(0)
       end
 
-      it 'does not create a new user when password is nil' do
+      it 'does NOT create a new user when password is nil' do
         expect do
           post :create, params: { user: { username: 'nimblehq', password: nil, password_confirmation: 'password' } }
         end.to change(User, :count).by(0)
       end
 
-      it 'does not create a new user when password is empty string' do
+      it 'does NOT create a new user when password is empty string' do
         expect do
           post :create, params: { user: { username: 'nimblehq', password: '', password_confirmation: 'password' } }
         end.to change(User, :count).by(0)
       end
 
-      it 'does not create a new user when password confirmation is nil' do
+      it 'does NOT create a new user when password confirmation is nil' do
         expect do
           post :create, params: { user: { username: 'nimblehq', password: 'password', password_confirmation: nil } }
         end.to change(User, :count).by(0)
       end
 
-      it 'does not create a new user when password confirmation is empty string' do
+      it 'does NOT create a new user when password confirmation is empty string' do
         expect do
           post :create, params: { user: { username: 'nimblehq', password: 'password', password_confirmation: '' } }
         end.to change(User, :count).by(0)
