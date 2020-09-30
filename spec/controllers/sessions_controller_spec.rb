@@ -142,19 +142,19 @@ RSpec.describe SessionsController, type: :controller do
   end
 
   describe 'DELETE#destroy' do
-    it 'renders a redirect response' do
+    it 'returns a redirect response' do
       delete :destroy
 
       expect(response).to be_redirect
     end
 
-    it 'redirects to correct path' do
+    it 'redirects to root path' do
       delete :destroy
 
       expect(response).to redirect_to(root_path)
     end
 
-    it 'session should be nil' do
+    it 'deletes the user_id session' do
       session[:user_id] = 'test'
 
       expect(session[:user_id]).to eql('test')
