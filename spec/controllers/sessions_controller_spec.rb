@@ -60,6 +60,17 @@ RSpec.describe SessionsController, type: :controller do
       end
     end
 
+    context 'given return_to path' do
+      it 'returns to keywords path when return_to path is keywords' do
+        user = Fabricate(:user)
+        session[:return_to] = keywords_path
+
+        post :create, params: { username: user[:username], password: 'password' }
+
+        expect(response).to redirect_to(keywords_path)
+      end
+    end
+
     context 'given invalid parameters' do
       context 'given an invalid username' do
         it 'does NOT set user_id to session' do
