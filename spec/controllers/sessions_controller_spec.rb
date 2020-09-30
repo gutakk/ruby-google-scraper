@@ -43,7 +43,7 @@ RSpec.describe SessionsController, type: :controller do
     end
 
     context 'given valid parameters' do
-      it 'creates user id session and redirects to home page' do
+      it 'creates user id session' do
         user = Fabricate(:user)
 
         post :create, params: { username: user[:username], password: 'password' }
