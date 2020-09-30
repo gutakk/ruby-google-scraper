@@ -1,13 +1,11 @@
 h1 class="text-secondary mt-5" = t('auth.login')
 
 = form_with(local: true, url: sessions_path) do |form|
-  = render 'sessions/shared/alert_messages'
-
-  = render 'sessions/shared/notice_messages'
+  = render 'sessions/shared/flash_messages'
 
   .form-group
     = form.label t('auth.username')
-    = form.text_field :username, required: true, value: nil
+    = form.text_field :username, required: true
 
   .form-group
     = form.label t('auth.password')
