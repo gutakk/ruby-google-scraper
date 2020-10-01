@@ -21,7 +21,7 @@ RSpec.describe SessionsController, type: :controller do
     context 'when user_id session exists' do
       it 'redirects to home page' do
         user = Fabricate(:user)
-        session[:user_id] = user[:id]
+        session[:user_id] = user.id
 
         get :new
 
@@ -34,9 +34,9 @@ RSpec.describe SessionsController, type: :controller do
     context 'when user_id session exists' do
       it 'redirects to home page' do
         user = Fabricate(:user)
-        session[:user_id] = user[:id]
+        session[:user_id] = user.id
 
-        post :create, params: { username: user[:username], password: 'password' }
+        post :create, params: { username: user.username, password: 'password' }
 
         expect(response).to redirect_to(root_path)
       end
@@ -46,15 +46,15 @@ RSpec.describe SessionsController, type: :controller do
       it 'creates user id session' do
         user = Fabricate(:user)
 
-        post :create, params: { username: user[:username], password: 'password' }
+        post :create, params: { username: user.username, password: 'password' }
 
-        expect(session[:user_id]).to eql(user[:id])
+        expect(session[:user_id]).to eql(user.id)
       end
 
       it 'redirects to home page' do
         user = Fabricate(:user)
 
-        post :create, params: { username: user[:username], password: 'password' }
+        post :create, params: { username: user.username, password: 'password' }
 
         expect(response).to redirect_to(root_path)
       end

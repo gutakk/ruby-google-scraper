@@ -21,7 +21,7 @@ RSpec.describe UsersController, type: :controller do
     context 'when user_id session exists' do
       it 'redirects to home page' do
         user = Fabricate(:user)
-        session[:user_id] = user[:id]
+        session[:user_id] = user.id
 
         get :new
 
@@ -34,7 +34,7 @@ RSpec.describe UsersController, type: :controller do
     context 'when user_id session exists' do
       it 'redirects to home page' do
         user = Fabricate(:user)
-        session[:user_id] = user[:id]
+        session[:user_id] = user.id
 
         post :create, params: { user: { username: 'nimblehq', password: 'password', password_confirmation: 'password' } }
 
