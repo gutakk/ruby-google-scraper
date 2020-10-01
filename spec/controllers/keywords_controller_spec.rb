@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe KeywordsController, type: :controller do
   describe 'GET#new' do
-    context 'when user_id session exists' do
+    context 'given the user_id session' do
       it 'returns a successful response' do
         user = Fabricate(:user)
         session[:user_id] = user[:id]
@@ -24,7 +24,7 @@ RSpec.describe KeywordsController, type: :controller do
       end
     end
 
-    context 'when user_id session not exists' do
+    context 'given NO user_id session' do
       it 'redirects to login' do
         get :new
 

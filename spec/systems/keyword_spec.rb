@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Keyword, type: :system do
   describe 'redirects' do
-    context 'when user does not login yet' do
+    context 'given an unauthenticated user' do
       it 'redirects to login page with' do
         visit keywords_path
 
