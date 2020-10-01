@@ -2,10 +2,10 @@
 
 require 'rails_helper'
 
-RSpec.describe ApplicationController, type: :routing do
+RSpec.describe HomeController, type: :routing do
   describe 'routing' do
     it 'routes to #home' do
-      expect(get: '/').to route_to('application#home')
+      expect(get: '/').to route_to('home#index')
     end
   end
 end
