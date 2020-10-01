@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe 'Logout', type: :system do
-  context 'when logout clicked' do
+  context 'given logout click action' do
     it 'redirects to home page, displays logged out message and does NOT show greeting message and logout link in nav' do
       Fabricate(:user)
 
