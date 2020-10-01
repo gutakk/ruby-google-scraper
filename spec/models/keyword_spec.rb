@@ -5,9 +5,7 @@ require 'rails_helper'
 RSpec.describe Keyword, type: :model do
   describe 'association' do
     context 'belong to' do
-      it do
-        is_expected.to belong_to(:user)
-      end
+      it { is_expected.to belong_to(:user) }
     end
   end
 end
