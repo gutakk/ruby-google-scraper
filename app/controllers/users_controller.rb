@@ -12,7 +12,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    user = User.new(user_params)
+    user = User.new(create_params)
 
     if user.save
       redirect_to login_path, notice: t('auth.signup_successfully')
@@ -25,7 +25,7 @@ class UsersController < ApplicationController
 
   private
 
-  def user_params
+  def create_params
     params.require(:user).permit(:username, :password, :password_confirmation)
   end
 end
