@@ -9,7 +9,7 @@ describe 'login', type: :system do
 
       expect(page).to have_selector('nav')
       expect(page).to have_content(I18n.t('auth.login'))
-      expect(page).to have_content("#{I18n.t('app.do_not_have_account_yet')} #{I18n.t('auth.signup')}")
+      expect(page).to have_content(I18n.t('app.do_not_have_account_yet_html', link: I18n.t('auth.signup')))
 
       within 'form' do
         expect(page).to have_content(I18n.t('auth.username'))

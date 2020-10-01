@@ -9,6 +9,7 @@ describe 'signup', type: :system do
 
       expect(page).to have_selector('nav')
       expect(page).to have_content(I18n.t('auth.signup'))
+      expect(page).to have_content(I18n.t('app.already_have_account_html', link: I18n.t('auth.login')))
 
       within 'form' do
         expect(page).to have_content(I18n.t('auth.username'))
