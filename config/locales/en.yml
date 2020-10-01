@@ -47,6 +47,7 @@ en:
     do_not_have_account_yet: "Don't have account yet?"
     greeting: "Hi"
     title: "Ruby Google Scraper"
+    welcome_to: "Welcome to"
 
   auth:
     confirm_password: "Confirm password"
