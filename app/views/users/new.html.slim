@@ -20,6 +20,4 @@ h1 class="text-secondary mt-5" = t('auth.signup')
     = form.submit t('auth.signup'), class: "btn btn-primary"
 
   div class="small mt-3"
-    = t('app.already_have_account')
-    | &nbsp
-    == link_to t('auth.login'), login_path
+    = t('app.already_have_account_html', link: link_to(t('auth.login'), login_path))

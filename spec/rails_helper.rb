@@ -3,6 +3,7 @@
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../config/environment', __dir__)
 
+require 'helpers'
 require 'spec_helper'
 require 'rspec/rails'
 require 'json_matchers/rspec'
@@ -21,4 +22,5 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
 
   config.include Rails.application.routes.url_helpers
+  config.include Helpers
 end

@@ -3,10 +3,9 @@ nav class="navbar py-4 px-5 bg-dark"
   div
     - if current_user
       span class="text-white mr-4"
-        small = t('app.greeting')
-        | &nbsp
-        strong = current_user.username
+        == t('app.greeting_html', username: current_user.username)
       == link_to t('auth.logout'), sessions_path, method: :delete, class: "btn btn-outline-light align-baseline"
-    - else
-      == link_to t('auth.login'), login_path, class: "text-white mr-4"
-      == link_to t('auth.signup'), signup_path, class: "btn btn-outline-light align-baseline"
+    - else        
+      div
+        == link_to t('auth.login'), login_path, class: "text-white mr-4"
+        == link_to t('auth.signup'), signup_path, class: "btn btn-outline-light align-baseline"
