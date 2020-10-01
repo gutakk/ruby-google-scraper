@@ -3,9 +3,7 @@ nav class="navbar py-4 px-5 bg-dark"
   - if current_user
     div
       span class="text-white mr-4"
-        small = t('app.greeting')
-        | &nbsp
-        strong = current_user.username
+        == t('app.greeting_html', username: current_user.username)
   - else
     div
       == link_to t('auth.login'), login_path, class: "text-white mr-4"
