@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
   describe 'GET#new' do
-    context 'when user_id session not exists' do
+    context 'given NO user_id session' do
       it 'returns a successful response' do
         get :new
 
@@ -18,7 +18,7 @@ RSpec.describe UsersController, type: :controller do
       end
     end
 
-    context 'when user_id session exists' do
+    context 'given the user_id session' do
       it 'redirects to home page' do
         user = Fabricate(:user)
         session[:user_id] = user.id
@@ -31,7 +31,7 @@ RSpec.describe UsersController, type: :controller do
   end
 
   describe 'POST#create' do
-    context 'when user_id session exists' do
+    context 'given the user_id session' do
       it 'redirects to home page' do
         user = Fabricate(:user)
         session[:user_id] = user.id
