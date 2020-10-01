@@ -34,7 +34,7 @@ describe 'login', type: :system do
       expect(current_path).to eql(root_path)
 
       within 'nav' do
-        expect(page).to have_content("#{I18n.t('app.greeting')} #{user[:username]}")
+        expect(page).to have_content(strip_tags(I18n.t('app.greeting_html', username: user[:username])))
       end
     end
   end
