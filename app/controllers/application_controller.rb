@@ -14,6 +14,6 @@ class ApplicationController < ActionController::Base
   end
 
   def redirect_to_home
-    redirect_to root_path if current_user
+    redirect_to root_path
   end
 end
