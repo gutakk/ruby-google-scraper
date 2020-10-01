@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
     if user&.authenticate(params[:password])
       session[:user_id] = user[:id]
 
-      redirect_to root_path
+      redirect_to_home
     else
       flash.now[:alert] = t('auth.login_failed')
 
