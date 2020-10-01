@@ -24,6 +24,8 @@ class SessionsController < ApplicationController
   def destroy
     session.delete(:user_id)
 
-    redirect_to root_url, notice: t('auth.logout_successfully')
+    flash[:notice] = t('auth.logout_successfully')
+
+    redirect_to_home
   end
 end
