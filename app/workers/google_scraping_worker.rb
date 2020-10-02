@@ -30,5 +30,7 @@ class GoogleScrapingWorker
 
   def non_adwords_links; end
 
-  def total_links; end
+  def total_links
+    @parse_page.css('a').map { |link| link['href'] }.length
+  end
 end
