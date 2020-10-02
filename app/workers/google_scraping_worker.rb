@@ -28,7 +28,9 @@ class GoogleScrapingWorker
     @parse_page.css('#tads > div').css('.Krnil').map { |link| link['href'] }.compact
   end
 
-  def total_adwords; end
+  def count_total_adwords
+    @parse_page.css('#tadsb > div').length + count_top_position_adwords
+  end
 
   def total_non_adword_results; end
 
