@@ -20,7 +20,9 @@ class GoogleScrapingWorker
 
   private
 
-  def total_top_position_adwords; end
+  def count_top_position_adwords
+    @parse_page.css('#tads > div').length
+  end
 
   def top_position_adwords_links; end
 
@@ -30,7 +32,7 @@ class GoogleScrapingWorker
 
   def non_adwords_links; end
 
-  def total_links
+  def count_links
     @parse_page.css('a').map { |link| link['href'] }.length
   end
 end
