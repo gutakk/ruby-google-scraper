@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe Keyword, type: :system do
   describe 'uploads csv file' do
     context 'given valid csv and user logged in' do
-      it 'displays uploaded successfully message, show keywords table and keywords must be ordered' do
+      it 'displays uploaded successfully message, keywords table and keywords must be ordered' do
         user = Fabricate(:user)
         file_path = Rails.root.join('spec', 'fabricators', 'files', 'example.csv')
 
