@@ -14,6 +14,7 @@ gem 'sidekiq' # background processing for Ruby
 gem 'bootsnap', require: false # Reduces boot times through caching; required in config/boot.rb
 gem 'i18n-js', '3.5.1' # A library to provide the I18n translations on the Javascript
 gem 'httparty' # A library to make http request easier
+gem 'nokogiri' # A HTML parser library
 
 # Authentications & Authorizations
 gem 'devise' # Authentication solution for Rails with Warden
