@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'httparty'
-require 'Nokogiri'
+require 'nokogiri'
 
 class GoogleScrapingWorker
   include Sidekiq::Worker
