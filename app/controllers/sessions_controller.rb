@@ -3,7 +3,7 @@
 class SessionsController < ApplicationController
   layout 'auth', only: %i[new create]
 
-  before_action :redirect_to_home, if: :current_user, only: %i[new create]
+  before_action :redirect_to_home, if: :logged_in?, only: %i[new create]
 
   def new; end
 

@@ -3,14 +3,18 @@
 class ApplicationController < ActionController::Base
   include Localization
 
-  helper_method :current_user
+  helper_method :logged_in?, :current_user
 
   private
 
-  def current_user
-    return unless session[:user_id]
+  def logged_in?
+    session[:user_id].present?
+  end
 
-    User.find(session[:user_id])
+  def current_user
+    return unless logged_in?
+
+    @current_user ||= User.find_by(id: session[:user_id])
   end
 
   def redirect_to_home
