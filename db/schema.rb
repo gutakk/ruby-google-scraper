@@ -10,10 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_28_092143) do
+ActiveRecord::Schema.define(version: 2020_10_05_053431) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "adword_links", force: :cascade do |t|
+    t.bigint "keyword_id"
+    t.string "link"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["keyword_id"], name: "index_adword_links_on_keyword_id"
+  end
 
   create_table "keywords", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -21,6 +29,14 @@ ActiveRecord::Schema.define(version: 2020_09_28_092143) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_keywords_on_user_id"
+  end
+
+  create_table "non_adword_links", force: :cascade do |t|
+    t.bigint "keyword_id"
+    t.string "link"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["keyword_id"], name: "index_non_adword_links_on_keyword_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -32,5 +48,7 @@ ActiveRecord::Schema.define(version: 2020_09_28_092143) do
     t.index ["username"], name: "unique_users_on_username", unique: true
   end
 
+  add_foreign_key "adword_links", "keywords"
   add_foreign_key "keywords", "users"
+  add_foreign_key "non_adword_links", "keywords"
 end
