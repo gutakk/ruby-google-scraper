@@ -75,8 +75,6 @@ RUN mkdir -p /usr/local/etc \
 # Copy all denpendencies from app and engines into tmp/docker to install
 COPY tmp/docker ./
 
-RUN gem install nokogiri
-
 # Install Ruby gems
 RUN gem install bundler && \
     bundle config set jobs $BUNDLE_JOBS && \
