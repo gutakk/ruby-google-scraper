@@ -36,7 +36,9 @@ class GoogleScrapingWorker
     @parse_page.css('#rso > div[class=g]').length
   end
 
-  def non_adwords_links; end
+  def fetch_non_adwords_links
+    @parse_page.css('#rso > div[class=g]').css('.yuRUbf > a').map { |link| link['href'] }.compact
+  end
 
   def count_links
     @parse_page.css('a').map { |link| link['href'] }.length
