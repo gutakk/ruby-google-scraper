@@ -75,6 +75,9 @@ RUN mkdir -p /usr/local/etc \
 # Copy all denpendencies from app and engines into tmp/docker to install
 COPY tmp/docker ./
 
+RUN sudo apt-get install libxml2 libxml2-dev libxslt1-dev && \
+    sudo gem install nokogiri
+    
 # Install Ruby gems
 RUN gem install bundler && \
     bundle config set jobs $BUNDLE_JOBS && \
