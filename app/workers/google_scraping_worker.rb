@@ -7,16 +7,38 @@ class GoogleScrapingWorker
   include Sidekiq::Worker
   sidekiq_options retry: false
 
-  def initialize
-    uri = URI('https://www.google.com/search?q=AWS')
-    user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) ' \
-    'Chrome/85.0.4183.121 Safari/537.36'
+  def perform
+    keywords = Keyword.all.where(status: 'processing')
 
-    response = HTTParty.get(uri, { headers: { 'User-Agent': user_agent } })
-    @parse_page ||= Nokogiri::HTML(response)
+    Keyword.transaction do
+      keywords.each do |keyword|
+        uri = URI("https://www.google.com/search?q=#{keyword.keyword}")
+        user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) ' \
+        'Chrome/85.0.4183.121 Safari/537.36'
+
+        response = HTTParty.get(uri, { headers: { 'User-Agent': user_agent } })
+        @parse_page = Nokogiri::HTML(response)
+
+        keyword.update(
+          status: 'processed',
+          top_pos_adwords: count_top_position_adwords,
+          non_adwords: count_non_adwords,
+          links: count_links,
+          html_code: @parse_page
+        )
+
+        fetch_top_position_adwords_links.each do |link|
+          keyword.adword_links.create(link: link)
+        end
+
+        fetch_non_adwords_links.each do |link|
+          keyword.non_adword_links.create(link: link)
+        end
+
+        sleep(1)
+      end
+    end
   end
-
-  def perform; end
 
   private
 
