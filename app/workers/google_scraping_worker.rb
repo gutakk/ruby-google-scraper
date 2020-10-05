@@ -32,7 +32,9 @@ class GoogleScrapingWorker
     @parse_page.css('#tadsb > div').length + count_top_position_adwords
   end
 
-  def total_non_adword_results; end
+  def count_non_adwords
+    @parse_page.css('#rso > div[class=g]').length
+  end
 
   def non_adwords_links; end
 
