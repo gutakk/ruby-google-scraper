@@ -3,7 +3,8 @@
 class SessionsController < ApplicationController
   layout 'auth', only: %i[new create]
 
-  before_action :redirect_to_home, if: :require_redirection?, only: %i[new create destroy]
+  before_action :require_no_authentication, only: %i[new create]
+  before_action :require_autentication, only: :destroy
 
   def new; end
 
@@ -13,7 +14,7 @@ class SessionsController < ApplicationController
     if user&.authenticate(params[:password])
       session[:user_id] = user.id
 
-      redirect_to_home
+      redirect_to root_path
     else
       flash.now[:alert] = t('auth.login_failed')
 
@@ -26,6 +27,6 @@ class SessionsController < ApplicationController
 
     flash[:notice] = t('auth.logout_successfully')
 
-    redirect_to_home
+    redirect_to root_path
   end
 end

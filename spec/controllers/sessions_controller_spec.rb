@@ -179,10 +179,10 @@ RSpec.describe SessionsController, type: :controller do
     end
 
     context 'given unauthenticated user' do
-      it 'redirects to root_path' do
+      it 'redirects to login_path' do
         delete :destroy
 
-        expect(response).to redirect_to(root_path)
+        expect(response).to redirect_to(login_path)
       end
 
       it 'does NOT show notice flash message' do
