@@ -43,11 +43,17 @@ en:
               taken: "Username has already been taken"
 
   app:
+    already_have_account_html: "Already have an account? %{link}"
+    do_not_have_account_yet_html: "Don't have an account yet? %{link}"
+    greeting_html: "<small>Hi</small> <strong>%{username}</strong>"
     title: "Ruby Google Scraper"
+    welcome_to: "Welcome to"
 
   auth:
     confirm_password: "Confirm password"
+    login: "Login"
+    login_failed: "Username or password is invalid" 
     password: "Password"
-    signed_up_successfully: "Account was successfully created"
     signup: "Signup"
+    signup_successfully: "Account was successfully created"
     username: "Username"

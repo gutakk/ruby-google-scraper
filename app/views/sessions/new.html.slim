@@ -1,0 +1,18 @@
+h1 class="text-secondary mt-5" = t('auth.login')
+
+= form_with(local: true, url: sessions_path) do |form|
+  = render 'sessions/shared/flash_messages'
+
+  .form-group
+    = form.label t('auth.username')
+    = form.text_field :username, required: true
+
+  .form-group
+    = form.label t('auth.password')
+    = form.password_field :password, required: true
+
+  .actions
+    = form.submit t('auth.login'), class: "btn btn-primary"
+
+  div class="small mt-3"
+    = t('app.do_not_have_account_yet_html', link: link_to(t('auth.signup'), signup_path))
