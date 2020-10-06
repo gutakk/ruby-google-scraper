@@ -66,6 +66,7 @@ en:
       
   keyword:
     adwords: "Adwords"
+    adword_links: "Adword links"
     created_at: "Created at"
     file_must_be_csv: "File must be CSV format"
     keyword: "Keyword"
@@ -73,6 +74,7 @@ en:
     keyword_range: "CSV file must contain between 1 to 1000 keywords"
     links: "Links"
     non_adwords: "Non adwords"
+    non_adword_links: "Non adword links"
     page: "Keywords page"
     status: "Status"
     top_pos_adwords: "Top position adwords"

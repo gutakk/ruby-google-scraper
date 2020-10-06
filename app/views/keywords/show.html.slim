@@ -27,7 +27,7 @@ div class="d-flex flex-column align-items-center mt-4"
   - if adword_links.present?
     hr class="w-75 mt-5 mb-4"
 
-    h1 Adwords links
+    h2 = t('keyword.adword_links').titleize
 
     ul class="mt-4 w-75 text-break"
       - non_adword_links.each do |nal|
@@ -36,9 +36,9 @@ div class="d-flex flex-column align-items-center mt-4"
   - if non_adword_links.present?
     hr class="w-75 mt-5 mb-4"
     
-    h1 Non adword links
+    h2 = t('keyword.non_adword_links').titleize
 
     ul class="mt-4 w-75 text-break"
       - non_adword_links.each do |nal|
-        li = nal.link
+        li = link_to nal.link
     
