@@ -65,13 +65,17 @@ en:
     username: "Username"
       
   keyword:
+    adwords: "Adwords"
     created_at: "Created at"
     file_must_be_csv: "File must be CSV format"
     keyword: "Keyword"
     keywords: "Keywords"
     keyword_range: "CSV file must contain between 1 to 1000 keywords"
+    links: "Links"
+    non_adwords: "Non adwords"
     page: "Keywords page"
     status: "Status"
+    top_pos_adwords: "Top position adwords"
     upload: "Upload"
     upload_csv_successfully: "CSV uploaded successfully"
     upload_keywords_csv_file: "Upload keywords CSV file"

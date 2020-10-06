@@ -1,0 +1,25 @@
+.card {
+  width: 10rem;
+  margin: 0 1rem;
+  border-radius: 0.5rem;
+  text-align: center;
+
+  .card-body {
+    display: flex;
+    height: 10rem;
+    color: $light;
+    background-color: $secondary;
+    border-radius: 0.5rem 0.5rem 0 0;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .card-info {
+    display: flex;
+    height: 5rem;
+    font-size: 80%;
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
+  }
+}
