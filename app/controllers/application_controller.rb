@@ -20,4 +20,15 @@ class ApplicationController < ActionController::Base
   def redirect_to_home
     redirect_to root_path
   end
+
+  def require_redirection?
+    case action_name
+    when 'new'
+      return true if logged_in?
+    when 'create'
+      return true if logged_in?
+    when 'destroy'
+      return true unless logged_in?
+    end
+  end
 end
