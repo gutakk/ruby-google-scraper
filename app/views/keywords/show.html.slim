@@ -23,4 +23,22 @@ div class="d-flex flex-column align-items-center mt-4"
         h1 = keyword.links
       div class="card-info" = t('keyword.links').upcase
   
-  hr class="w-75 my-4"
+
+  - if adword_links.present?
+    hr class="w-75 mt-5 mb-4"
+
+    h1 Adwords links
+
+    ul class="mt-4 w-75 text-break"
+      - non_adword_links.each do |nal|
+        li = nal.link
+
+  - if non_adword_links.present?
+    hr class="w-75 mt-5 mb-4"
+    
+    h1 Non adword links
+
+    ul class="mt-4 w-75 text-break"
+      - non_adword_links.each do |nal|
+        li = nal.link
+    
