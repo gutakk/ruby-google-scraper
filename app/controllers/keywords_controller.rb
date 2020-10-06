@@ -11,7 +11,15 @@ class KeywordsController < ApplicationController
     }
   end
 
-  def show; end
+  def show
+    keyword = Keyword.find_by(id: params[:id])
+
+    render locals: {
+      keyword: keyword,
+      adword_links: keyword.adword_links.all,
+      non_adword_links: keyword.non_adword_links.all
+    }
+  end
 
   def create
     if @csv_import_form.save(create_params)
