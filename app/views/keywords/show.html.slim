@@ -2,7 +2,7 @@ div class="d-flex flex-column align-items-center mt-4"
 
   h1.display-3 == keyword.keyword
 
-  div class="d-flex mt-4 w-100 justify-content-center"
+  div class="d-flex mt-5 w-100 justify-content-center"
     div class="card"
       div class="card-body" 
         .display-4 = keyword.top_pos_adwords
@@ -25,20 +25,20 @@ div class="d-flex flex-column align-items-center mt-4"
   
 
   - if adword_links.present?
-    hr class="w-75 mt-5 mb-4"
+    hr class="w-75 my-5"
     h2 = t('keyword.adword_links').titleize
     ul class="mt-4 w-75 text-break"
       - non_adword_links.each do |nal|
         li = nal.link
 
   - if non_adword_links.present?
-    hr class="w-75 mt-5 mb-4"
+    hr class="w-75 my-5"
     h2 = t('keyword.non_adword_links').titleize
     ul class="mt-4 w-75 text-break"
       - non_adword_links.each do |nal|
         li = link_to nil, nal.link, target: :_blank
 
-  hr class="w-75 mt-5 mb-4"
+  hr class="w-75 my-5"
   h2 = t('keyword.google_html')
   div
     == keyword.html_code
