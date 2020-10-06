@@ -23,12 +23,10 @@ class ApplicationController < ActionController::Base
 
   def require_redirection?
     case action_name
-    when 'new'
-      return true if logged_in?
-    when 'create'
-      return true if logged_in?
     when 'destroy'
       return true unless logged_in?
+    else
+      return true if logged_in?
     end
   end
 end
