@@ -17,11 +17,11 @@ class ApplicationController < ActionController::Base
     @current_user ||= User.find_by(id: session[:user_id])
   end
 
-  def require_no_authentication
+  def ensure_no_authentication
     redirect_to root_path if authenticated?
   end
 
-  def require_autentication
+  def ensure_autentication
     redirect_to login_path unless authenticated?
   end
 end
