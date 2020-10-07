@@ -1,5 +1,5 @@
 = form_with(model: keyword, local: true, url: keywords_path) do |form|
-  h5.mb-3 Upload keywords CSV file
+  h5.mb-3 = t('keyword.upload_keywords_csv_file')
   .form-group
     = form.file_field :file, class: "form-control-file", required: true
 
