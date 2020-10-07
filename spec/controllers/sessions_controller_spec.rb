@@ -69,6 +69,15 @@ RSpec.describe SessionsController, type: :controller do
 
         expect(response).to redirect_to(keywords_path)
       end
+
+      it 'deletes return_to session' do
+        user = Fabricate(:user)
+        session[:return_to] = keywords_path
+
+        post :create, params: { username: user[:username], password: 'password' }
+
+        expect(session[:return_to]).to be_nil
+      end
     end
 
     context 'given invalid parameters' do
