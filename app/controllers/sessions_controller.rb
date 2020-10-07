@@ -4,7 +4,7 @@ class SessionsController < ApplicationController
   layout 'auth', only: %i[new create]
 
   before_action :ensure_no_authentication, only: %i[new create]
-  before_action :ensure_autentication, only: :destroy
+  before_action :ensure_authentication, only: :destroy
 
   def new; end
 

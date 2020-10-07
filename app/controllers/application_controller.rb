@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
     redirect_to root_path if authenticated?
   end
 
-  def ensure_autentication
+  def ensure_authentication
     redirect_to login_path unless authenticated?
   end
 end
