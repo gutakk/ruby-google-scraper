@@ -1,10 +1,10 @@
 nav class="navbar py-4 px-5 bg-dark"
   == link_to t('app.title'), root_path, class: "text-white"
-  - if logged_in?
-    div
+  div
+    - if authenticated?
       span class="text-white mr-4"
         == t('app.greeting_html', username: current_user.username)
-  - else
-    div
-      == link_to t('auth.login'), login_path, class: "text-white mr-4"
-      == link_to t('auth.signup'), signup_path, class: "btn btn-outline-light align-baseline"
+      == link_to t('auth.logout'), sessions_path, method: :delete, class: "btn btn-outline-light align-baseline"
+    - else        
+        == link_to t('auth.login'), login_path, class: "text-white mr-4"
+        == link_to t('auth.signup'), signup_path, class: "btn btn-outline-light align-baseline"

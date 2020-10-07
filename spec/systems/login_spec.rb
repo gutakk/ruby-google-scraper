@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe 'login', type: :system do
+describe 'Login', type: :system do
   context 'validates screen' do
     it 'displays correct contents and components' do
       visit login_path

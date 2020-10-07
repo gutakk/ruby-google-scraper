@@ -10,5 +10,6 @@ html
 
   body
     = render 'shared/nav'
-    == notice
-    == yield
+    main class="vh-100 p-3"
+      = render 'shared/flash_messages'
+      == yield

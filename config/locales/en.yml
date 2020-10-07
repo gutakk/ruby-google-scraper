@@ -53,6 +53,8 @@ en:
     confirm_password: "Confirm password"
     login: "Login"
     login_failed: "Username or password is invalid" 
+    logout: "Logout"
+    logout_successfully: "You've been logged out"
     password: "Password"
     signup: "Signup"
     signup_successfully: "Account was successfully created"

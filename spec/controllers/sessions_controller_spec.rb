@@ -140,4 +140,56 @@ RSpec.describe SessionsController, type: :controller do
       end
     end
   end
+
+  describe 'DELETE#destroy' do
+    context 'given authenticated user' do
+      it 'returns a redirect response' do
+        session[:user_id] = 'test'
+
+        delete :destroy
+
+        expect(response).to be_redirect
+      end
+
+      it 'redirects to root path' do
+        session[:user_id] = 'test'
+
+        delete :destroy
+
+        expect(response).to redirect_to(root_path)
+      end
+
+      it 'deletes the user_id session' do
+        session[:user_id] = 'test'
+
+        expect(session[:user_id]).to eql('test')
+
+        delete :destroy
+
+        expect(session[:user_id]).to be_nil
+      end
+
+      it 'shows notice flash message' do
+        session[:user_id] = 'test'
+
+        delete :destroy
+
+        expect(flash[:notice]).to eql(I18n.t('auth.logout_successfully'))
+      end
+    end
+
+    context 'given unauthenticated user' do
+      it 'redirects to login_path' do
+        delete :destroy
+
+        expect(response).to redirect_to(login_path)
+      end
+
+      it 'does NOT show notice flash message' do
+        delete :destroy
+
+        expect(flash[:notice]).to be_nil
+      end
+    end
+  end
 end
