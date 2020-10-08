@@ -16,7 +16,7 @@ class KeywordsController < ApplicationController
   def create
     Keyword.import(@file, current_user)
 
-    redirect_to keywords_path, notice: t('app.upload_csv_successfully')
+    redirect_to keywords_path, notice: t('keyword.upload_csv_successfully')
   end
 
   private
@@ -28,12 +28,12 @@ class KeywordsController < ApplicationController
   def csv?
     file_type = @file.content_type
 
-    redirect_to keywords_path, alert: 'File must be CSV format' unless file_type == 'text/csv'
+    redirect_to keywords_path, alert: t('keyword.file_must_be_csv') unless file_type == 'text/csv'
   end
 
   def csv_keyword_in_range?
     keyword_count = CSV.read(@file, headers: true).count
 
-    redirect_to keywords_path, alert: t('app.invalid_csv') unless keyword_count.between?(1, 1000)
+    redirect_to keywords_path, alert: t('keyword.keyword_range') unless keyword_count.between?(1, 1000)
   end
 end
