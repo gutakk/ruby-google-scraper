@@ -1,7 +1,7 @@
 = form_with(model: keyword, local: true, url: keywords_path) do |form|
   h5.mb-3 = t('keyword.upload_keywords_csv_file')
   .form-group
-    = form.file_field :file, class: "form-control-file", required: true
+    = form.file_field :file, class: "form-control-file", required: true, accept: 'text/csv'
 
   .action
     = form.submit t('keyword.upload'), class: "btn btn-dark"
