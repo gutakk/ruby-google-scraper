@@ -2,13 +2,14 @@ div class="d-flex flex-column align-items-center"
 
   = render(partial: 'upload_csv', locals: { keyword: keyword })
 
-  table class="table table-hover my-5 w-50"
-    thead.thead-light
-      tr
-        th = t('keyword.keyword')
-        th = t('keyword.created_at')
-    tbody
-      - keywords.each do |k|
+  - if keywords.present?
+    table class="table table-hover my-5 w-50"
+      thead.thead-light
         tr
-          td = k.keyword
-          td = k.created_at.to_date
+          th = t('keyword.keyword')
+          th = t('keyword.created_at')
+      tbody
+        - keywords.each do |k|
+          tr
+            td = k.keyword
+            td = k.created_at.to_date
