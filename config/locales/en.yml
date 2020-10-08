@@ -67,7 +67,6 @@ en:
   keyword:
     created_at: "Created at"
     file_must_be_csv: "File must be CSV format"
-    id: "ID"
     keyword: "Keyword"
     keywords: "Keywords"
     keyword_range: "CSV file must contain between 1 to 1000 keywords"
