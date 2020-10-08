@@ -3,7 +3,7 @@
 require 'csv'
 
 class KeywordsController < ApplicationController
-  before_action { login_required(t('keyword.page')) }
+  before_action :ensure_autentication
   before_action :fetch_file, only: :create
   before_action :csv?, only: :create
   before_action :csv_keyword_in_range?, only: :create

@@ -14,7 +14,7 @@ RSpec.describe Keyword, type: :system do
       it 'displays login required message' do
         visit keywords_path
 
-        expect(page).to have_content(I18n.t('auth.login_required', page: I18n.t('keyword.page')))
+        expect(page).to have_content(I18n.t('auth.login_required'))
       end
 
       it 'redirects to keywords path after logged in when come from keywords page' do
