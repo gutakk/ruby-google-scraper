@@ -22,10 +22,6 @@ class ApplicationController < ActionController::Base
   end
 
   def ensure_authentication
-    redirect_to login_path unless authenticated?
-  end
-
-  def ensure_autentication
     session[:return_to] = request.fullpath
 
     redirect_to login_path, alert: t('auth.login_required') unless authenticated?
