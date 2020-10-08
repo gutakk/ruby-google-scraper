@@ -68,5 +68,5 @@ en:
     keywords: "Keywords"
     keyword_range: "CSV file must contain between 1 to 1000 keywords"
     upload: "Upload"
-    upload_keywords_csv_file: "Upload keywords CSV file"
     upload_csv_successfully: "CSV uploaded successfully"
+    upload_keywords_csv_file: "Upload keywords CSV file"
