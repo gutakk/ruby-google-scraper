@@ -9,7 +9,7 @@ nav class="navbar py-4 px-5 bg-dark"
       li class="nav-item dropdown d-inline-block align-middle"
         a class="nav-link dropdown-toggle text-white" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"
         div class="dropdown-menu dropdown-menu-right"
-          == link_to t('keyword.keywords'), keywords_path, class: "dropdown-item"
+          == link_to t('keyword.keywords'), new_keywords_path, class: "dropdown-item"
           == link_to t('auth.logout'), sessions_path, method: :delete, class: "dropdown-item"
           
     - else

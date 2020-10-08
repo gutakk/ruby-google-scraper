@@ -9,7 +9,7 @@ RSpec.describe Keyword, type: :system do
         user = Fabricate(:user)
         file_path = Rails.root.join('spec', 'fabricators', 'files', 'example.csv')
 
-        visit keywords_path
+        visit new_keywords_path
 
         within 'form' do
           fill_in('username', with: user[:username])

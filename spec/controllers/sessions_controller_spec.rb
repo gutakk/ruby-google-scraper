@@ -61,18 +61,18 @@ RSpec.describe SessionsController, type: :controller do
     end
 
     context 'given return_to path' do
-      it 'returns to keywords path when return_to path is keywords' do
+      it 'returns to new keywords path when return_to path is keywords' do
         user = Fabricate(:user)
-        session[:return_to] = keywords_path
+        session[:return_to] = new_keywords_path
 
         post :create, params: { username: user[:username], password: 'password' }
 
-        expect(response).to redirect_to(keywords_path)
+        expect(response).to redirect_to(new_keywords_path)
       end
 
       it 'deletes return_to session' do
         user = Fabricate(:user)
-        session[:return_to] = keywords_path
+        session[:return_to] = new_keywords_path
 
         post :create, params: { username: user[:username], password: 'password' }
 
