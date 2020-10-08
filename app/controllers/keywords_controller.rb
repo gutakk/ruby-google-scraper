@@ -4,9 +4,7 @@ require 'csv'
 
 class KeywordsController < ApplicationController
   before_action :ensure_authentication
-  before_action :fetch_file, only: :create
-  before_action :validate_file_type, only: :create
-  before_action :validate_csv, only: :create
+  before_action :fetch_file, :validate_file_type, :validate_csv, only: :create
 
   def new
     render locals: {
@@ -37,7 +35,7 @@ class KeywordsController < ApplicationController
   end
 
   def validate_csv
-    keyword_count = CSV.read(@file).count
+    keyword_count = CSV.read(@file, headers: true).count
 
     redirect_to new_keywords_path, alert: t('keyword.keyword_range') unless keyword_count.between?(1, 1000)
   end
