@@ -46,7 +46,7 @@ en:
     already_have_account_html: "Already have an account? %{link}"
     description: "Gathering Google search information with your own keywords"
     do_not_have_account_yet_html: "Don't have an account yet? %{link}"
-    get_started: 'Get Started'
+    get_started: "Get Started"
     greeting_html: "<small>Hi</small> <strong>%{username}</strong>"
     title: "Ruby Google Scraper"
     welcome_to: "Welcome to"
