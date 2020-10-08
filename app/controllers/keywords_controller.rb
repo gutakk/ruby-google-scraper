@@ -16,7 +16,7 @@ class KeywordsController < ApplicationController
 
   def create
     Keyword.transaction do
-      CSV.foreach(@file.path, headers: true) do |row|
+      CSV.foreach(@file.path) do |row|
         current_user.keywords.create(keyword: row[0])
       end
     end
@@ -37,7 +37,7 @@ class KeywordsController < ApplicationController
   end
 
   def validate_csv
-    keyword_count = CSV.read(@file, headers: true).count
+    keyword_count = CSV.read(@file).count
 
     redirect_to new_keywords_path, alert: t('keyword.keyword_range') unless keyword_count.between?(1, 1000)
   end
