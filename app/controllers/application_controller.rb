@@ -28,8 +28,6 @@ class ApplicationController < ActionController::Base
   end
 
   def redirect_to_target_or_default(default)
-    redirect_to(session[:return_to] || default)
-
-    session.delete(:return_to)
+    redirect_to(session.delete(:return_to) || default)
   end
 end
