@@ -23,7 +23,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    session.delete(:user_id)
+    session.clear
 
     flash[:notice] = t('auth.logout_successfully')
 

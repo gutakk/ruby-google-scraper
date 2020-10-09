@@ -189,6 +189,14 @@ RSpec.describe SessionsController, type: :controller do
         expect(session[:user_id]).to be_nil
       end
 
+      it 'deletes the return_to session' do
+        session[:user_id] = 'test'
+
+        delete :destroy
+
+        expect(session[:return_to]).to be_nil
+      end
+
       it 'shows notice flash message' do
         session[:user_id] = 'test'
 
