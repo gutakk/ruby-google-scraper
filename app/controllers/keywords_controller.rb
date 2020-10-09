@@ -43,7 +43,7 @@ class KeywordsController < ApplicationController
     if form.save(@file)
       redirect_to new_keywords_path, notice: t('keyword.upload_csv_successfully')
     else
-      redirect_to new_keywords_path, alert: 'Something went wrong, please try again'
+      redirect_to new_keywords_path, alert: t('app.something_went_wrong')
     end
   end
 

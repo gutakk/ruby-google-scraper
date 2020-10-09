@@ -16,8 +16,8 @@ ActiveRecord::Schema.define(version: 2020_09_28_092143) do
   enable_extension "plpgsql"
 
   create_table "keywords", force: :cascade do |t|
-    t.bigint "user_id"
-    t.string "keyword"
+    t.bigint "user_id", null: false
+    t.string "keyword", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_keywords_on_user_id"

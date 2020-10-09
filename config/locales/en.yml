@@ -48,6 +48,7 @@ en:
     do_not_have_account_yet_html: "Don't have an account yet? %{link}"
     get_started: "Get Started"
     greeting_html: "<small>Hi</small> <strong>%{username}</strong>"
+    something_went_wrong: "Something went wrong, please try again"
     title: "Ruby Google Scraper"
     welcome_to: "Welcome to"
 
