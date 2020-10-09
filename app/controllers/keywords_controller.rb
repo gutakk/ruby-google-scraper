@@ -10,11 +10,20 @@ class CsvImportForm
   end
 
   def save(file)
-    Keyword.transaction do
-      CSV.foreach(file.path) do |row|
-        @user.keywords.create(keyword: row[0])
-      end
+    bulk_data = []
+
+    CSV.foreach(file.path) do |row|
+      bulk_data << {
+        user_id: @user.id,
+        keyword: row[0],
+        created_at: Time.current,
+        updated_at: Time.current
+      }
     end
+
+    # rubocop:disable Rails/SkipsModelValidations
+    Keyword.insert_all(bulk_data, returning: %w[id keyword])
+    # rubocop:enable Rails/SkipsModelValidations
   end
 end
 
