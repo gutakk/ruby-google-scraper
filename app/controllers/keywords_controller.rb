@@ -2,6 +2,22 @@
 
 require 'csv'
 
+class CsvImportForm
+  include ActiveModel::Model
+
+  def initialize(user)
+    @user = user
+  end
+
+  def save(file)
+    Keyword.transaction do
+      CSV.foreach(file.path) do |row|
+        @user.keywords.create(keyword: row[0])
+      end
+    end
+  end
+end
+
 class KeywordsController < ApplicationController
   before_action :ensure_authentication
   before_action :fetch_file, :validate_file_type, :validate_csv, only: :create
@@ -13,13 +29,13 @@ class KeywordsController < ApplicationController
   end
 
   def create
-    Keyword.transaction do
-      CSV.foreach(@file.path) do |row|
-        current_user.keywords.create(keyword: row[0])
-      end
-    end
+    form = CsvImportForm.new(current_user)
 
-    redirect_to new_keywords_path, notice: t('keyword.upload_csv_successfully')
+    if form.save(@file)
+      redirect_to new_keywords_path, notice: t('keyword.upload_csv_successfully')
+    else
+      redirect_to new_keywords_path, alert: 'Something went wrong, please try again'
+    end
   end
 
   private
