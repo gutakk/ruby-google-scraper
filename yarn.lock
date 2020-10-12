@@ -1521,6 +1521,14 @@ boolbase@^1.0.0, boolbase@~1.0.0:
   resolved "https://registry.yarnpkg.com/boolbase/-/boolbase-1.0.0.tgz#68dff5fbe60c51eb37725ea9e3ed310dcc1e776e"
   integrity sha1-aN/1++YMUes3cl6p4+0xDcwed24=
 
+bootstrap.native@3.0.13:
+  version "3.0.13"
+  resolved "https://registry.yarnpkg.com/bootstrap.native/-/bootstrap.native-3.0.13.tgz#95c6ed59c3dcb180643d140a1e9095d35a246c9d"
+  integrity sha512-8df8/6+zXDxolYCIn7QNsQ+3NozgNmMfBgSyOolhs0GDUWyG6MfM3oGv7GsOfFbQRjBL7VFqQ1KJuBb/uW/HXA==
+  dependencies:
+    minifill "^0.0.8"
+    shorter-js "^0.1.7"
+
 bootstrap@4.5.2:
   version "4.5.2"
   resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-4.5.2.tgz#a85c4eda59155f0d71186b6e6ad9b875813779ab"
@@ -4664,6 +4672,11 @@ mini-css-extract-plugin@^0.9.0:
     schema-utils "^1.0.0"
     webpack-sources "^1.1.0"
 
+minifill@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/minifill/-/minifill-0.0.8.tgz#c6ecef302bee672352986d89257b3c18fc7a9ce5"
+  integrity sha512-DOw02Fev6xB40wyie/YJtnIhY0eI+iQ7aBQlSVkOy5OKlFAxob6uG301uvJyMT7F1OeMGfbDexOTabL3uLid1g==
+
 minimalistic-assert@^1.0.0, minimalistic-assert@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/minimalistic-assert/-/minimalistic-assert-1.0.1.tgz#2e194de044626d4a10e7f7fbc00ce73e83e4d5c7"
@@ -6814,6 +6827,11 @@ shebang-regex@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-1.0.0.tgz#da42f49740c0b42db2ca9728571cb190c98efea3"
   integrity sha1-2kL0l0DAtC2yypcoVxyxkMmO/qM=
+
+shorter-js@^0.1.7:
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/shorter-js/-/shorter-js-0.1.7.tgz#e02ca55838fa4841553d0fdc49870adde7f5cb19"
+  integrity sha512-H7dO5P4a0LndmaRgTsRTHn3Rf2Oy7ocVf6M1ZvYJIIAtOcEnE7lmhQ7bnDzoU22JbN6KR+VgLzhuuSAhMpoxrQ==
 
 signal-exit@^3.0.0, signal-exit@^3.0.2:
   version "3.0.3"

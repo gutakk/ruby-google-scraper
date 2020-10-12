@@ -2,23 +2,32 @@
 
 require 'csv'
 
+class CsvValidator < ActiveModel::Validator
+  def validate(record)
+    file = record.instance_variable_get(:@file)
+
+    return record.errors.add(:base, I18n.t('keyword.file_must_be_csv')) unless file.content_type == 'text/csv'
+    return record.errors.add(:base, I18n.t('keyword.keyword_range')) unless CSV.read(file).count.between?(1, 1000)
+  end
+end
+
 class CsvImportForm
   include ActiveModel::Model
+  include ActiveModel::Validations
+  validates_with CsvValidator
 
-  def initialize(user)
+  def initialize(user, file)
     @user = user
+    @file = file
   end
 
-  def save(file)
+  def save
+    return self unless valid?
+
     bulk_data = []
 
-    CSV.foreach(file.path) do |row|
-      bulk_data << {
-        user_id: @user.id,
-        keyword: row[0],
-        created_at: Time.current,
-        updated_at: Time.current
-      }
+    CSV.foreach(@file.path) do |row|
+      bulk_data << { user_id: @user.id, keyword: row[0], created_at: Time.current, updated_at: Time.current }
     end
 
     # rubocop:disable Rails/SkipsModelValidations
@@ -29,7 +38,6 @@ end
 
 class KeywordsController < ApplicationController
   before_action :ensure_authentication
-  before_action :fetch_file, :validate_file_type, :validate_csv, only: :create
 
   def new
     render locals: {
@@ -38,30 +46,13 @@ class KeywordsController < ApplicationController
   end
 
   def create
-    form = CsvImportForm.new(current_user)
+    form = CsvImportForm.new(current_user, params[:keyword][:file])
+    save_result = form.save
 
-    if form.save(@file)
-      redirect_to new_keywords_path, notice: t('keyword.upload_csv_successfully')
-    else
-      redirect_to new_keywords_path, alert: t('app.something_went_wrong')
+    if save_result.class == ActiveRecord::Result
+      return redirect_to new_keywords_path, notice: t('keyword.upload_csv_successfully')
     end
-  end
 
-  private
-
-  def fetch_file
-    @file = params[:keyword][:file]
-  end
-
-  def validate_file_type
-    file_type = @file.content_type
-
-    redirect_to new_keywords_path, alert: t('keyword.file_must_be_csv') unless file_type == 'text/csv'
-  end
-
-  def validate_csv
-    keyword_count = CSV.read(@file, headers: true).count
-
-    redirect_to new_keywords_path, alert: t('keyword.keyword_range') unless keyword_count.between?(1, 1000)
+    redirect_to new_keywords_path, alert: save_result.errors.messages[:base][0]
   end
 end
