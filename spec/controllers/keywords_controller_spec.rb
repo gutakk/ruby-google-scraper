@@ -41,7 +41,7 @@ RSpec.describe KeywordsController, type: :controller do
         file = fixture_file_upload('files/example.csv', 'text/csv')
 
         expect do
-          post :create, params: { keyword: { file: file } }
+          post :create, params: { csv_import_form: { file: file } }
         end.to change(Keyword, :count).by(6)
       end
 
@@ -50,7 +50,7 @@ RSpec.describe KeywordsController, type: :controller do
         session[:user_id] = user[:id]
         file = fixture_file_upload('files/example.csv', 'text/csv')
 
-        post :create, params: { keyword: { file: file } }
+        post :create, params: { csv_import_form: { file: file } }
 
         expect(response).to redirect_to(new_keywords_path)
       end
@@ -60,7 +60,7 @@ RSpec.describe KeywordsController, type: :controller do
         session[:user_id] = user[:id]
         file = fixture_file_upload('files/example.csv', 'text/csv')
 
-        post :create, params: { keyword: { file: file } }
+        post :create, params: { csv_import_form: { file: file } }
 
         expect(flash[:notice]).to eql(I18n.t('keyword.upload_csv_successfully'))
       end
@@ -73,7 +73,7 @@ RSpec.describe KeywordsController, type: :controller do
           session[:user_id] = user[:id]
           file = fixture_file_upload('files/nimble.png')
 
-          post :create, params: { keyword: { file: file } }
+          post :create, params: { csv_import_form: { file: file } }
 
           expect(response).to redirect_to(new_keywords_path)
         end
@@ -83,7 +83,7 @@ RSpec.describe KeywordsController, type: :controller do
           session[:user_id] = user[:id]
           file = fixture_file_upload('files/nimble.png')
 
-          post :create, params: { keyword: { file: file } }
+          post :create, params: { csv_import_form: { file: file } }
 
           expect(flash[:alert]).to eql(I18n.t('keyword.file_must_be_csv'))
         end
@@ -95,7 +95,7 @@ RSpec.describe KeywordsController, type: :controller do
           session[:user_id] = user[:id]
           file = fixture_file_upload('files/no_keywords.csv', 'text/csv')
 
-          post :create, params: { keyword: { file: file } }
+          post :create, params: { csv_import_form: { file: file } }
 
           expect(response).to redirect_to(new_keywords_path)
         end
@@ -105,7 +105,7 @@ RSpec.describe KeywordsController, type: :controller do
           session[:user_id] = user[:id]
           file = fixture_file_upload('files/no_keywords.csv', 'text/csv')
 
-          post :create, params: { keyword: { file: file } }
+          post :create, params: { csv_import_form: { file: file } }
 
           expect(flash[:alert]).to eql(I18n.t('keyword.keyword_range'))
         end
@@ -117,7 +117,7 @@ RSpec.describe KeywordsController, type: :controller do
           session[:user_id] = user[:id]
           file = fixture_file_upload('files/more_than_thoudsand_keywords.csv', 'text/csv')
 
-          post :create, params: { keyword: { file: file } }
+          post :create, params: { csv_import_form: { file: file } }
 
           expect(response).to redirect_to(new_keywords_path)
         end
@@ -127,7 +127,7 @@ RSpec.describe KeywordsController, type: :controller do
           session[:user_id] = user[:id]
           file = fixture_file_upload('files/more_than_thoudsand_keywords.csv', 'text/csv')
 
-          post :create, params: { keyword: { file: file } }
+          post :create, params: { csv_import_form: { file: file } }
 
           expect(flash[:alert]).to eql(I18n.t('keyword.keyword_range'))
         end
