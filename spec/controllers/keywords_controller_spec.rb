@@ -120,9 +120,9 @@ RSpec.describe KeywordsController, type: :controller do
           session[:user_id] = user[:id]
           file = fixture_file_upload('files/example.csv', 'text/csv')
 
-          expect {
+          expect do
             post :create, params: { csv_import_form: { file: file } }
-          }.to change(GoogleScrapingJobWorker.jobs, :size).by(1)
+          end.to change(GoogleScrapingJobWorker.jobs, :size).by(1)
         end
       end
 
@@ -163,9 +163,9 @@ RSpec.describe KeywordsController, type: :controller do
             session[:user_id] = user[:id]
             file = fixture_file_upload('files/nimble.png')
 
-            expect {
+            expect do
               post :create, params: { csv_import_form: { file: file } }
-            }.to change(GoogleScrapingJobWorker.jobs, :size).by(0)
+            end.to change(GoogleScrapingJobWorker.jobs, :size).by(0)
           end
         end
 
@@ -205,9 +205,9 @@ RSpec.describe KeywordsController, type: :controller do
             session[:user_id] = user[:id]
             file = fixture_file_upload('files/no_keywords.csv')
 
-            expect {
+            expect do
               post :create, params: { csv_import_form: { file: file } }
-            }.to change(GoogleScrapingJobWorker.jobs, :size).by(0)
+            end.to change(GoogleScrapingJobWorker.jobs, :size).by(0)
           end
         end
 
@@ -247,9 +247,9 @@ RSpec.describe KeywordsController, type: :controller do
             session[:user_id] = user[:id]
             file = fixture_file_upload('files/more_than_thoudsand_keywords.csv')
 
-            expect {
+            expect do
               post :create, params: { csv_import_form: { file: file } }
-            }.to change(GoogleScrapingJobWorker.jobs, :size).by(0)
+            end.to change(GoogleScrapingJobWorker.jobs, :size).by(0)
           end
         end
       end
