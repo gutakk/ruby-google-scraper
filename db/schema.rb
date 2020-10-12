@@ -24,10 +24,16 @@ ActiveRecord::Schema.define(version: 2020_10_05_065240) do
   end
 
   create_table "keywords", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.string "keyword", null: false
+    t.bigint "user_id"
+    t.string "keyword"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "status", default: "processing"
+    t.integer "top_pos_adwords"
+    t.integer "adwords"
+    t.integer "non_adwords"
+    t.integer "links"
+    t.text "html_code"
     t.index ["user_id"], name: "index_keywords_on_user_id"
   end
 
