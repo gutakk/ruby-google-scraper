@@ -33,6 +33,54 @@ RSpec.describe KeywordsController, type: :controller do
     end
   end
 
+  describe 'GET#show' do
+    context 'given the authenticated user' do
+      context 'given correct keyword id' do
+        it 'returns a successful response' do
+          user = Fabricate(:user)
+          keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'test')
+          session[:user_id] = user[:id]
+
+          get :show, params: { id: keyword[:id] }
+
+          expect(response).to be_successful
+        end
+
+        it 'renders the template of :show action' do
+          user = Fabricate(:user)
+          keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'test')
+          session[:user_id] = user[:id]
+
+          get :show, params: { id: keyword[:id] }
+
+          expect(response).to render_template(:show)
+        end
+      end
+
+      context 'given incorrect keyword id' do
+        it 'returns not found response' do
+          user = Fabricate(:user)
+          session[:user_id] = user[:id]
+
+          get :show, params: { id: 'not_found_id' }
+
+          expect(response).to be_not_found
+        end
+      end
+    end
+
+    context 'given unauthenticated user' do
+      it 'redirects to login' do
+        user = Fabricate(:user)
+        keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'test')
+
+        get :show, params: { id: keyword[:id] }
+
+        expect(response).to redirect_to(login_path)
+      end
+    end
+  end
+
   describe 'POST#create' do
     context 'given authenticated user' do
       context 'given valid parameters (file)' do
