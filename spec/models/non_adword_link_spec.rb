@@ -3,5 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe NonAdwordLink, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe 'association' do
+    context 'belong to' do
+      it { is_expected.to belong_to(:keyword) }
+    end
+  end
 end
