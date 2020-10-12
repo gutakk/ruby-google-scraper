@@ -4,7 +4,7 @@ class KeywordsController < ApplicationController
   before_action :ensure_authentication
   before_action :set_csv_import_form
 
-  def new
+  def index
     render locals: {
       csv_import_form: @csv_import_form
     }

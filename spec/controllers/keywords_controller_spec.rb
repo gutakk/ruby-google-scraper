@@ -3,30 +3,30 @@
 require 'rails_helper'
 
 RSpec.describe KeywordsController, type: :controller do
-  describe 'GET#new' do
+  describe 'GET#index' do
     context 'given the user_id session' do
       it 'returns a successful response' do
         user = Fabricate(:user)
         session[:user_id] = user[:id]
 
-        get :new
+        get :index
 
         expect(response).to be_successful
       end
 
-      it 'renders the template of :new action' do
+      it 'renders the template of :index action' do
         user = Fabricate(:user)
         session[:user_id] = user[:id]
 
-        get :new
+        get :index
 
-        expect(response).to render_template(:new)
+        expect(response).to render_template(:index)
       end
     end
 
     context 'given NO user_id session' do
       it 'redirects to login' do
-        get :new
+        get :index
 
         expect(response).to redirect_to(login_path)
       end
