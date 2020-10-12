@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require 'sidekiq/testing'
 
 RSpec.describe KeywordsController, type: :controller do
   describe 'GET#index' do
@@ -113,6 +114,16 @@ RSpec.describe KeywordsController, type: :controller do
 
           expect(flash[:notice]).to eql(I18n.t('keyword.upload_csv_successfully'))
         end
+
+        it 'creates google scraping worker sidekiq job' do
+          user = Fabricate(:user)
+          session[:user_id] = user[:id]
+          file = fixture_file_upload('files/example.csv', 'text/csv')
+
+          expect {
+            post :create, params: { csv_import_form: { file: file } }
+          }.to change(GoogleScrapingJobWorker.jobs, :size).by(1)
+        end
       end
 
       context 'given invalid parameters (file)' do
@@ -136,6 +147,26 @@ RSpec.describe KeywordsController, type: :controller do
 
             expect(flash[:alert]).to eql(I18n.t('keyword.file_must_be_csv'))
           end
+
+          it 'does NOT insert keywords to database' do
+            user = Fabricate(:user)
+            session[:user_id] = user[:id]
+            file = fixture_file_upload('files/nimble.png')
+
+            expect do
+              post :create, params: { csv_import_form: { file: file } }
+            end.to change(Keyword, :count).by(0)
+          end
+
+          it 'does NOT create google scraping worker sidekiq job' do
+            user = Fabricate(:user)
+            session[:user_id] = user[:id]
+            file = fixture_file_upload('files/nimble.png')
+
+            expect {
+              post :create, params: { csv_import_form: { file: file } }
+            }.to change(GoogleScrapingJobWorker.jobs, :size).by(0)
+          end
         end
 
         context 'given no keyword csv' do
@@ -158,6 +189,26 @@ RSpec.describe KeywordsController, type: :controller do
 
             expect(flash[:alert]).to eql(I18n.t('keyword.keyword_range'))
           end
+
+          it 'does NOT insert keywords to database' do
+            user = Fabricate(:user)
+            session[:user_id] = user[:id]
+            file = fixture_file_upload('files/no_keywords.csv')
+
+            expect do
+              post :create, params: { csv_import_form: { file: file } }
+            end.to change(Keyword, :count).by(0)
+          end
+
+          it 'does NOT create google scraping worker sidekiq job' do
+            user = Fabricate(:user)
+            session[:user_id] = user[:id]
+            file = fixture_file_upload('files/no_keywords.csv')
+
+            expect {
+              post :create, params: { csv_import_form: { file: file } }
+            }.to change(GoogleScrapingJobWorker.jobs, :size).by(0)
+          end
         end
 
         context 'given more than 1,000 keywords csv' do
@@ -179,6 +230,26 @@ RSpec.describe KeywordsController, type: :controller do
             post :create, params: { csv_import_form: { file: file } }
 
             expect(flash[:alert]).to eql(I18n.t('keyword.keyword_range'))
+          end
+
+          it 'does NOT insert keywords to database' do
+            user = Fabricate(:user)
+            session[:user_id] = user[:id]
+            file = fixture_file_upload('files/more_than_thoudsand_keywords.csv')
+
+            expect do
+              post :create, params: { csv_import_form: { file: file } }
+            end.to change(Keyword, :count).by(0)
+          end
+
+          it 'does NOT create google scraping worker sidekiq job' do
+            user = Fabricate(:user)
+            session[:user_id] = user[:id]
+            file = fixture_file_upload('files/more_than_thoudsand_keywords.csv')
+
+            expect {
+              post :create, params: { csv_import_form: { file: file } }
+            }.to change(GoogleScrapingJobWorker.jobs, :size).by(0)
           end
         end
       end
