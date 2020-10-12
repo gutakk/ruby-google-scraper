@@ -33,7 +33,7 @@ describe 'views keyword list', type: :system do
         click_button(I18n.t('auth.login'))
       end
 
-      attach_file('keyword[file]', file_path)
+      attach_file('csv_import_form[file]', file_path)
 
       click_button(I18n.t('keyword.upload'))
 
@@ -70,7 +70,7 @@ describe 'views keyword list', type: :system do
         click_button(I18n.t('auth.login'))
       end
 
-      attach_file('keyword[file]', file_path)
+      attach_file('csv_import_form[file]', file_path)
 
       click_button(I18n.t('keyword.upload'))
 
@@ -109,7 +109,7 @@ describe 'views keyword list', type: :system do
         click_button(I18n.t('auth.login'))
       end
 
-      attach_file('keyword[file]', file_path)
+      attach_file('csv_import_form[file]', file_path)
 
       click_button(I18n.t('keyword.upload'))
 
