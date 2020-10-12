@@ -5,24 +5,12 @@ require 'Nokogiri'
 
 class GoogleScrapingWorker
   include Sidekiq::Worker
-  sidekiq_options retry: false
 
-  def perform
-    keywords = Keyword.all.where(status: 'processing')
+  def perform(keyword_id)
+    keyword = Keyword.find_by(id: keyword_id)
 
-    Keyword.transaction do
-      keywords.each do |keyword|
-        scrap_from_google(keyword)
-
-        update_keyword(keyword)
-
-        create_adword_links(keyword)
-
-        create_non_adword_links(keyword)
-
-        sleep(1)
-      end
-    end
+    scrap_from_google(keyword)
+    store_result(keyword)
   end
 
   private
@@ -36,14 +24,18 @@ class GoogleScrapingWorker
     @parse_page = Nokogiri::HTML(response)
   end
 
-  def update_keyword(keyword)
+  def store_result(keyword)
     keyword.update(
       status: 'processed',
       top_pos_adwords: count_top_position_adwords,
+      adwords: count_total_adwords,
       non_adwords: count_non_adwords,
       links: count_links,
       html_code: @parse_page
     )
+
+    create_adword_links(keyword)
+    create_non_adword_links(keyword)
   end
 
   def create_adword_links(keyword)
