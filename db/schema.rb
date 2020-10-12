@@ -24,8 +24,8 @@ ActiveRecord::Schema.define(version: 2020_10_05_065240) do
   end
 
   create_table "keywords", force: :cascade do |t|
-    t.bigint "user_id"
-    t.string "keyword"
+    t.bigint "user_id", null: false
+    t.string "keyword", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "status", default: "processing"
