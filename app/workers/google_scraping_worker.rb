@@ -5,18 +5,23 @@ require 'nokogiri'
 
 class GoogleScrapingWorker
   include Sidekiq::Worker
+  include ActiveModel::Model
+  include ActiveModel::Attributes
 
-  def perform(keyword_id)
-    keyword = Keyword.find_by(id: keyword_id)
+  attribute :keyword_id
+  attribute :keyword
 
-    scrap_from_google(keyword)
-    store_result(keyword)
+  def perform(attributes)
+    assign_attributes(attributes)
+
+    scrap_from_google
+    store_result
   end
 
   private
 
-  def scrap_from_google(keyword)
-    uri = URI("https://www.google.com/search?q=#{keyword.keyword}")
+  def scrap_from_google
+    uri = URI("https://www.google.com/search?q=#{keyword}")
     user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) ' \
     'Chrome/85.0.4183.121 Safari/537.36'
 
@@ -24,29 +29,31 @@ class GoogleScrapingWorker
     @parse_page = Nokogiri::HTML(response)
   end
 
-  def store_result(keyword)
-    keyword.update(
-      status: 'processed',
-      top_pos_adwords: count_top_position_adwords,
-      adwords: count_total_adwords,
-      non_adwords: count_non_adwords,
-      links: count_links,
-      html_code: @parse_page
-    )
+  def store_result
+    ActiveRecord::Base.transaction do
+      Keyword.where(id: keyword_id).update(
+        status: 'processed',
+        top_pos_adwords: count_top_position_adwords,
+        adwords: count_total_adwords,
+        non_adwords: count_non_adwords,
+        links: count_links,
+        html_code: @parse_page
+      )
 
-    create_adword_links(keyword)
-    create_non_adword_links(keyword)
-  end
-
-  def create_adword_links(keyword)
-    fetch_top_position_adwords_links.each do |link|
-      keyword.adword_links.create(link: link)
+      create_adword_links
+      create_non_adword_links
     end
   end
 
-  def create_non_adword_links(keyword)
+  def create_adword_links
+    fetch_top_position_adwords_links.each do |link|
+      AdwordLink.create(link: link, keyword_id: keyword_id)
+    end
+  end
+
+  def create_non_adword_links
     fetch_non_adword_links.each do |link|
-      keyword.non_adword_links.create(link: link)
+      NonAdwordLink.create(link: link, keyword_id: keyword_id)
     end
   end
 
