@@ -23,6 +23,10 @@ class KeywordsController < ApplicationController
 
   def create
     if @csv_import_form.save(create_params)
+      @csv_import_form.inserted_keywords.rows.each do |row|
+        GoogleScrapingWorker.perform_async(row[0])
+      end
+
       redirect_to keywords_path, notice: t('keyword.upload_csv_successfully')
     else
       redirect_to keywords_path, alert: @csv_import_form.errors.messages[:base][0]
