@@ -46,15 +46,37 @@ class GoogleScrapingWorker
   end
 
   def create_adword_links
+    bulk_data = []
+
     fetch_top_position_adwords_links.each do |link|
-      TopPositionAdwordLink.create(link: link, keyword_id: keyword_id)
+      bulk_data << {
+        keyword_id: keyword_id,
+        link: link,
+        created_at: Time.current,
+        updated_at: Time.current
+      }
     end
+
+    # rubocop:disable Rails/SkipsModelValidations
+    TopPositionAdwordLink.insert_all(bulk_data)
+    # rubocop:enable Rails/SkipsModelValidations
   end
 
   def create_non_adword_links
+    bulk_data = []
+
     fetch_non_adword_links.each do |link|
-      NonAdwordLink.create(link: link, keyword_id: keyword_id)
+      bulk_data << {
+        keyword_id: keyword_id,
+        link: link,
+        created_at: Time.current,
+        updated_at: Time.current
+      }
     end
+
+    # rubocop:disable Rails/SkipsModelValidations
+    NonAdwordLink.insert_all(bulk_data)
+    # rubocop:enable Rails/SkipsModelValidations
   end
 
   def count_top_position_adwords
