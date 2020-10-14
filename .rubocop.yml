@@ -28,6 +28,12 @@ Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
 
+Metrics/MethodLength:
+  CountAsOne:
+    - array
+    - heredoc
+    - hash
+
 Style/FormatStringToken:
   EnforcedStyle: template
 
