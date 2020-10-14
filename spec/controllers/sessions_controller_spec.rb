@@ -60,6 +60,26 @@ RSpec.describe SessionsController, type: :controller do
       end
     end
 
+    context 'given return_to path' do
+      it 'returns to new keywords path when return_to path is keywords' do
+        user = Fabricate(:user)
+        session[:return_to] = new_keywords_path
+
+        post :create, params: { username: user[:username], password: 'password' }
+
+        expect(response).to redirect_to(new_keywords_path)
+      end
+
+      it 'deletes return_to session' do
+        user = Fabricate(:user)
+        session[:return_to] = new_keywords_path
+
+        post :create, params: { username: user[:username], password: 'password' }
+
+        expect(session[:return_to]).to be_nil
+      end
+    end
+
     context 'given invalid parameters' do
       context 'given an invalid username' do
         it 'does NOT set user_id to session' do
@@ -167,6 +187,14 @@ RSpec.describe SessionsController, type: :controller do
         delete :destroy
 
         expect(session[:user_id]).to be_nil
+      end
+
+      it 'deletes the return_to session' do
+        session[:user_id] = 'test'
+
+        delete :destroy
+
+        expect(session[:return_to]).to be_nil
       end
 
       it 'shows notice flash message' do

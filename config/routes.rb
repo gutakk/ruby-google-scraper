@@ -6,7 +6,9 @@ Rails.application.routes.draw do
   
   get '/signup', to: 'users#new'
 
-  resource :sessions, only: [:create, :destroy]
+  resource :sessions, only: %i[create destroy]
   
   get '/login', to: 'sessions#new'
+
+  resource :keywords, only: %i[new create]
 end

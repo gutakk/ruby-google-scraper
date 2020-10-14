@@ -11,6 +11,7 @@
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "5.2.1",
     "bootstrap": "4.5.2",
+    "bootstrap.native": "3.0.13",
     "i18n-js": "3.5.1"
   },
   "devDependencies": {

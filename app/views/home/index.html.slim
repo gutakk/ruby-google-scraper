@@ -1,3 +1,5 @@
 div class="text-center mt-5" 
-  h2 = t('app.welcome_to')
-  h1 = t('app.title')
+  h1.display-4 = t('app.title')
+  p.lead = t('app.description')
+  hr.my-4
+  == link_to t('app.get_started'), new_keywords_path, class: "btn btn-dark btn-lg" 

@@ -14,7 +14,7 @@ class SessionsController < ApplicationController
     if user&.authenticate(params[:password])
       session[:user_id] = user.id
 
-      redirect_to root_path
+      redirect_to_target_or_default(root_path)
     else
       flash.now[:alert] = t('auth.login_failed')
 
@@ -24,6 +24,7 @@ class SessionsController < ApplicationController
 
   def destroy
     session.delete(:user_id)
+    session.delete(:return_to)
 
     flash[:notice] = t('auth.logout_successfully')
 

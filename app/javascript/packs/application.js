@@ -6,6 +6,7 @@
 require('@rails/ujs').start();
 require('@rails/activestorage').start();
 require('channels');
+require('bootstrap.native');
 
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';

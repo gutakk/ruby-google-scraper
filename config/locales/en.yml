@@ -44,18 +44,30 @@ en:
 
   app:
     already_have_account_html: "Already have an account? %{link}"
+    description: "Gathering Google search information with your own keywords"
     do_not_have_account_yet_html: "Don't have an account yet? %{link}"
+    get_started: "Get Started"
     greeting_html: "<small>Hi</small> <strong>%{username}</strong>"
+    something_went_wrong: "Something went wrong, please try again"
     title: "Ruby Google Scraper"
     welcome_to: "Welcome to"
 
   auth:
     confirm_password: "Confirm password"
     login: "Login"
-    login_failed: "Username or password is invalid" 
+    login_failed: "Username or password is invalid"
     logout: "Logout"
+    login_required: "Login required"
     logout_successfully: "You've been logged out"
     password: "Password"
     signup: "Signup"
     signup_successfully: "Account was successfully created"
     username: "Username"
+      
+  keyword:
+    file_must_be_csv: "File must be CSV format"
+    keywords: "Keywords"
+    keyword_range: "CSV file must contain between 1 to 1000 keywords"
+    upload: "Upload"
+    upload_csv_successfully: "CSV uploaded successfully"
+    upload_keywords_csv_file: "Upload keywords CSV file"
