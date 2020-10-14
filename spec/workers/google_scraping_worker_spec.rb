@@ -5,31 +5,33 @@ require 'sidekiq/testing'
 require 'vcr'
 
 RSpec.describe GoogleScrapingWorker, type: :worker do
-  describe 'performs async task' do
+  describe 'performs task' do
     context 'given valid keyword' do
       it 'creates google scraping sidekiq job' do
-        user = Fabricate(:user)
-        keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
+        VCR.use_cassette('google_scraping', record: :none) do
+          user = Fabricate(:user)
+          keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
 
-        expect do
-          GoogleScrapingWorker.perform_async(
-            keyword_id: keyword.id,
-            keyword: keyword.keyword
-          )
-        end.to change(GoogleScrapingWorker.jobs, :size).by(1)
+          expect do
+            GoogleScrapingWorker.perform_async(
+              keyword_id: keyword.id,
+              keyword: keyword.keyword
+            )
+          end.to change(GoogleScrapingWorker.jobs, :size).by(1)
+        end
       end
 
       it 'updates status to processed' do
+        subject { new GoogleScrapingWorker }
+
         user = Fabricate(:user)
         keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
 
         VCR.use_cassette('google_scraping', record: :none) do
-          GoogleScrapingWorker.perform_async(
+          subject.perform(
             keyword_id: keyword.id,
             keyword: keyword.keyword
           )
-
-          GoogleScrapingWorker.drain
 
           result = Keyword.find_by(id: keyword.id)
 
@@ -38,16 +40,16 @@ RSpec.describe GoogleScrapingWorker, type: :worker do
       end
 
       it 'updates top position adword count scraping result' do
+        subject { new GoogleScrapingWorker }
+
         user = Fabricate(:user)
         keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
 
         VCR.use_cassette('google_scraping', record: :none) do
-          GoogleScrapingWorker.perform_async(
+          subject.perform(
             keyword_id: keyword.id,
             keyword: keyword.keyword
           )
-
-          GoogleScrapingWorker.drain
 
           result = Keyword.find_by(id: keyword.id)
 
@@ -56,16 +58,16 @@ RSpec.describe GoogleScrapingWorker, type: :worker do
       end
 
       it 'updates adword count scraping result' do
+        subject { new GoogleScrapingWorker }
+
         user = Fabricate(:user)
         keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
 
         VCR.use_cassette('google_scraping', record: :none) do
-          GoogleScrapingWorker.perform_async(
+          subject.perform(
             keyword_id: keyword.id,
             keyword: keyword.keyword
           )
-
-          GoogleScrapingWorker.drain
 
           result = Keyword.find_by(id: keyword.id)
 
@@ -74,16 +76,16 @@ RSpec.describe GoogleScrapingWorker, type: :worker do
       end
 
       it 'updates non adword count scraping result' do
+        subject { new GoogleScrapingWorker }
+
         user = Fabricate(:user)
         keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
 
         VCR.use_cassette('google_scraping', record: :none) do
-          GoogleScrapingWorker.perform_async(
+          subject.perform(
             keyword_id: keyword.id,
             keyword: keyword.keyword
           )
-
-          GoogleScrapingWorker.drain
 
           result = Keyword.find_by(id: keyword.id)
 
@@ -92,16 +94,16 @@ RSpec.describe GoogleScrapingWorker, type: :worker do
       end
 
       it 'updates link count scraping result' do
+        subject { new GoogleScrapingWorker }
+
         user = Fabricate(:user)
         keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
 
         VCR.use_cassette('google_scraping', record: :none) do
-          GoogleScrapingWorker.perform_async(
+          subject.perform(
             keyword_id: keyword.id,
             keyword: keyword.keyword
           )
-
-          GoogleScrapingWorker.drain
 
           result = Keyword.find_by(id: keyword.id)
 
@@ -110,16 +112,16 @@ RSpec.describe GoogleScrapingWorker, type: :worker do
       end
 
       it 'updates html code scraping result' do
+        subject { new GoogleScrapingWorker }
+
         user = Fabricate(:user)
         keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
 
         VCR.use_cassette('google_scraping', record: :none) do
-          GoogleScrapingWorker.perform_async(
+          subject.perform(
             keyword_id: keyword.id,
             keyword: keyword.keyword
           )
-
-          GoogleScrapingWorker.drain
 
           result = Keyword.find_by(id: keyword.id)
 
@@ -128,16 +130,16 @@ RSpec.describe GoogleScrapingWorker, type: :worker do
       end
 
       it 'creates top position adword links' do
+        subject { new GoogleScrapingWorker }
+
         user = Fabricate(:user)
         keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
 
         VCR.use_cassette('google_scraping', record: :none) do
-          GoogleScrapingWorker.perform_async(
+          subject.perform(
             keyword_id: keyword.id,
             keyword: keyword.keyword
           )
-
-          GoogleScrapingWorker.drain
 
           inserted_keyword = Keyword.find_by(id: keyword.id)
           result = TopPositionAdwordLink.where(keyword_id: keyword.id)
@@ -147,16 +149,16 @@ RSpec.describe GoogleScrapingWorker, type: :worker do
       end
 
       it 'creates non adword links' do
+        subject { new GoogleScrapingWorker }
+
         user = Fabricate(:user)
         keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
 
         VCR.use_cassette('google_scraping', record: :none) do
-          GoogleScrapingWorker.perform_async(
+          subject.perform(
             keyword_id: keyword.id,
             keyword: keyword.keyword
           )
-
-          GoogleScrapingWorker.drain
 
           inserted_keyword = Keyword.find_by(id: keyword.id)
           result = NonAdwordLink.where(keyword_id: keyword.id)
@@ -167,23 +169,53 @@ RSpec.describe GoogleScrapingWorker, type: :worker do
     end
 
     context 'given error raising' do
-      it 'rollback the transaction when insert to top position adword links is raised' do
+      it 'rollback the transaction when create top position adword links is raised' do
+        subject { new GoogleScrapingWorker }
+
         user = Fabricate(:user)
         keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
 
         VCR.use_cassette('google_scraping', record: :none) do
-          google_scraping_worker = double(GoogleScrapingWorker)
+          allow(subject).to receive(:create_top_position_adword_links).and_raise(ActiveRecord::Rollback)
 
-          GoogleScrapingWorker.perform_async(
+          subject.perform(
             keyword_id: keyword.id,
             keyword: keyword.keyword
           )
 
-          GoogleScrapingWorker.drain
+          result = Keyword.find_by(id: keyword.id)
+
+          expect(result.status).to eql('processing')
+          expect(result.top_pos_adwords).to be_nil
+          expect(result.adwords).to be_nil
+          expect(result.non_adwords).to be_nil
+          expect(result.links).to be_nil
+          expect(result.html_code).to be_nil
+        end
+      end
+
+      it 'rollback the transaction when create non adword links is raised' do
+        subject { new GoogleScrapingWorker }
+
+        user = Fabricate(:user)
+        keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
+
+        VCR.use_cassette('google_scraping', record: :none) do
+          allow(subject).to receive(:create_non_adword_links).and_raise(ActiveRecord::Rollback)
+
+          subject.perform(
+            keyword_id: keyword.id,
+            keyword: keyword.keyword
+          )
 
           result = Keyword.find_by(id: keyword.id)
 
           expect(result.status).to eql('processing')
+          expect(result.top_pos_adwords).to be_nil
+          expect(result.adwords).to be_nil
+          expect(result.non_adwords).to be_nil
+          expect(result.links).to be_nil
+          expect(result.html_code).to be_nil
         end
       end
     end
