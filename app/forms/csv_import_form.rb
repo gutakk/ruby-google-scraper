@@ -25,7 +25,12 @@ class CsvImportForm
     bulk_data = []
 
     CSV.foreach(file.path) do |row|
-      bulk_data << { user_id: user.id, keyword: row[0], created_at: Time.current, updated_at: Time.current }
+      bulk_data << {
+        user_id: user.id,
+        keyword: row[0],
+        created_at: Time.current,
+        updated_at: Time.current
+      }
     end
 
     # rubocop:disable Rails/SkipsModelValidations
