@@ -9,6 +9,7 @@ class CsvImportForm
 
   attribute :user
   attribute :file
+  attr_reader :inserted_keywords
 
   validates_with CsvValidator
 
@@ -19,7 +20,7 @@ class CsvImportForm
   def save(attributes)
     assign_attributes(attributes)
 
-    return self unless valid?
+    return false unless valid?
 
     bulk_data = []
 
@@ -28,7 +29,9 @@ class CsvImportForm
     end
 
     # rubocop:disable Rails/SkipsModelValidations
-    Keyword.insert_all(bulk_data, returning: %w[id keyword])
+    @inserted_keywords = Keyword.insert_all(bulk_data, returning: %w[id keyword])
     # rubocop:enable Rails/SkipsModelValidations
+
+    errors.empty?
   end
 end
