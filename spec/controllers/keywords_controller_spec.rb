@@ -52,7 +52,7 @@ RSpec.describe KeywordsController, type: :controller do
 
         post :create, params: { csv_import_form: { file: file } }
 
-        expect(response).to redirect_to(new_keywords_path)
+        expect(response).to redirect_to(keywords_path)
       end
 
       it 'shows a notice flash' do
@@ -75,7 +75,7 @@ RSpec.describe KeywordsController, type: :controller do
 
           post :create, params: { csv_import_form: { file: file } }
 
-          expect(response).to redirect_to(new_keywords_path)
+          expect(response).to redirect_to(keywords_path)
         end
 
         it 'shows an alert flash' do
@@ -97,7 +97,7 @@ RSpec.describe KeywordsController, type: :controller do
 
           post :create, params: { csv_import_form: { file: file } }
 
-          expect(response).to redirect_to(new_keywords_path)
+          expect(response).to redirect_to(keywords_path)
         end
 
         it 'shows an alert flash' do
@@ -119,7 +119,7 @@ RSpec.describe KeywordsController, type: :controller do
 
           post :create, params: { csv_import_form: { file: file } }
 
-          expect(response).to redirect_to(new_keywords_path)
+          expect(response).to redirect_to(keywords_path)
         end
 
         it 'shows an alert flash' do

@@ -12,9 +12,9 @@ class KeywordsController < ApplicationController
 
   def create
     if @csv_import_form.save(create_params)
-      redirect_to new_keywords_path, notice: t('keyword.upload_csv_successfully')
+      redirect_to keywords_path, notice: t('keyword.upload_csv_successfully')
     else
-      redirect_to new_keywords_path, alert: @csv_import_form.errors.messages[:base][0]
+      redirect_to keywords_path, alert: @csv_import_form.errors.messages[:base][0]
     end
   end
 

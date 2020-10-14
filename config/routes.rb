@@ -10,7 +10,5 @@ Rails.application.routes.draw do
   
   get '/login', to: 'sessions#new'
 
-  resource :keywords, only: :create
-
-  get '/keywords', to: 'keywords#index'
+  resources :keywords, only: %i[index create]
 end
