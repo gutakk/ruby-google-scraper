@@ -26,10 +26,10 @@ div class="d-flex flex-column align-items-center mt-4"
 
   - if adword_links.present?
     hr class="w-75 my-5"
-    h2 = t('keyword.adword_links').titleize
+    h2 = t('keyword.top_pos_adword_links').titleize
     ul class="mt-4 w-75 text-break"
-      - non_adword_links.each do |nal|
-        li = nal.link
+      - adword_links.each do |nal|
+        li = link_to nil, nal.link, target: :_blank
 
   - if non_adword_links.present?
     hr class="w-75 my-5"

@@ -66,7 +66,6 @@ en:
       
   keyword:
     adwords: "Adwords"
-    adword_links: "Adword links"
     created_at: "Created at"
     file_must_be_csv: "File must be CSV format"
     google_html: "Google HTML"
@@ -79,6 +78,7 @@ en:
     not_found: "Keyword not found"
     status: "Status"
     top_pos_adwords: "Top position adwords"
+    top_pos_adword_links: "Top position adword links"
     upload: "Upload"
     upload_csv_successfully: "CSV uploaded successfully"
     upload_keywords_csv_file: "Upload keywords CSV file"
