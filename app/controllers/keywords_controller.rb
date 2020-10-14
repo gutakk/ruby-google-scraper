@@ -6,7 +6,8 @@ class KeywordsController < ApplicationController
 
   def index
     render locals: {
-      csv_import_form: @csv_import_form
+      csv_import_form: @csv_import_form,
+      keywords: current_user.keywords.order(keyword: :asc)
     }
   end
 
