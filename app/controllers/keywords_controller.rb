@@ -23,9 +23,7 @@ class KeywordsController < ApplicationController
 
   def create
     if @csv_import_form.save(create_params)
-      @csv_import_form.inserted_keywords.rows.each do |row|
-        GoogleScrapingWorker.perform_async(row[0])
-      end
+      GoogleScrapingJobWorker.perform_async(@csv_import_form.inserted_keywords.rows)
 
       redirect_to keywords_path, notice: t('keyword.upload_csv_successfully')
     else
