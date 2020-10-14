@@ -24,11 +24,11 @@ div class="d-flex flex-column align-items-center mt-4"
       div class="card-info" = t('keyword.links').upcase
   
 
-  - if adword_links.present?
+  - if top_position_adword_links.present?
     hr class="w-75 my-5"
     h2 = t('keyword.top_pos_adword_links').titleize
     ul class="mt-4 w-75 text-break"
-      - adword_links.each do |nal|
+      - top_position_adword_links.each do |nal|
         li = link_to nil, nal.link, target: :_blank
 
   - if non_adword_links.present?

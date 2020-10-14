@@ -47,7 +47,7 @@ class GoogleScrapingWorker
 
   def create_adword_links
     fetch_top_position_adwords_links.each do |link|
-      AdwordLink.create(link: link, keyword_id: keyword_id)
+      TopPositionAdwordLink.create(link: link, keyword_id: keyword_id)
     end
   end
 

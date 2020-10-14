@@ -1,6 +1,6 @@
 class CreateAdwordLinks < ActiveRecord::Migration[6.0]
   def change
-    create_table :adword_links do |t|
+    create_table :top_position_adword_links do |t|
       t.belongs_to :keyword, foreign_key: true
 
       t.string :link

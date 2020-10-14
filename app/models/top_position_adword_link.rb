@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-class AdwordLink < ApplicationRecord
+class TopPositionAdwordLink < ApplicationRecord
   belongs_to :keyword
 end

@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe Keyword, type: :model do
   describe 'association' do
     context 'has many' do
-      it { is_expected.to have_many(:adword_links) }
+      it { is_expected.to have_many(:top_position_adword_links) }
     end
 
     context 'has many' do
