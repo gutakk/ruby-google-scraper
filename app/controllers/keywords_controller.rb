@@ -7,7 +7,7 @@ class KeywordsController < ApplicationController
   def index
     render locals: {
       csv_import_form: @csv_import_form,
-      keywords: current_user.keywords.order(keyword: :asc)
+      keywords: current_user.keywords.order(keyword: :asc).limit(50) # TODOs pagination (new ticket)
     }
   end
 

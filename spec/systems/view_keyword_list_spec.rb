@@ -95,5 +95,32 @@ describe 'views keyword list', type: :system do
       expect(current_path).to eql(keywords_path)
       expect(page).not_to have_selector('table')
     end
+
+    it 'displays ONLY 50 keywords' do
+      user = Fabricate(:user)
+      file_path = Rails.root.join('spec', 'fabricators', 'files', '60_keywords.csv')
+
+      visit keywords_path
+
+      within 'form' do
+        fill_in('username', with: user[:username])
+        fill_in('password', with: 'password')
+
+        click_button(I18n.t('auth.login'))
+      end
+
+      attach_file('keyword[file]', file_path)
+
+      click_button(I18n.t('keyword.upload'))
+
+      expect(current_path).to eql(keywords_path)
+      expect(page).to have_selector('table')
+
+      within 'table' do
+        within 'tbody' do
+          expect(page).to have_selector('tr', count: 50)
+        end
+      end
+    end
   end
 end
