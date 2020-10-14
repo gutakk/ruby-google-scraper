@@ -40,12 +40,12 @@ class GoogleScrapingWorker
         html_code: @parse_page
       )
 
-      create_adword_links
+      create_top_position_adword_links
       create_non_adword_links
     end
   end
 
-  def create_adword_links
+  def create_top_position_adword_links
     bulk_data = []
 
     fetch_top_position_adwords_links.each do |link|

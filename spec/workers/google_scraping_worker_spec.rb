@@ -165,5 +165,27 @@ RSpec.describe GoogleScrapingWorker, type: :worker do
         end
       end
     end
+
+    context 'given error raising' do
+      it 'rollback the transaction when insert to top position adword links is raised' do
+        user = Fabricate(:user)
+        keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
+
+        VCR.use_cassette('google_scraping', record: :none) do
+          google_scraping_worker = double(GoogleScrapingWorker)
+
+          GoogleScrapingWorker.perform_async(
+            keyword_id: keyword.id,
+            keyword: keyword.keyword
+          )
+
+          GoogleScrapingWorker.drain
+
+          result = Keyword.find_by(id: keyword.id)
+
+          expect(result.status).to eql('processing')
+        end
+      end
+    end
   end
 end
