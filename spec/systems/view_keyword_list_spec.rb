@@ -3,6 +3,9 @@
 require 'rails_helper'
 
 describe 'views keyword list', type: :system do
+  include ActiveJob::TestHelper
+  ActiveJob::Base.queue_adapter = :test
+
   context 'given authenticated user' do
     it 'does NOT display table when no keywords' do
       user = Fabricate(:user)
@@ -119,6 +122,45 @@ describe 'views keyword list', type: :system do
       within 'table' do
         within 'tbody' do
           expect(page).to have_selector('tr', count: 50)
+        end
+      end
+    end
+
+    it 'displays information link when background job processed' do
+      user = Fabricate(:user)
+      file_path = Rails.root.join('spec', 'fabricators', 'files', 'adword_keywords.csv')
+
+      visit keywords_path
+
+      within 'form' do
+        fill_in('username', with: user[:username])
+        fill_in('password', with: 'password')
+
+        click_button(I18n.t('auth.login'))
+      end
+
+      attach_file('csv_import_form[file]', file_path)
+
+      click_button(I18n.t('keyword.upload'))
+
+      expect(current_path).to eql(keywords_path)
+      expect(page).to have_selector('table')
+
+      assert_enqueued_with(job: GoogleScrapingJobManagementJob)
+
+      VCR.use_cassette('with_top_position_adwords', record: :none) do
+        perform_enqueued_jobs
+      end
+
+      visit keywords_path
+
+      within 'table' do
+        within 'tbody' do
+          expect(page).to have_selector('tr', count: 1)
+
+          tr_list = all('tr')
+
+          expect(tr_list[0]).to have_selector('.fa-info-circle')
         end
       end
     end
