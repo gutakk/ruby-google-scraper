@@ -10,7 +10,7 @@ RSpec.describe GoogleScrapingJob, type: :job do
   describe '#perform' do
     context 'given valid keyword (with top position adwords)' do
       it 'enqueues google scraping job' do
-        VCR.use_cassette('google_scraping', record: :none) do
+        VCR.use_cassette('with_top_position_adwords', record: :none) do
           user = Fabricate(:user)
           keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
 
@@ -26,7 +26,7 @@ RSpec.describe GoogleScrapingJob, type: :job do
         user = Fabricate(:user)
         keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
 
-        VCR.use_cassette('google_scraping', record: :none) do
+        VCR.use_cassette('with_top_position_adwords', record: :none) do
           GoogleScrapingJob.perform_now(keyword.id, keyword.keyword)
         end
 
@@ -39,7 +39,7 @@ RSpec.describe GoogleScrapingJob, type: :job do
         user = Fabricate(:user)
         keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
 
-        VCR.use_cassette('google_scraping', record: :none) do
+        VCR.use_cassette('with_top_position_adwords', record: :none) do
           GoogleScrapingJob.perform_now(keyword.id, keyword.keyword)
         end
 
@@ -52,7 +52,7 @@ RSpec.describe GoogleScrapingJob, type: :job do
         user = Fabricate(:user)
         keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
 
-        VCR.use_cassette('google_scraping', record: :none) do
+        VCR.use_cassette('with_top_position_adwords', record: :none) do
           GoogleScrapingJob.perform_now(keyword.id, keyword.keyword)
         end
 
@@ -65,7 +65,7 @@ RSpec.describe GoogleScrapingJob, type: :job do
         user = Fabricate(:user)
         keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
 
-        VCR.use_cassette('google_scraping', record: :none) do
+        VCR.use_cassette('with_top_position_adwords', record: :none) do
           GoogleScrapingJob.perform_now(keyword.id, keyword.keyword)
         end
 
@@ -78,7 +78,7 @@ RSpec.describe GoogleScrapingJob, type: :job do
         user = Fabricate(:user)
         keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
 
-        VCR.use_cassette('google_scraping', record: :none) do
+        VCR.use_cassette('with_top_position_adwords', record: :none) do
           GoogleScrapingJob.perform_now(keyword.id, keyword.keyword)
         end
 
@@ -91,7 +91,7 @@ RSpec.describe GoogleScrapingJob, type: :job do
         user = Fabricate(:user)
         keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
 
-        VCR.use_cassette('google_scraping', record: :none) do
+        VCR.use_cassette('with_top_position_adwords', record: :none) do
           GoogleScrapingJob.perform_now(keyword.id, keyword.keyword)
         end
 
@@ -104,7 +104,7 @@ RSpec.describe GoogleScrapingJob, type: :job do
         user = Fabricate(:user)
         keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
 
-        VCR.use_cassette('google_scraping', record: :none) do
+        VCR.use_cassette('with_top_position_adwords', record: :none) do
           GoogleScrapingJob.perform_now(keyword.id, keyword.keyword)
         end
 
@@ -118,7 +118,7 @@ RSpec.describe GoogleScrapingJob, type: :job do
         user = Fabricate(:user)
         keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
 
-        VCR.use_cassette('google_scraping', record: :none) do
+        VCR.use_cassette('with_top_position_adwords', record: :none) do
           GoogleScrapingJob.perform_now(keyword.id, keyword.keyword)
         end
 
@@ -138,7 +138,7 @@ RSpec.describe GoogleScrapingJob, type: :job do
 
         allow(subject).to receive(:create_top_position_adword_links).and_raise(ActiveRecord::Rollback)
 
-        VCR.use_cassette('google_scraping', record: :none) do
+        VCR.use_cassette('with_top_position_adwords', record: :none) do
           subject.perform(keyword.id, keyword.keyword)
         end
 
@@ -160,7 +160,7 @@ RSpec.describe GoogleScrapingJob, type: :job do
 
         allow(subject).to receive(:create_non_adword_links).and_raise(ActiveRecord::Rollback)
 
-        VCR.use_cassette('google_scraping', record: :none) do
+        VCR.use_cassette('with_top_position_adwords', record: :none) do
           subject.perform(keyword.id, keyword.keyword)
         end
 
