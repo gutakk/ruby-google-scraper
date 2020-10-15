@@ -8,7 +8,7 @@ RSpec.describe GoogleScrapingJob, type: :job do
   ActiveJob::Base.queue_adapter = :test
 
   describe '#perform' do
-    context 'given valid keyword' do
+    context 'given valid keyword (with top position adwords)' do
       it 'enqueues google scraping job' do
         VCR.use_cassette('google_scraping', record: :none) do
           user = Fabricate(:user)
@@ -172,6 +172,34 @@ RSpec.describe GoogleScrapingJob, type: :job do
         expect(result.non_adwords).to be_nil
         expect(result.links).to be_nil
         expect(result.html_code).to be_nil
+      end
+    end
+
+    context 'given non ascii keyword' do
+      it 'does NOT raise an error when construct URI' do
+        user = Fabricate(:user)
+        keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'สวัสดี')
+
+        VCR.use_cassette('non_ascii_keyword', record: :none) do
+          expect do
+            GoogleScrapingJob.perform_now(keyword.id, keyword.keyword)
+          end.not_to raise_error(URI::InvalidURIError)
+        end
+      end
+    end
+
+    context 'given invalid keyword' do
+      context 'given no top position adword keyword' do
+        it 'does NOT raise an error when try to bulk insert to top position adwords' do
+          user = Fabricate(:user)
+          keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'Eden Hazard')
+
+          VCR.use_cassette('no_top_position_adword', record: :none) do
+            expect do
+              GoogleScrapingJob.perform_now(keyword.id, keyword.keyword)
+            end.not_to raise_error(ArgumentError)
+          end
+        end
       end
     end
   end
