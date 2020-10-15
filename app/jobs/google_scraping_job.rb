@@ -3,24 +3,23 @@
 require 'httparty'
 require 'nokogiri'
 
-class GoogleScrapingWorker
-  include Sidekiq::Worker
-  include ActiveModel::Model
-  include ActiveModel::Attributes
+class GoogleScrapingJob < ApplicationJob
+  # include ActiveModel::Model
+  # include ActiveModel::Attributes
 
-  attribute :keyword_id
-  attribute :keyword
+  # attribute :keyword_id
+  # attribute :keyword
 
-  def perform(attributes)
-    assign_attributes(attributes)
+  def perform(keyword_id, keyword)
+    # assign_attributes(attributes)
 
-    scrap_from_google
-    store_result
+    scrap_from_google(keyword)
+    store_result(keyword_id)
   end
 
   private
 
-  def scrap_from_google
+  def scrap_from_google(keyword)
     uri = URI("https://www.google.com/search?q=#{keyword}")
     user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) ' \
     'Chrome/85.0.4183.121 Safari/537.36'
@@ -29,7 +28,7 @@ class GoogleScrapingWorker
     @parse_page = Nokogiri::HTML(response)
   end
 
-  def store_result
+  def store_result(keyword_id)
     ActiveRecord::Base.transaction do
       Keyword.where(id: keyword_id).update(
         status: 'processed',
@@ -40,12 +39,12 @@ class GoogleScrapingWorker
         html_code: @parse_page
       )
 
-      create_top_position_adword_links
-      create_non_adword_links
+      create_top_position_adword_links(keyword_id)
+      create_non_adword_links(keyword_id)
     end
   end
 
-  def create_top_position_adword_links
+  def create_top_position_adword_links(keyword_id)
     return if fetch_top_position_adwords_links.blank?
 
     bulk_data = []
@@ -64,7 +63,7 @@ class GoogleScrapingWorker
     # rubocop:enable Rails/SkipsModelValidations
   end
 
-  def create_non_adword_links
+  def create_non_adword_links(keyword_id)
     return if fetch_non_adword_links.blank?
 
     bulk_data = []
