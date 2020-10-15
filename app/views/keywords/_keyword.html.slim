@@ -5,5 +5,5 @@ tr
     - if keyword.status == 'processing'
       == fa_icon 'spinner spin', class: "text-secondary"
     - elsif keyword.status == 'processed'
-      == link_to k
+      == link_to keyword
         == fa_icon 'info-circle', class: "text-success"
