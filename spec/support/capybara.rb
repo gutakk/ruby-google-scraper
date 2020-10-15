@@ -44,3 +44,4 @@ end
 
 Capybara.javascript_driver = :chrome
 Capybara.default_max_wait_time = CAPYBARA_TIMEOUT
+Capybara.raise_server_errors = false
