@@ -8,5 +8,6 @@ div class="d-flex flex-column align-items-center"
         tr
           th = t('keyword.keyword')
           th = t('keyword.created_at')
+          th.text-center = t('keyword.status')
       tbody
         = render(partial: 'keyword', collection: keywords)
