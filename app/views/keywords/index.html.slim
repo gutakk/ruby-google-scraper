@@ -9,7 +9,4 @@ div class="d-flex flex-column align-items-center"
           th = t('keyword.keyword')
           th = t('keyword.created_at')
       tbody
-        - keywords.each do |k|
-          tr
-            td = k.keyword
-            td = k.created_at.to_date
+        = render(partial: 'keyword', collection: keywords)
