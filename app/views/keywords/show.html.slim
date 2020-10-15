@@ -28,20 +28,18 @@ div class="d-flex flex-column align-items-center mt-4"
     - if top_position_adword_links.present?
       hr class="w-75 my-5"
       h2 = t('keyword.top_pos_adword_links').titleize
-      ul class="mt-4 w-75 text-break"
-        - top_position_adword_links.each do |nal|
-          li = link_to nil, nal.link, target: :_blank
+      ul id="topPosAdwordLinks" class="mt-4 w-75 text-break"
+        = render(partial: 'link', collection: top_position_adword_links)
 
     - if non_adword_links.present?
       hr class="w-75 my-5"
       h2 = t('keyword.non_adword_links').titleize
-      ul class="mt-4 w-75 text-break"
-        - non_adword_links.each do |nal|
-          li = link_to nil, nal.link, target: :_blank
+      ul id="nonAdwordLinks" class="mt-4 w-75 text-break"
+        = render(partial: 'link', collection: non_adword_links)
 
     hr class="w-75 my-5"
     h2 = t('keyword.google_html')
-    div class="w-100 overflow-hidden"
+    div id="googleHtml" class="w-100 overflow-hidden"
       == keyword.html_code
       
   - else
