@@ -4,15 +4,7 @@ require 'httparty'
 require 'nokogiri'
 
 class GoogleScrapingJob < ApplicationJob
-  # include ActiveModel::Model
-  # include ActiveModel::Attributes
-
-  # attribute :keyword_id
-  # attribute :keyword
-
   def perform(keyword_id, keyword)
-    # assign_attributes(attributes)
-
     scrap_from_google(keyword)
     store_result(keyword_id)
   end
