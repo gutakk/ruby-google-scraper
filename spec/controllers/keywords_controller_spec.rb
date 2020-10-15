@@ -4,6 +4,8 @@ require 'rails_helper'
 require 'sidekiq/testing'
 
 RSpec.describe KeywordsController, type: :controller do
+  ActiveJob::Base.queue_adapter = :test
+
   describe 'GET#index' do
     context 'given authenticated user' do
       it 'returns a successful response' do
@@ -122,7 +124,7 @@ RSpec.describe KeywordsController, type: :controller do
 
           expect do
             post :create, params: { csv_import_form: { file: file } }
-          end.to change(GoogleScrapingJobWorker.jobs, :size).by(1)
+          end.to have_enqueued_job(GoogleScrapingJobManagementJob)
         end
       end
 
@@ -165,7 +167,7 @@ RSpec.describe KeywordsController, type: :controller do
 
             expect do
               post :create, params: { csv_import_form: { file: file } }
-            end.to change(GoogleScrapingJobWorker.jobs, :size).by(0)
+            end.not_to have_enqueued_job(GoogleScrapingJobManagementJob)
           end
         end
 
@@ -207,7 +209,7 @@ RSpec.describe KeywordsController, type: :controller do
 
             expect do
               post :create, params: { csv_import_form: { file: file } }
-            end.to change(GoogleScrapingJobWorker.jobs, :size).by(0)
+            end.not_to have_enqueued_job(GoogleScrapingJobManagementJob)
           end
         end
 
@@ -249,7 +251,7 @@ RSpec.describe KeywordsController, type: :controller do
 
             expect do
               post :create, params: { csv_import_form: { file: file } }
-            end.to change(GoogleScrapingJobWorker.jobs, :size).by(0)
+            end.not_to have_enqueued_job(GoogleScrapingJobManagementJob)
           end
         end
       end
