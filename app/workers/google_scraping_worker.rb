@@ -46,6 +46,8 @@ class GoogleScrapingWorker
   end
 
   def create_top_position_adword_links
+    return if fetch_top_position_adwords_links.blank?
+
     bulk_data = []
 
     fetch_top_position_adwords_links.each do |link|
@@ -63,6 +65,8 @@ class GoogleScrapingWorker
   end
 
   def create_non_adword_links
+    return if fetch_non_adword_links.blank?
+
     bulk_data = []
 
     fetch_non_adword_links.each do |link|
