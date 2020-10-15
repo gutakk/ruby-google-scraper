@@ -10,16 +10,16 @@ RSpec.describe GoogleScrapingJob, type: :job do
   describe '#perform' do
     context 'given valid keyword (with top position adwords)' do
       it 'enqueues google scraping job' do
-        VCR.use_cassette('with_top_position_adwords', record: :none) do
-          user = Fabricate(:user)
-          keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
+        user = Fabricate(:user)
+        keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
 
+        VCR.use_cassette('with_top_position_adwords', record: :none) do
           expect do
             GoogleScrapingJob.perform_later(keyword.id, keyword.keyword)
           end.to have_enqueued_job(GoogleScrapingJob)
-
-          assert_enqueued_with(job: GoogleScrapingJob, args: [keyword.id, 'AWS'])
         end
+
+        assert_enqueued_with(job: GoogleScrapingJob, args: [keyword.id, 'AWS'])
       end
 
       it 'updates status to processed' do
