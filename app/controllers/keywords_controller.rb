@@ -11,6 +11,8 @@ class KeywordsController < ApplicationController
     }
   end
 
+  def show; end
+
   def create
     if @csv_import_form.save(create_params)
       redirect_to keywords_path, notice: t('keyword.upload_csv_successfully')
