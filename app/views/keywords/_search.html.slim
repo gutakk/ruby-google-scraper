@@ -1,6 +1,5 @@
 
 = form_tag(keywords_path, method: :get, id: 'searchForm', class: 'border-0 p-0 mt-5')
   .input-group
-    = text_field_tag :search, params[:search], autocomplete: 'off', placeholder: 'Search keywords', class: 'form-control'
-    = submit_tag :search
-
+    = text_field_tag :search, params[:search], autocomplete: 'off', placeholder: t('keyword.search_keywords'), class: 'form-control'
+    = submit_tag t('keyword.search')
