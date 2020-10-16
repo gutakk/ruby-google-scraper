@@ -21,7 +21,7 @@ class KeywordsController < ApplicationController
         non_adword_links: keyword.non_adword_links.all
       }
     else
-      render plain: t('keyword.not_found'), status: :not_found
+      render 'not_found', status: :not_found
     end
   end
 
