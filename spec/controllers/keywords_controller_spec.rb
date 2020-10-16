@@ -69,6 +69,15 @@ RSpec.describe KeywordsController, type: :controller do
 
           expect(response).to be_not_found
         end
+
+        it 'renders not found template' do
+          user = Fabricate(:user)
+          session[:user_id] = user[:id]
+
+          get :show, params: { id: 'not_found_id' }
+
+          expect(response).to render_template(:not_found)
+        end
       end
     end
 
