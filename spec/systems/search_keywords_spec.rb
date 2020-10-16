@@ -136,6 +136,8 @@ describe 'search keywords', type: :system do
       end
 
       expect(page).not_to have_selector('table')
+
+      expect(page).to have_content(I18n.t('keyword.no_keywords'))
     end
   end
 end

@@ -12,6 +12,8 @@ describe 'views keyword list', type: :system do
       system_login
 
       expect(current_path).to eql(keywords_path)
+      expect(page).to have_content(I18n.t('keyword.no_keywords'))
+
       expect(page).not_to have_selector('table')
     end
 
@@ -68,6 +70,8 @@ describe 'views keyword list', type: :system do
       system_login(user2.username, 'password')
 
       expect(current_path).to eql(keywords_path)
+      expect(page).to have_content(I18n.t('keyword.no_keywords'))
+
       expect(page).not_to have_selector('table')
     end
 
