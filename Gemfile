@@ -26,7 +26,6 @@ gem 'slim'
 # Assets
 gem 'webpacker', '~>5.2.0' # Transpile app-like JavaScript
 gem 'sass-rails' # SASS
-gem "font-awesome-rails" # Fontawesome
 
 # Translations
 # gem 'rails-i18n', '~> 6.0.0' # Translations for Rails
