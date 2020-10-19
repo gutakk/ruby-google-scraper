@@ -22,7 +22,8 @@ class GoogleScrapingJob < ApplicationJob
 
   def store_result(keyword_id)
     ActiveRecord::Base.transaction do
-      Keyword.where(id: keyword_id).update(
+      Keyword.update(
+        keyword_id,
         status: 'processed',
         top_pos_adwords: count_top_position_adwords,
         adwords: count_total_adwords,
