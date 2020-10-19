@@ -7,7 +7,7 @@ require('@rails/ujs').start();
 require('@rails/activestorage').start();
 require('channels');
 require('bootstrap.native');
-require('@fortawesome/fontawesome-free/js/all')
+require('@fortawesome/fontawesome-free/js/all');
 
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
