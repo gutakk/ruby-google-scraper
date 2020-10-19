@@ -2,8 +2,8 @@ tr
   td = keyword.keyword
   td = keyword.created_at.to_date
   td.text-center
-    - if keyword.status == 'processing'
+    - if keyword.status == 'in_queue'
       i class="fas fa-spinner fa-spin text-secondary"
-    - elsif keyword.status == 'processed'
+    - elsif keyword.status == 'completed'
       == link_to keyword
         i class="fas fa-info-circle text-success"

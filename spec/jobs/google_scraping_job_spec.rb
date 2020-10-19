@@ -22,7 +22,7 @@ RSpec.describe GoogleScrapingJob, type: :job do
         assert_enqueued_with(job: GoogleScrapingJob, args: [keyword.id, 'AWS'])
       end
 
-      it 'updates status to processed' do
+      it 'updates status to completed' do
         user = Fabricate(:user)
         keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
 
@@ -32,7 +32,7 @@ RSpec.describe GoogleScrapingJob, type: :job do
 
         result = Keyword.find_by(id: keyword.id)
 
-        expect(result.status).to eql('processed')
+        expect(result.status).to eql('completed')
       end
 
       it 'updates top position adword count scraping result' do
@@ -144,7 +144,7 @@ RSpec.describe GoogleScrapingJob, type: :job do
 
         result = Keyword.find_by(id: keyword.id)
 
-        expect(result.status).to eql('processing')
+        expect(result.status).to eql('in_queue')
         expect(result.top_pos_adwords).to be_nil
         expect(result.adwords).to be_nil
         expect(result.non_adwords).to be_nil
@@ -166,7 +166,7 @@ RSpec.describe GoogleScrapingJob, type: :job do
 
         result = Keyword.find_by(id: keyword.id)
 
-        expect(result.status).to eql('processing')
+        expect(result.status).to eql('in_queue')
         expect(result.top_pos_adwords).to be_nil
         expect(result.adwords).to be_nil
         expect(result.non_adwords).to be_nil

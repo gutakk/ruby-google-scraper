@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 2020_10_05_065240) do
     t.string "keyword", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "status", default: "processing"
+    t.integer "status", default: 0
     t.integer "top_pos_adwords"
     t.integer "adwords"
     t.integer "non_adwords"

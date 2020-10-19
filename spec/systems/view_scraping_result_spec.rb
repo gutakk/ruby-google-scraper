@@ -6,7 +6,7 @@ describe 'views scraping result', type: :system do
   include ActiveJob::TestHelper
   ActiveJob::Base.queue_adapter = :test
 
-  context 'given processed scraping status' do
+  context 'given completed scraping status' do
     it 'displays google scraping result page' do
       user = Fabricate(:user)
       file_path = Rails.root.join('spec', 'fabricators', 'files', 'adword_keywords.csv')
@@ -73,7 +73,7 @@ describe 'views scraping result', type: :system do
     end
   end
 
-  context 'given processing scraping status' do
+  context 'given in_queue scraping status' do
     it 'displays spinner in result page' do
       user = Fabricate(:user)
       file_path = Rails.root.join('spec', 'fabricators', 'files', 'adword_keywords.csv')

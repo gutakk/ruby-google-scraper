@@ -126,7 +126,7 @@ describe 'views keyword list', type: :system do
       end
     end
 
-    it 'displays information link when background job processed' do
+    it 'displays information link when background job completed' do
       user = Fabricate(:user)
       file_path = Rails.root.join('spec', 'fabricators', 'files', 'adword_keywords.csv')
 

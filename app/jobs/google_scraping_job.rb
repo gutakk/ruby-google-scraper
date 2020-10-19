@@ -24,7 +24,7 @@ class GoogleScrapingJob < ApplicationJob
     ActiveRecord::Base.transaction do
       Keyword.update(
         keyword_id,
-        status: 'processed',
+        status: :completed,
         top_pos_adwords: count_top_position_adwords,
         adwords: count_total_adwords,
         non_adwords: count_non_adwords,
