@@ -5,6 +5,8 @@
   = render(partial: 'search_form')
 
   - if keywords.present?
+    == paginate keywords
+    
     table class="table table-hover my-5 w-50"
       thead.thead-light
         tr
