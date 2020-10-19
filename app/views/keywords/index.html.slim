@@ -1,0 +1,12 @@
+div class="d-flex flex-column align-items-center"
+
+  = render(partial: 'upload_csv', locals: { csv_import_form: csv_import_form })
+
+  - if keywords.present?
+    table class="table table-hover my-5 w-50"
+      thead.thead-light
+        tr
+          th = t('keyword.keyword')
+          th = t('keyword.created_at')
+      tbody
+        = render(partial: 'keyword', collection: keywords)
