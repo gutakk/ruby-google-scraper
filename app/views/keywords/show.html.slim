@@ -7,22 +7,22 @@ div class="d-flex flex-column align-items-center mt-4"
       .card id="topPosAdwordsCount"
         .card-body
           .display-4 = keyword.top_pos_adwords
-        .card-info = t('keyword.top_pos_adwords').upcase
+        .card-info = t('keyword.top_pos_adwords')
 
       .card id="adwordsCount"
         .card-body
           .display-4 = keyword.adwords
-        .card-info = t('keyword.adwords').upcase
+        .card-info = t('keyword.adwords')
 
       .card id="nonAdwordsCount"
         .card-body
           .display-4 = keyword.non_adwords
-        .card-info = t('keyword.non_adwords').upcase
+        .card-info = t('keyword.non_adwords')
 
       .card id="linksCount"
         .card-body
           .display-4 = keyword.links
-        .card-info = t('keyword.links').upcase
+        .card-info = t('keyword.links')
 
     - if keyword.top_pos_adword_links.present?
       hr class="w-75 my-5"
