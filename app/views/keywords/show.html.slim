@@ -2,7 +2,7 @@ div class="d-flex flex-column align-items-center mt-4"
 
   h1.display-3 == keyword.keyword
 
-  - if keyword.status == 'completed'
+  - if keyword.completed?
     div class="d-flex mt-5 w-100 justify-content-center"
       div id="topPosAdwordsCount" class="card"
         div class="card-body" 
@@ -41,11 +41,11 @@ div class="d-flex flex-column align-items-center mt-4"
     div id="googleHtml" class="w-100 overflow-hidden"
       == keyword.html_code
       
-  - elsif keyword.status == 'in_queue'
+  - elsif keyword.in_queue?
     div class="display-2 mt-5"
       i class="fas fa-spinner fa-spin text-secondary"
 
-  - elsif keyword.status == 'failed'
+  - elsif keyword.failed?
     div class="mt-5"
       div class="alert alert-danger"
         = t('app.something_went_wrong')

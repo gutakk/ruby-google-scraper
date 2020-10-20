@@ -2,11 +2,11 @@ tr
   td = keyword.keyword
   td = keyword.created_at.to_date
   td.text-center
-    - if keyword.status == 'in_queue'
+    - if keyword.in_queue?
       i class="fas fa-spinner fa-spin text-secondary"
-    - elsif keyword.status == 'completed'
+    - elsif keyword.completed?
       == link_to keyword
         i class="fas fa-info-circle text-success"
-    - elsif keyword.status == 'failed'
+    - elsif keyword.failed?
       == link_to keyword
         i class="fas fa-exclamation-circle text-danger"
