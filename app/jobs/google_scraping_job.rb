@@ -31,19 +31,17 @@ class GoogleScrapingJob < ApplicationJob
   end
 
   def store_result(keyword_id)
-    ActiveRecord::Base.transaction do
-      Keyword.update(
-        keyword_id,
-        status: :completed,
-        top_pos_adwords: count_top_position_adwords,
-        adwords: count_total_adwords,
-        non_adwords: count_non_adwords,
-        links: count_links,
-        html_code: @parse_page,
-        top_pos_adword_links: fetch_top_position_adwords_links,
-        non_adword_links: fetch_non_adword_links
-      )
-    end
+    Keyword.update(
+      keyword_id,
+      status: :completed,
+      top_pos_adwords: count_top_position_adwords,
+      adwords: count_total_adwords,
+      non_adwords: count_non_adwords,
+      links: count_links,
+      html_code: @parse_page,
+      top_pos_adword_links: fetch_top_position_adwords_links,
+      non_adword_links: fetch_non_adword_links
+    )
   end
 
   def count_top_position_adwords
