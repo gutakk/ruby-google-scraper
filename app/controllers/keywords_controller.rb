@@ -12,15 +12,11 @@ class KeywordsController < ApplicationController
   end
 
   def show
-    keyword = Keyword.find_by(id: params[:id])
+    keyword = Keyword.find(params[:id])
 
-    if keyword.present?
-      render locals: {
-        keyword: keyword
-      }
-    else
-      render :not_found, status: :not_found
-    end
+    render locals: {
+      keyword: keyword
+    }
   end
 
   def create

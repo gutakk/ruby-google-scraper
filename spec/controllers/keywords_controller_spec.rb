@@ -61,22 +61,13 @@ RSpec.describe KeywordsController, type: :controller do
       end
 
       context 'given incorrect keyword id' do
-        it 'returns not found response' do
+        it 'raises ActiveRecord::RecordNotFound' do
           user = Fabricate(:user)
           session[:user_id] = user[:id]
 
-          get :show, params: { id: 'not_found_id' }
-
-          expect(response).to be_not_found
-        end
-
-        it 'renders not found template' do
-          user = Fabricate(:user)
-          session[:user_id] = user[:id]
-
-          get :show, params: { id: 'not_found_id' }
-
-          expect(response).to render_template(:not_found)
+          expect do
+            get :show, params: { id: 'not_found_id' }
+          end.to raise_error(ActiveRecord::RecordNotFound)
         end
       end
     end
