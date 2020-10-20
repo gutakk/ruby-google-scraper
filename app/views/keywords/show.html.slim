@@ -25,17 +25,17 @@ div class="d-flex flex-column align-items-center mt-4"
         div class="card-info" = t('keyword.links').upcase
     
 
-    - if top_position_adword_links.present?
+    - if keyword.top_pos_adword_links.present?
       hr class="w-75 my-5"
       h2 = t('keyword.top_pos_adword_links').titleize
       ul id="topPosAdwordLinks" class="mt-4 w-75 text-break"
-        = render(partial: 'link', collection: top_position_adword_links)
+        = render(partial: 'link', collection: keyword.top_pos_adword_links)
 
-    - if non_adword_links.present?
+    - if keyword.non_adword_links.present?
       hr class="w-75 my-5"
       h2 = t('keyword.non_adword_links').titleize
       ul id="nonAdwordLinks" class="mt-4 w-75 text-break"
-        = render(partial: 'link', collection: non_adword_links)
+        = render(partial: 'link', collection: keyword.non_adword_links)
 
     hr class="w-75 my-5"
     h2 = t('keyword.google_html')

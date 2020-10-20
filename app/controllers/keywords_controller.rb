@@ -16,9 +16,7 @@ class KeywordsController < ApplicationController
 
     if keyword.present?
       render locals: {
-        keyword: keyword,
-        top_position_adword_links: keyword.top_position_adword_links.all,
-        non_adword_links: keyword.non_adword_links.all
+        keyword: keyword
       }
     else
       render :not_found, status: :not_found
