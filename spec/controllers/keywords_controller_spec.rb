@@ -124,7 +124,7 @@ RSpec.describe KeywordsController, type: :controller do
 
           expect do
             post :create, params: { csv_import_form: { file: file } }
-          end.to have_enqueued_job(InitiateGoogleScrapingBgProcessJob)
+          end.to have_enqueued_job(ScrapingProcessDistributingJob)
         end
       end
 
@@ -167,7 +167,7 @@ RSpec.describe KeywordsController, type: :controller do
 
             expect do
               post :create, params: { csv_import_form: { file: file } }
-            end.not_to have_enqueued_job(InitiateGoogleScrapingBgProcessJob)
+            end.not_to have_enqueued_job(ScrapingProcessDistributingJob)
           end
         end
 
@@ -209,7 +209,7 @@ RSpec.describe KeywordsController, type: :controller do
 
             expect do
               post :create, params: { csv_import_form: { file: file } }
-            end.not_to have_enqueued_job(InitiateGoogleScrapingBgProcessJob)
+            end.not_to have_enqueued_job(ScrapingProcessDistributingJob)
           end
         end
 
@@ -251,7 +251,7 @@ RSpec.describe KeywordsController, type: :controller do
 
             expect do
               post :create, params: { csv_import_form: { file: file } }
-            end.not_to have_enqueued_job(InitiateGoogleScrapingBgProcessJob)
+            end.not_to have_enqueued_job(ScrapingProcessDistributingJob)
           end
         end
       end

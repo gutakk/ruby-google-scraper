@@ -146,7 +146,7 @@ describe 'views keyword list', type: :system do
       expect(current_path).to eql(keywords_path)
       expect(page).to have_selector('table')
 
-      assert_enqueued_with(job: InitiateGoogleScrapingBgProcessJob)
+      assert_enqueued_with(job: ScrapingProcessDistributingJob)
 
       VCR.use_cassette('with_top_position_adwords', record: :none) do
         perform_enqueued_jobs
