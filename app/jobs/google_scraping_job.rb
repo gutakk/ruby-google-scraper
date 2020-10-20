@@ -29,50 +29,11 @@ class GoogleScrapingJob < ApplicationJob
         adwords: count_total_adwords,
         non_adwords: count_non_adwords,
         links: count_links,
-        html_code: @parse_page
+        html_code: @parse_page,
+        top_pos_adword_links: fetch_top_position_adwords_links,
+        non_adword_links: fetch_non_adword_links
       )
-
-      create_top_position_adword_links(keyword_id)
-      create_non_adword_links(keyword_id)
     end
-  end
-
-  def create_top_position_adword_links(keyword_id)
-    return if fetch_top_position_adwords_links.blank?
-
-    bulk_data = []
-
-    fetch_top_position_adwords_links.each do |link|
-      bulk_data << {
-        keyword_id: keyword_id,
-        link: link,
-        created_at: Time.current,
-        updated_at: Time.current
-      }
-    end
-
-    # rubocop:disable Rails/SkipsModelValidations
-    TopPositionAdwordLink.insert_all(bulk_data)
-    # rubocop:enable Rails/SkipsModelValidations
-  end
-
-  def create_non_adword_links(keyword_id)
-    return if fetch_non_adword_links.blank?
-
-    bulk_data = []
-
-    fetch_non_adword_links.each do |link|
-      bulk_data << {
-        keyword_id: keyword_id,
-        link: link,
-        created_at: Time.current,
-        updated_at: Time.current
-      }
-    end
-
-    # rubocop:disable Rails/SkipsModelValidations
-    NonAdwordLink.insert_all(bulk_data)
-    # rubocop:enable Rails/SkipsModelValidations
   end
 
   def count_top_position_adwords
