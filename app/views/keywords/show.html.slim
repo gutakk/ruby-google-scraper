@@ -4,25 +4,25 @@ div class="d-flex flex-column align-items-center mt-4"
 
   - if keyword.completed?
     div class="d-flex mt-5 w-100 justify-content-center"
-      div id="topPosAdwordsCount" class="card"
-        div class="card-body" 
+      .card id="topPosAdwordsCount"
+        .card-body
           .display-4 = keyword.top_pos_adwords
-        div class="card-info" = t('keyword.top_pos_adwords').upcase
+        .card-info = t('keyword.top_pos_adwords').upcase
 
-      div id="adwordsCount" class="card"
-        div class="card-body" 
+      .card id="adwordsCount"
+        .card-body
           .display-4 = keyword.adwords
-        div class="card-info" = t('keyword.adwords').upcase
+        .card-info = t('keyword.adwords').upcase
 
-      div id="nonAdwordsCount" class="card"
-        div class="card-body" 
+      .card id="nonAdwordsCount"
+        .card-body
           .display-4 = keyword.non_adwords
-        div class="card-info" = t('keyword.non_adwords').upcase
+        .card-info = t('keyword.non_adwords').upcase
 
-      div id="linksCount" class="card"
-        div class="card-body" 
+      .card id="linksCount"
+        .card-body
           .display-4 = keyword.links
-        div class="card-info" = t('keyword.links').upcase
+        .card-info = t('keyword.links').upcase
 
     - if keyword.top_pos_adword_links.present?
       hr class="w-75 my-5"
@@ -48,6 +48,6 @@ div class="d-flex flex-column align-items-center mt-4"
       i class="fas fa-spinner fa-spin text-secondary"
 
   - elsif keyword.failed?
-    div class="mt-5"
+    .mt-5
       div class="alert alert-danger"
         = t('app.something_went_wrong')

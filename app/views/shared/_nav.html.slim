@@ -3,7 +3,7 @@ nav class="navbar py-4 px-5 bg-dark"
 
   div
     - if authenticated?
-      span class="text-white"
+      span.text-white
         == t('app.greeting_html', username: current_user.username)
 
       li class="nav-item dropdown d-inline-block align-middle"
