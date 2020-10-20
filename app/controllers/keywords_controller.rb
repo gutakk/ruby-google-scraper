@@ -21,7 +21,7 @@ class KeywordsController < ApplicationController
 
   def create
     if @csv_import_form.save(create_params)
-      GoogleScrapingJobManagementJob.perform_later(@csv_import_form.inserted_keywords.rows)
+      InitiateGoogleScrapingBgProcessJob.perform_later(@csv_import_form.inserted_keywords.rows)
 
       redirect_to keywords_path, notice: t('keyword.upload_csv_successfully')
     else

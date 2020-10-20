@@ -2,23 +2,23 @@
 
 require 'rails_helper'
 
-RSpec.describe GoogleScrapingJobManagementJob, type: :job do
+RSpec.describe InitiateGoogleScrapingBgProcessJob, type: :job do
   include ActiveJob::TestHelper
   ActiveJob::Base.queue_adapter = :test
 
   describe '#perform' do
     context 'given valid inserted keywords' do
-      it 'enqueues google scraping job manangement job' do
+      it 'enqueues initiate google scraping background process job' do
         inserted_keywords = [
           [1, 'hello'],
           [2, 'world']
         ]
 
         expect do
-          GoogleScrapingJobManagementJob.perform_later(inserted_keywords)
-        end.to have_enqueued_job(GoogleScrapingJobManagementJob)
+          InitiateGoogleScrapingBgProcessJob.perform_later(inserted_keywords)
+        end.to have_enqueued_job(InitiateGoogleScrapingBgProcessJob)
 
-        assert_enqueued_with(job: GoogleScrapingJobManagementJob, args: [[[1, 'hello'], [2, 'world']]])
+        assert_enqueued_with(job: InitiateGoogleScrapingBgProcessJob, args: [[[1, 'hello'], [2, 'world']]])
       end
 
       it 'enqueues google scraping jobs' do
@@ -27,7 +27,7 @@ RSpec.describe GoogleScrapingJobManagementJob, type: :job do
           [2, 'world']
         ]
         expect do
-          GoogleScrapingJobManagementJob.perform_now(inserted_keywords)
+          InitiateGoogleScrapingBgProcessJob.perform_now(inserted_keywords)
         end.to change { ActiveJob::Base.queue_adapter.enqueued_jobs.size }.by(2)
 
         assert_enqueued_with(job: GoogleScrapingJob, args: [1, 'hello'])

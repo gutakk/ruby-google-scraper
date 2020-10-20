@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class GoogleScrapingJobManagementJob < ApplicationJob
+class InitiateGoogleScrapingBgProcessJob < ApplicationJob
   queue_as :default
 
   def perform(inserted_keywords)
