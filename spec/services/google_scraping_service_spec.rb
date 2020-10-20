@@ -7,7 +7,7 @@ RSpec.describe GoogleScrapingService, type: :service do
   include ActiveJob::TestHelper
   ActiveJob::Base.queue_adapter = :test
 
-  describe '#perform' do
+  describe '#call' do
     context 'given valid keyword (with top position adwords)' do
       it 'updates status to completed' do
         user = Fabricate(:user)
