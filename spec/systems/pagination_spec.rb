@@ -24,9 +24,9 @@ describe 'pagination', type: :system do
 
       click_button(I18n.t('keyword.upload'))
 
-      paginations = all('.pagination')
+      paginations = find('.pagination')
 
-      within paginations[0] do
+      within paginations do
         expect(page).to have_content('1')
         expect(page).to have_content('2')
         expect(page).to have_content('3')
@@ -68,9 +68,9 @@ describe 'pagination', type: :system do
 
       expect(page).to have_current_path(keywords_path(page: 2))
 
-      paginations = all('.pagination')
+      paginations = find('.pagination')
 
-      within paginations[0] do
+      within paginations do
         expect(page).to have_content('1')
         expect(page).to have_content('2')
         expect(page).to have_content('3')
@@ -110,9 +110,9 @@ describe 'pagination', type: :system do
 
       expect(page).to have_current_path(keywords_path(page: 3))
 
-      paginations = all('.pagination')
+      paginations = find('.pagination')
 
-      within paginations[0] do
+      within paginations do
         expect(page).to have_content('1')
         expect(page).to have_content('2')
         expect(page).to have_content('3')
