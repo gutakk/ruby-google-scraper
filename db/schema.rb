@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 2020_10_05_065240) do
     t.text "html_code"
     t.json "top_pos_adword_links"
     t.json "non_adword_links"
+    t.text "failed_reason"
     t.index ["user_id"], name: "index_keywords_on_user_id"
   end
 

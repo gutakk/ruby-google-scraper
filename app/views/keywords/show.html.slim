@@ -42,6 +42,11 @@ div class="d-flex flex-column align-items-center mt-4"
     div id="googleHtml" class="w-100 overflow-hidden"
       == keyword.html_code
       
-  - else
+  - elsif keyword.status == 'in_queue'
     div class="display-2 mt-5"
       i class="fas fa-spinner fa-spin text-secondary"
+
+  - elsif keyword.status == 'failed'
+    div class="mt-5"
+      div class="alert alert-danger"
+        = t('app.something_went_wrong')

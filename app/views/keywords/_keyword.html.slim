@@ -7,3 +7,6 @@ tr
     - elsif keyword.status == 'completed'
       == link_to keyword
         i class="fas fa-info-circle text-success"
+    - elsif keyword.status == 'failed'
+      == link_to keyword
+        i class="fas fa-exclamation-circle text-danger"

@@ -129,17 +129,13 @@ RSpec.describe GoogleScrapingJob, type: :job do
 
     context 'given error raising' do
       it 'rollbacks the transaction' do
-        subject { new GoogleScrapingJob }
-
         user = Fabricate(:user)
         keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
 
-        allow(subject).to receive(:count_top_position_adwords).and_raise(Timeout::Error)
+        allow_any_instance_of(GoogleScrapingJob).to receive(:perform).and_raise(Timeout::Error)
 
         VCR.use_cassette('with_top_position_adwords', record: :none) do
-          expect do
-            subject.perform(keyword.id, keyword.keyword)
-          end.to raise_error(Timeout::Error)
+          GoogleScrapingJob.perform_later(keyword.id, keyword.keyword)
         end
 
         result = Keyword.find_by(id: keyword.id)
@@ -152,6 +148,42 @@ RSpec.describe GoogleScrapingJob, type: :job do
         expect(result.html_code).to be_nil
         expect(result.top_pos_adword_links).to be_nil
         expect(result.non_adword_links).to be_nil
+      end
+
+      context 'given retryable job' do
+        it 'updates status to failed' do
+          user = Fabricate(:user)
+          keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
+
+          allow_any_instance_of(GoogleScrapingJob).to receive(:perform).and_raise(Timeout::Error)
+
+          VCR.use_cassette('with_top_position_adwords', record: :none) do
+            assert_performed_jobs 5 do
+              GoogleScrapingJob.perform_later(keyword.id, keyword.keyword)
+            end
+          end
+
+          result = Keyword.find_by(id: keyword.id)
+
+          expect(result.status).to eql('failed')
+        end
+
+        it 'adds failed reason' do
+          user = Fabricate(:user)
+          keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
+
+          allow_any_instance_of(GoogleScrapingJob).to receive(:perform).and_raise(Timeout::Error)
+
+          VCR.use_cassette('with_top_position_adwords', record: :none) do
+            assert_performed_jobs 5 do
+              GoogleScrapingJob.perform_later(keyword.id, keyword.keyword)
+            end
+          end
+
+          result = Keyword.find_by(id: keyword.id)
+
+          expect(result.failed_reason).to eql('Timeout::Error')
+        end
       end
     end
 
