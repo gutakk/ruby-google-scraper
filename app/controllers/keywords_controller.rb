@@ -6,7 +6,6 @@ class KeywordsController < ApplicationController
 
   # Kaminari default item per page is 25
   def index
-    # TODOs pagination (new ticket)
     render locals: {
       csv_import_form: @csv_import_form,
       keywords: search_keyword
