@@ -31,22 +31,6 @@ ActiveRecord::Schema.define(version: 2020_10_05_065240) do
     t.index ["user_id"], name: "index_keywords_on_user_id"
   end
 
-  create_table "non_adword_links", force: :cascade do |t|
-    t.bigint "keyword_id"
-    t.string "link"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["keyword_id"], name: "index_non_adword_links_on_keyword_id"
-  end
-
-  create_table "top_position_adword_links", force: :cascade do |t|
-    t.bigint "keyword_id"
-    t.string "link"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["keyword_id"], name: "index_top_position_adword_links_on_keyword_id"
-  end
-
   create_table "users", force: :cascade do |t|
     t.string "username", null: false
     t.string "password_digest", null: false
@@ -57,6 +41,4 @@ ActiveRecord::Schema.define(version: 2020_10_05_065240) do
   end
 
   add_foreign_key "keywords", "users"
-  add_foreign_key "non_adword_links", "keywords"
-  add_foreign_key "top_position_adword_links", "keywords"
 end
