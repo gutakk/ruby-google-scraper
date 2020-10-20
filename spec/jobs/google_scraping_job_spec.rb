@@ -100,7 +100,7 @@ RSpec.describe GoogleScrapingJob, type: :job do
         expect(result.html_code).not_to be_nil
       end
 
-      it 'creates top position adword links' do
+      it 'updates top position adword links' do
         user = Fabricate(:user)
         keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
 
@@ -108,13 +108,12 @@ RSpec.describe GoogleScrapingJob, type: :job do
           GoogleScrapingJob.perform_now(keyword.id, keyword.keyword)
         end
 
-        inserted_keyword = Keyword.find_by(id: keyword.id)
-        result = TopPositionAdwordLink.where(keyword_id: keyword.id)
+        result = Keyword.find_by(id: keyword.id)
 
-        expect(inserted_keyword.top_pos_adwords).to eql(result.length)
+        expect(result.top_pos_adword_links.length).to eql(result.top_pos_adwords)
       end
 
-      it 'creates non adword links' do
+      it 'updates non adword links' do
         user = Fabricate(:user)
         keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
 
@@ -122,24 +121,25 @@ RSpec.describe GoogleScrapingJob, type: :job do
           GoogleScrapingJob.perform_now(keyword.id, keyword.keyword)
         end
 
-        inserted_keyword = Keyword.find_by(id: keyword.id)
-        result = NonAdwordLink.where(keyword_id: keyword.id)
+        result = Keyword.find_by(id: keyword.id)
 
-        expect(inserted_keyword.non_adwords).to eql(result.length)
+        expect(result.non_adword_links.length).to eql(result.non_adwords)
       end
     end
 
     context 'given error raising' do
-      it 'rollback the transaction when create top position adword links is raised' do
+      it 'rollbacks the transaction' do
         subject { new GoogleScrapingJob }
 
         user = Fabricate(:user)
         keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
 
-        allow(subject).to receive(:create_top_position_adword_links).and_raise(ActiveRecord::Rollback)
+        allow(subject).to receive(:count_top_position_adwords).and_raise(Timeout::Error)
 
         VCR.use_cassette('with_top_position_adwords', record: :none) do
-          subject.perform(keyword.id, keyword.keyword)
+          expect do
+            subject.perform(keyword.id, keyword.keyword)
+          end.to raise_error(Timeout::Error)
         end
 
         result = Keyword.find_by(id: keyword.id)
@@ -150,28 +150,8 @@ RSpec.describe GoogleScrapingJob, type: :job do
         expect(result.non_adwords).to be_nil
         expect(result.links).to be_nil
         expect(result.html_code).to be_nil
-      end
-
-      it 'rollback the transaction when create non adword links is raised' do
-        subject { new GoogleScrapingJob }
-
-        user = Fabricate(:user)
-        keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
-
-        allow(subject).to receive(:create_non_adword_links).and_raise(ActiveRecord::Rollback)
-
-        VCR.use_cassette('with_top_position_adwords', record: :none) do
-          subject.perform(keyword.id, keyword.keyword)
-        end
-
-        result = Keyword.find_by(id: keyword.id)
-
-        expect(result.status).to eql('in_queue')
-        expect(result.top_pos_adwords).to be_nil
-        expect(result.adwords).to be_nil
-        expect(result.non_adwords).to be_nil
-        expect(result.links).to be_nil
-        expect(result.html_code).to be_nil
+        expect(result.top_pos_adword_links).to be_nil
+        expect(result.non_adword_links).to be_nil
       end
     end
 
