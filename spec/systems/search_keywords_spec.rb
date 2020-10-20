@@ -46,7 +46,7 @@ describe 'search keywords', type: :system do
     end
   end
 
-  context 'given unmatch search keyword' do
+  context 'given partially match search keyword' do
     it 'displays searched keywords' do
       user = Fabricate(:user)
       keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
@@ -87,7 +87,7 @@ describe 'search keywords', type: :system do
     end
   end
 
-  context 'given exactly match search keyword' do
+  context 'given unmatch search keyword' do
     it 'displays searched keywords' do
       user = Fabricate(:user)
       keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
