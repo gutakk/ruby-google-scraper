@@ -6,5 +6,7 @@ class AddResultToKeyword < ActiveRecord::Migration[6.0]
     add_column :keywords, :non_adwords, :int
     add_column :keywords, :links, :int
     add_column :keywords, :html_code, :text
+    add_column :keywords, :top_pos_adword_links, :json
+    add_column :keywords, :non_adword_links, :json
   end
 end
