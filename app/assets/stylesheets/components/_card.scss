@@ -4,7 +4,7 @@
   text-align: center;
   border-radius: 0.5rem;
 
-  .card-body {
+  &__body {
     display: flex;
     height: 11rem;
     color: $light;
@@ -14,7 +14,7 @@
     align-items: center;
   }
 
-  .card-info {
+  &__info {
     display: flex;
     height: 5rem;
     font-size: 80%;

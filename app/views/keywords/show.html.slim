@@ -5,24 +5,24 @@ div class="d-flex flex-column align-items-center mt-4"
   - if keyword.completed?
     div class="d-flex mt-5 w-100 justify-content-center"
       .card id="topPosAdwordsCount"
-        .card-body
+        .card__body
           .display-4 = keyword.top_pos_adwords
-        .card-info = t('keyword.top_pos_adwords')
+        .card__info = t('keyword.top_pos_adwords')
 
       .card id="adwordsCount"
-        .card-body
+        .card__body
           .display-4 = keyword.adwords
-        .card-info = t('keyword.adwords')
+        .card__info = t('keyword.adwords')
 
       .card id="nonAdwordsCount"
-        .card-body
+        .card__body
           .display-4 = keyword.non_adwords
-        .card-info = t('keyword.non_adwords')
+        .card__info = t('keyword.non_adwords')
 
       .card id="linksCount"
-        .card-body
+        .card__body
           .display-4 = keyword.links
-        .card-info = t('keyword.links')
+        .card__info = t('keyword.links')
 
     - if keyword.top_pos_adword_links.present?
       hr class="w-75 my-5"

@@ -60,8 +60,8 @@ describe 'views scraping result', type: :system do
       expect(page).to have_selector('#nonAdwordLinks')
       expect(page).to have_selector('#googleHtml')
 
-      top_position_adwords_count = find('#topPosAdwordsCount .card-body').text.to_i
-      non_adwords_count = find('#nonAdwordsCount .card-body').text.to_i
+      top_position_adwords_count = find('#topPosAdwordsCount .card__body').text.to_i
+      non_adwords_count = find('#nonAdwordsCount .card__body').text.to_i
 
       within '#topPosAdwordLinks' do
         expect(page).to have_selector('li', count: top_position_adwords_count)
