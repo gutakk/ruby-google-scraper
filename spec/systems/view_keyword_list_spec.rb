@@ -22,7 +22,7 @@ describe 'views keyword list', type: :system do
       expect(page).not_to have_selector('table')
     end
 
-    it 'displays ordered keyword list table when upload successfully' do
+    it 'displays ordered keyword list table' do
       user = Fabricate(:user)
       Fabricate(:keyword, user_id: user[:id], keyword: 'Eden Hazard')
       Fabricate(:keyword, user_id: user[:id], keyword: 'Lionel Messi')
