@@ -17,6 +17,19 @@ RSpec.describe GoogleScrapingJob, type: :job do
       assert_enqueued_with(job: GoogleScrapingJob, args: [keyword.id, 'AWS'])
     end
 
+    it 'creates GoogleScrapingService instance' do
+      user = Fabricate(:user)
+      keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
+
+      VCR.use_cassette('with_top_position_adwords', record: :none) do
+        GoogleScrapingJob.perform_now(keyword.id, keyword.keyword)
+      end
+
+      result = Keyword.find(keyword.id)
+
+      expect(result.status).to eql('completed')
+    end
+
     context 'given error raising' do
       it 'retrys the job 5 times' do
         user = Fabricate(:user)
