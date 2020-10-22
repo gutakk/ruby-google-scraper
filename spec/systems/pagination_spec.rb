@@ -5,11 +5,11 @@ require 'rails_helper'
 describe 'pagination', type: :system do
   ActiveJob::Base.queue_adapter = :test
 
-  context 'given 60 keywords csv' do
+  context 'given 60 keywords' do
     # 25 keywords per page
     it 'displays first page' do
       user = Fabricate(:user)
-      file_path = Rails.root.join('spec', 'fabricators', 'files', '60_keywords.csv')
+      Fabricate.times(60, :keyword, user_id: user[:id], keyword: FFaker::Name.name)
 
       visit keywords_path
 
@@ -19,10 +19,6 @@ describe 'pagination', type: :system do
 
         click_button(I18n.t('auth.login'))
       end
-
-      attach_file('csv_import_form[file]', file_path)
-
-      click_button(I18n.t('keyword.upload'))
 
       paginations = find('.pagination')
 
@@ -36,22 +32,16 @@ describe 'pagination', type: :system do
         expect(page).not_to have_content(I18n.t('pagination.prev'))
       end
 
-      within 'table' do
-        within 'tbody' do
-          expect(page).to have_selector('tr', count: 25)
-
-          tr_list = all('tr')
-
-          expect(tr_list[0]).to have_selector('td', text: 'Addie Waters')
-        end
+      within 'table tbody' do
+        expect(page).to have_selector('tr', count: 25)
       end
     end
 
     it 'displays second page' do
       user = Fabricate(:user)
-      file_path = Rails.root.join('spec', 'fabricators', 'files', '60_keywords.csv')
+      Fabricate.times(60, :keyword, user_id: user[:id], keyword: FFaker::Name.name)
 
-      visit keywords_path
+      visit keywords_path(page: 2)
 
       within 'form' do
         fill_in('username', with: user[:username])
@@ -59,12 +49,6 @@ describe 'pagination', type: :system do
 
         click_button(I18n.t('auth.login'))
       end
-
-      attach_file('csv_import_form[file]', file_path)
-
-      click_button(I18n.t('keyword.upload'))
-
-      visit keywords_path(page: 2)
 
       expect(page).to have_current_path(keywords_path(page: 2))
 
@@ -78,22 +62,16 @@ describe 'pagination', type: :system do
         expect(page).to have_content(I18n.t('pagination.prev'))
       end
 
-      within 'table' do
-        within 'tbody' do
-          expect(page).to have_selector('tr', count: 25)
-
-          tr_list = all('tr')
-
-          expect(tr_list[0]).to have_selector('td', text: 'Henrietta Taylor')
-        end
+      within 'table tbody' do
+        expect(page).to have_selector('tr', count: 25)
       end
     end
 
     it 'displays third page' do
       user = Fabricate(:user)
-      file_path = Rails.root.join('spec', 'fabricators', 'files', '60_keywords.csv')
+      Fabricate.times(60, :keyword, user_id: user[:id], keyword: FFaker::Name.name)
 
-      visit keywords_path
+      visit keywords_path(page: 3)
 
       within 'form' do
         fill_in('username', with: user[:username])
@@ -101,12 +79,6 @@ describe 'pagination', type: :system do
 
         click_button(I18n.t('auth.login'))
       end
-
-      attach_file('csv_import_form[file]', file_path)
-
-      click_button(I18n.t('keyword.upload'))
-
-      visit keywords_path(page: 3)
 
       expect(page).to have_current_path(keywords_path(page: 3))
 
@@ -121,22 +93,16 @@ describe 'pagination', type: :system do
         expect(page).not_to have_content(I18n.t('pagination.next'))
       end
 
-      within 'table' do
-        within 'tbody' do
-          expect(page).to have_selector('tr', count: 10)
-
-          tr_list = all('tr')
-
-          expect(tr_list[0]).to have_selector('td', text: 'Rhoda McDonald')
-        end
+      within 'table tbody' do
+        expect(page).to have_selector('tr', count: 10)
       end
     end
 
     it 'does NOT display keywords table when go to page 4' do
       user = Fabricate(:user)
-      file_path = Rails.root.join('spec', 'fabricators', 'files', '60_keywords.csv')
+      Fabricate.times(60, :keyword, user_id: user[:id], keyword: FFaker::Name.name)
 
-      visit keywords_path
+      visit keywords_path(page: 4)
 
       within 'form' do
         fill_in('username', with: user[:username])
@@ -144,12 +110,6 @@ describe 'pagination', type: :system do
 
         click_button(I18n.t('auth.login'))
       end
-
-      attach_file('csv_import_form[file]', file_path)
-
-      click_button(I18n.t('keyword.upload'))
-
-      visit keywords_path(page: 4)
 
       expect(page).not_to have_selector('table')
 
