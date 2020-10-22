@@ -3,148 +3,112 @@
 require 'rails_helper'
 
 RSpec.describe GoogleScrapingService, type: :service do
-  include ActiveJob::TestHelper
+  describe '#initialize' do
+    it 'creates class instance' do
+      google_scraping = GoogleScrapingService.new(1, 'test')
 
-  describe '#call' do
-    context 'given valid keyword (with top position adwords)' do
+      expect(google_scraping.class).to eq(GoogleScrapingService)
+      expect(google_scraping.keyword_id).to eql(1)
+      expect(google_scraping.keyword).to eql('test')
+    end
+  end
+
+  describe '#call!' do
+    context 'given top position adwords keyword' do
       it 'updates status to completed' do
         user = Fabricate(:user)
         keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
+        google_scraping = GoogleScrapingService.new(keyword.id, 'AWS')
 
         VCR.use_cassette('with_top_position_adwords', record: :none) do
-          GoogleScrapingJob.perform_now(keyword.id, keyword.keyword)
+          result = google_scraping.call!
+
+          expect(result.status).to eql('completed')
         end
-
-        result = Keyword.find_by(id: keyword.id)
-
-        expect(result.status).to eql('completed')
       end
 
       it 'updates top position adword count scraping result' do
         user = Fabricate(:user)
         keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
+        google_scraping = GoogleScrapingService.new(keyword.id, 'AWS')
 
         VCR.use_cassette('with_top_position_adwords', record: :none) do
-          GoogleScrapingJob.perform_now(keyword.id, keyword.keyword)
+          result = google_scraping.call!
+
+          expect(result.top_pos_adwords).not_to be_nil
         end
-
-        result = Keyword.find_by(id: keyword.id)
-
-        expect(result.top_pos_adwords).not_to be_nil
       end
 
       it 'updates adword count scraping result' do
         user = Fabricate(:user)
         keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
+        google_scraping = GoogleScrapingService.new(keyword.id, 'AWS')
 
         VCR.use_cassette('with_top_position_adwords', record: :none) do
-          GoogleScrapingJob.perform_now(keyword.id, keyword.keyword)
+          result = google_scraping.call!
+
+          expect(result.adwords).not_to be_nil
         end
-
-        result = Keyword.find_by(id: keyword.id)
-
-        expect(result.adwords).not_to be_nil
       end
 
       it 'updates non adword count scraping result' do
         user = Fabricate(:user)
         keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
+        google_scraping = GoogleScrapingService.new(keyword.id, 'AWS')
 
         VCR.use_cassette('with_top_position_adwords', record: :none) do
-          GoogleScrapingJob.perform_now(keyword.id, keyword.keyword)
+          result = google_scraping.call!
+
+          expect(result.non_adwords).not_to be_nil
         end
-
-        result = Keyword.find_by(id: keyword.id)
-
-        expect(result.non_adwords).not_to be_nil
       end
 
       it 'updates link count scraping result' do
         user = Fabricate(:user)
         keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
+        google_scraping = GoogleScrapingService.new(keyword.id, 'AWS')
 
         VCR.use_cassette('with_top_position_adwords', record: :none) do
-          GoogleScrapingJob.perform_now(keyword.id, keyword.keyword)
+          result = google_scraping.call!
+
+          expect(result.links).not_to be_nil
         end
-
-        result = Keyword.find_by(id: keyword.id)
-
-        expect(result.links).not_to be_nil
       end
 
       it 'updates html code scraping result' do
         user = Fabricate(:user)
         keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
+        google_scraping = GoogleScrapingService.new(keyword.id, 'AWS')
 
         VCR.use_cassette('with_top_position_adwords', record: :none) do
-          GoogleScrapingJob.perform_now(keyword.id, keyword.keyword)
+          result = google_scraping.call!
+
+          expect(result.html_code).not_to be_nil
         end
-
-        result = Keyword.find_by(id: keyword.id)
-
-        expect(result.html_code).not_to be_nil
       end
 
       it 'updates top position adword links' do
         user = Fabricate(:user)
         keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
+        google_scraping = GoogleScrapingService.new(keyword.id, 'AWS')
 
         VCR.use_cassette('with_top_position_adwords', record: :none) do
-          GoogleScrapingJob.perform_now(keyword.id, keyword.keyword)
+          result = google_scraping.call!
+
+          expect(result.top_pos_adword_links.length).to eql(result.top_pos_adwords)
         end
-
-        result = Keyword.find_by(id: keyword.id)
-
-        expect(result.top_pos_adword_links.length).to eql(result.top_pos_adwords)
       end
 
       it 'updates non adword links' do
         user = Fabricate(:user)
         keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
+        google_scraping = GoogleScrapingService.new(keyword.id, 'AWS')
 
         VCR.use_cassette('with_top_position_adwords', record: :none) do
-          GoogleScrapingJob.perform_now(keyword.id, keyword.keyword)
+          result = google_scraping.call!
+
+          expect(result.non_adword_links.length).to eql(result.non_adwords)
         end
-
-        result = Keyword.find_by(id: keyword.id)
-
-        expect(result.non_adword_links.length).to eql(result.non_adwords)
-      end
-    end
-
-    context 'given error raising' do
-      it 'updates status to failed' do
-        user = Fabricate(:user)
-        keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
-
-        allow_any_instance_of(GoogleScrapingService).to receive(:call!).and_raise(Timeout::Error)
-
-        VCR.use_cassette('with_top_position_adwords', record: :none) do
-          perform_enqueued_jobs(only: GoogleScrapingJob) do
-            GoogleScrapingJob.perform_later(keyword.id, keyword.keyword)
-          end
-        end
-
-        result = Keyword.find_by(id: keyword.id)
-
-        expect(result.status).to eql('failed')
-      end
-
-      it 'adds failed reason' do
-        user = Fabricate(:user)
-        keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
-
-        allow_any_instance_of(GoogleScrapingService).to receive(:call!).and_raise(Timeout::Error)
-
-        VCR.use_cassette('with_top_position_adwords', record: :none) do
-          perform_enqueued_jobs(only: GoogleScrapingJob) do
-            GoogleScrapingJob.perform_later(keyword.id, keyword.keyword)
-          end
-        end
-
-        result = Keyword.find_by(id: keyword.id)
-
-        expect(result.failed_reason).to eql('Timeout::Error')
       end
     end
 
@@ -152,12 +116,11 @@ RSpec.describe GoogleScrapingService, type: :service do
       it 'does NOT raise an error when construct URI' do
         user = Fabricate(:user)
         keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'สวัสดี')
+        google_scraping = GoogleScrapingService.new(keyword.id, 'สวัสดี')
 
-        VCR.use_cassette('non_ascii_keyword', record: :none) do
-          expect do
-            GoogleScrapingJob.perform_now(keyword.id, keyword.keyword)
-          end.not_to raise_error(URI::InvalidURIError)
-        end
+        expect do
+          google_scraping.call!
+        end.not_to raise_error(URI::InvalidURIError)
       end
     end
   end

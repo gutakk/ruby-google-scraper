@@ -4,6 +4,8 @@ require 'httparty'
 require 'nokogiri'
 
 class GoogleScrapingService
+  attr_reader :keyword_id, :keyword
+
   def initialize(keyword_id, keyword)
     @keyword_id = keyword_id
     @keyword = keyword
@@ -15,8 +17,6 @@ class GoogleScrapingService
   end
 
   private
-
-  attr_reader :keyword_id, :keyword
 
   def scrap_from_google
     uri = URI.parse("https://www.google.com/search?q=#{CGI.escape(keyword)}")
