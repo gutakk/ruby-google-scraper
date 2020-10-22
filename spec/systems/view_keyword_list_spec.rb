@@ -3,8 +3,6 @@
 require 'rails_helper'
 
 describe 'views keyword list', type: :system do
-  include ActiveJob::TestHelper
-
   context 'given authenticated user' do
     it 'does NOT display table when no keywords' do
       user = Fabricate(:user)
@@ -146,11 +144,7 @@ describe 'views keyword list', type: :system do
     context 'given completed status' do
       it 'displays information icon' do
         user = Fabricate(:user)
-        keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'Eden Hazard')
-
-        VCR.use_cassette('with_top_position_adwords', record: :none) do
-          GoogleScrapingJob.perform_now(keyword.id, keyword.keyword)
-        end
+        Fabricate(:keyword, user_id: user[:id], keyword: 'Eden Hazard', status: :completed)
 
         visit keywords_path
 
@@ -163,8 +157,6 @@ describe 'views keyword list', type: :system do
 
         expect(current_path).to eql(keywords_path)
         expect(page).to have_selector('table')
-
-        visit keywords_path
 
         within 'table tbody' do
           expect(page).to have_selector('tr', count: 1)
@@ -179,15 +171,7 @@ describe 'views keyword list', type: :system do
     context 'given failed status' do
       it 'displays error icon' do
         user = Fabricate(:user)
-        keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'Eden Hazard')
-
-        allow_any_instance_of(GoogleScrapingJob).to receive(:perform).and_raise(Timeout::Error)
-
-        VCR.use_cassette('with_top_position_adwords', record: :none) do
-          perform_enqueued_jobs(only: GoogleScrapingJob) do
-            GoogleScrapingJob.perform_later(keyword.id, keyword.keyword)
-          end
-        end
+        Fabricate(:keyword, user_id: user[:id], keyword: 'Eden Hazard', status: :failed)
 
         visit keywords_path
 
