@@ -8,7 +8,7 @@ describe 'search keywords', type: :system do
   context 'given exactly match search keyword' do
     it 'displays searched keywords' do
       user = Fabricate(:user)
-      keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
+      Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
 
       visit keywords_path
 
@@ -21,12 +21,6 @@ describe 'search keywords', type: :system do
 
       expect(current_path).to eql(keywords_path)
       expect(page).to have_selector('table')
-
-      VCR.use_cassette('with_top_position_adwords', record: :none) do
-        GoogleScrapingJob.perform_now(keyword.id, keyword.keyword)
-      end
-
-      visit keywords_path
 
       within '#searchForm' do
         fill_in('search', with: 'AWS')
@@ -49,7 +43,7 @@ describe 'search keywords', type: :system do
   context 'given partially match search keyword' do
     it 'displays searched keywords' do
       user = Fabricate(:user)
-      keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
+      Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
 
       visit keywords_path
 
@@ -62,12 +56,6 @@ describe 'search keywords', type: :system do
 
       expect(current_path).to eql(keywords_path)
       expect(page).to have_selector('table')
-
-      VCR.use_cassette('with_top_position_adwords', record: :none) do
-        GoogleScrapingJob.perform_now(keyword.id, keyword.keyword)
-      end
-
-      visit keywords_path
 
       within '#searchForm' do
         fill_in('search', with: 'AW')
@@ -90,7 +78,7 @@ describe 'search keywords', type: :system do
   context 'given unmatch search keyword' do
     it 'displays searched keywords' do
       user = Fabricate(:user)
-      keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
+      Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
 
       visit keywords_path
 
@@ -103,12 +91,6 @@ describe 'search keywords', type: :system do
 
       expect(current_path).to eql(keywords_path)
       expect(page).to have_selector('table')
-
-      VCR.use_cassette('with_top_position_adwords', record: :none) do
-        GoogleScrapingJob.perform_now(keyword.id, keyword.keyword)
-      end
-
-      visit keywords_path
 
       within '#searchForm' do
         fill_in('search', with: 'AWSSSSS')
