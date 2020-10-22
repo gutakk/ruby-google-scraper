@@ -119,10 +119,10 @@ RSpec.describe GoogleScrapingService, type: :service do
         user = Fabricate(:user)
         keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
 
-        allow_any_instance_of(GoogleScrapingJob).to receive(:perform).and_raise(Timeout::Error)
+        allow_any_instance_of(GoogleScrapingService).to receive(:call!).and_raise(Timeout::Error)
 
         VCR.use_cassette('with_top_position_adwords', record: :none) do
-          assert_performed_jobs 5 do
+          perform_enqueued_jobs(only: GoogleScrapingJob) do
             GoogleScrapingJob.perform_later(keyword.id, keyword.keyword)
           end
         end
@@ -136,10 +136,10 @@ RSpec.describe GoogleScrapingService, type: :service do
         user = Fabricate(:user)
         keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
 
-        allow_any_instance_of(GoogleScrapingJob).to receive(:perform).and_raise(Timeout::Error)
+        allow_any_instance_of(GoogleScrapingService).to receive(:call!).and_raise(Timeout::Error)
 
         VCR.use_cassette('with_top_position_adwords', record: :none) do
-          assert_performed_jobs 5 do
+          perform_enqueued_jobs(only: GoogleScrapingJob) do
             GoogleScrapingJob.perform_later(keyword.id, keyword.keyword)
           end
         end

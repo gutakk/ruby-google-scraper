@@ -7,16 +7,29 @@ RSpec.describe GoogleScrapingJob, type: :job do
   ActiveJob::Base.queue_adapter = :test
 
   describe '#perform' do
-    context 'given valid keyword (with top position adwords)' do
-      it 'enqueues google scraping job' do
+    it 'enqueues google scraping job' do
+      user = Fabricate(:user)
+      keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
+
+      expect do
+        GoogleScrapingJob.perform_later(keyword.id, keyword.keyword)
+      end.to have_enqueued_job(GoogleScrapingJob)
+
+      assert_enqueued_with(job: GoogleScrapingJob, args: [keyword.id, 'AWS'])
+    end
+
+    context 'given error raising' do
+      it 'retrys the job 5 times' do
         user = Fabricate(:user)
         keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
 
-        expect do
-          GoogleScrapingJob.perform_later(keyword.id, keyword.keyword)
-        end.to have_enqueued_job(GoogleScrapingJob)
+        allow_any_instance_of(GoogleScrapingJob).to receive(:perform).and_raise(Timeout::Error)
 
-        assert_enqueued_with(job: GoogleScrapingJob, args: [keyword.id, 'AWS'])
+        VCR.use_cassette('with_top_position_adwords', record: :none) do
+          assert_performed_jobs 5 do
+            GoogleScrapingJob.perform_later(keyword.id, keyword.keyword)
+          end
+        end
       end
     end
   end
