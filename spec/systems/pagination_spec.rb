@@ -3,8 +3,6 @@
 require 'rails_helper'
 
 describe 'pagination', type: :system do
-  ActiveJob::Base.queue_adapter = :test
-
   context 'given 60 keywords' do
     # 25 keywords per page
     it 'displays first page' do
@@ -13,12 +11,7 @@ describe 'pagination', type: :system do
 
       visit keywords_path
 
-      within 'form' do
-        fill_in('username', with: user[:username])
-        fill_in('password', with: 'password')
-
-        click_button(I18n.t('auth.login'))
-      end
+      system_login(user.username, 'password')
 
       paginations = find('.pagination')
 
@@ -43,12 +36,7 @@ describe 'pagination', type: :system do
 
       visit keywords_path(page: 2)
 
-      within 'form' do
-        fill_in('username', with: user[:username])
-        fill_in('password', with: 'password')
-
-        click_button(I18n.t('auth.login'))
-      end
+      system_login(user.username, 'password')
 
       expect(page).to have_current_path(keywords_path(page: 2))
 
@@ -73,12 +61,7 @@ describe 'pagination', type: :system do
 
       visit keywords_path(page: 3)
 
-      within 'form' do
-        fill_in('username', with: user[:username])
-        fill_in('password', with: 'password')
-
-        click_button(I18n.t('auth.login'))
-      end
+      system_login(user.username, 'password')
 
       expect(page).to have_current_path(keywords_path(page: 3))
 
@@ -104,12 +87,7 @@ describe 'pagination', type: :system do
 
       visit keywords_path(page: 4)
 
-      within 'form' do
-        fill_in('username', with: user[:username])
-        fill_in('password', with: 'password')
-
-        click_button(I18n.t('auth.login'))
-      end
+      system_login(user.username, 'password')
 
       expect(page).not_to have_selector('table')
 
