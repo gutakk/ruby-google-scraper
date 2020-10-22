@@ -19,7 +19,7 @@ describe 'views scraping result', type: :system do
         links: 99,
         html_code: 'test',
         top_pos_adword_links: ['http://hello.com', 'http://world.com'],
-        non_adword_links: ['http://my.com', 'http://name.com', 'http://is.com'],
+        non_adword_links: ['http://my.com', 'http://name.com', 'http://is.com']
       )
 
       visit "#{keywords_path}/#{keyword.id}"
