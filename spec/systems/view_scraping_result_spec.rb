@@ -3,12 +3,14 @@
 require 'rails_helper'
 
 describe 'views scraping result', type: :system do
-  include ActiveJob::TestHelper
-
   context 'given completed scraping status' do
     it 'displays google scraping result page' do
       user = Fabricate(:user)
-      file_path = Rails.root.join('spec', 'fabricators', 'files', 'adword_keywords.csv')
+      keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
+
+      VCR.use_cassette('with_top_position_adwords', record: :none) do
+        GoogleScrapingJob.perform_now(keyword.id, keyword.keyword)
+      end
 
       visit keywords_path
 
@@ -19,20 +21,8 @@ describe 'views scraping result', type: :system do
         click_button(I18n.t('auth.login'))
       end
 
-      attach_file('csv_import_form[file]', file_path)
-
-      click_button(I18n.t('keyword.upload'))
-
       expect(current_path).to eql(keywords_path)
       expect(page).to have_selector('table')
-
-      assert_enqueued_with(job: ScrapingProcessDistributingJob)
-
-      VCR.use_cassette('with_top_position_adwords', record: :none) do
-        perform_enqueued_jobs
-      end
-
-      visit keywords_path
 
       within 'table' do
         within 'tbody' do
@@ -46,7 +36,7 @@ describe 'views scraping result', type: :system do
         end
       end
 
-      expect(current_path).to eql("#{keywords_path}/#{ActiveJob::Base.queue_adapter.enqueued_jobs[1]['arguments'][0]}")
+      expect(current_path).to eql("#{keywords_path}/#{keyword.id}")
 
       expect(page).not_to have_selector('div.display-2 .fa-spinner')
 
@@ -75,7 +65,7 @@ describe 'views scraping result', type: :system do
   context 'given in_queue scraping status' do
     it 'displays spinner in result page' do
       user = Fabricate(:user)
-      file_path = Rails.root.join('spec', 'fabricators', 'files', 'adword_keywords.csv')
+      keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
 
       visit keywords_path
 
@@ -86,16 +76,10 @@ describe 'views scraping result', type: :system do
         click_button(I18n.t('auth.login'))
       end
 
-      attach_file('csv_import_form[file]', file_path)
-
-      click_button(I18n.t('keyword.upload'))
-
       expect(current_path).to eql(keywords_path)
       expect(page).to have_selector('table')
 
-      assert_enqueued_with(job: ScrapingProcessDistributingJob)
-
-      visit "#{keywords_path}/#{ActiveJob::Base.queue_adapter.enqueued_jobs[0]['arguments'][0][0][0]}"
+      visit "#{keywords_path}/#{keyword.id}"
 
       expect(page).to have_selector('h1.display-3', text: 'AWS')
       expect(page).to have_selector('div.display-2 .fa-spinner')

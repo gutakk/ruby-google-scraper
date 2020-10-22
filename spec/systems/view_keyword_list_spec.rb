@@ -24,7 +24,12 @@ describe 'views keyword list', type: :system do
 
     it 'displays ordered keyword list table when upload successfully' do
       user = Fabricate(:user)
-      file_path = Rails.root.join('spec', 'fabricators', 'files', 'example.csv')
+      Fabricate(:keyword, user_id: user[:id], keyword: 'Eden Hazard')
+      Fabricate(:keyword, user_id: user[:id], keyword: 'Lionel Messi')
+      Fabricate(:keyword, user_id: user[:id], keyword: 'Cristiano Ronaldo')
+      Fabricate(:keyword, user_id: user[:id], keyword: 'Kylian Mbappe')
+      Fabricate(:keyword, user_id: user[:id], keyword: 'Neymar')
+      Fabricate(:keyword, user_id: user[:id], keyword: 'Kevin De Bruyne')
 
       visit keywords_path
 
@@ -34,10 +39,6 @@ describe 'views keyword list', type: :system do
 
         click_button(I18n.t('auth.login'))
       end
-
-      attach_file('csv_import_form[file]', file_path)
-
-      click_button(I18n.t('keyword.upload'))
 
       expect(current_path).to eql(keywords_path)
       expect(page).to have_selector('table')
@@ -61,7 +62,7 @@ describe 'views keyword list', type: :system do
     it "displays ONLY logged in user's keywords" do
       user1 = Fabricate(:user)
       user2 = Fabricate(:user, username: 'hello', password: 'password', password_confirmation: 'password')
-      file_path = Rails.root.join('spec', 'fabricators', 'files', 'example.csv')
+      Fabricate(:keyword, user_id: user1[:id], keyword: 'Eden Hazard')
 
       visit keywords_path
 
@@ -71,10 +72,6 @@ describe 'views keyword list', type: :system do
 
         click_button(I18n.t('auth.login'))
       end
-
-      attach_file('csv_import_form[file]', file_path)
-
-      click_button(I18n.t('keyword.upload'))
 
       expect(current_path).to eql(keywords_path)
       expect(page).to have_selector('table')
@@ -100,7 +97,7 @@ describe 'views keyword list', type: :system do
 
     it 'displays ONLY 50 keywords' do
       user = Fabricate(:user)
-      file_path = Rails.root.join('spec', 'fabricators', 'files', '60_keywords.csv')
+      Fabricate.times(60, :keyword, user_id: user[:id], keyword: FFaker::Name.name)
 
       visit keywords_path
 
@@ -110,10 +107,6 @@ describe 'views keyword list', type: :system do
 
         click_button(I18n.t('auth.login'))
       end
-
-      attach_file('csv_import_form[file]', file_path)
-
-      click_button(I18n.t('keyword.upload'))
 
       expect(current_path).to eql(keywords_path)
       expect(page).to have_selector('table')
@@ -127,7 +120,11 @@ describe 'views keyword list', type: :system do
 
     it 'displays information link when background job completed' do
       user = Fabricate(:user)
-      file_path = Rails.root.join('spec', 'fabricators', 'files', 'adword_keywords.csv')
+      keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'Eden Hazard')
+
+      VCR.use_cassette('with_top_position_adwords', record: :none) do
+        GoogleScrapingJob.perform_now(keyword.id, keyword.keyword)
+      end
 
       visit keywords_path
 
@@ -138,18 +135,8 @@ describe 'views keyword list', type: :system do
         click_button(I18n.t('auth.login'))
       end
 
-      attach_file('csv_import_form[file]', file_path)
-
-      click_button(I18n.t('keyword.upload'))
-
       expect(current_path).to eql(keywords_path)
       expect(page).to have_selector('table')
-
-      assert_enqueued_with(job: ScrapingProcessDistributingJob)
-
-      VCR.use_cassette('with_top_position_adwords', record: :none) do
-        perform_enqueued_jobs
-      end
 
       visit keywords_path
 
