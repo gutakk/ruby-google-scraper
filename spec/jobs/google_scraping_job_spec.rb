@@ -24,10 +24,8 @@ RSpec.describe GoogleScrapingJob, type: :job do
 
         allow_any_instance_of(GoogleScrapingJob).to receive(:perform).and_raise(Timeout::Error)
 
-        VCR.use_cassette('with_top_position_adwords', record: :none) do
-          assert_performed_jobs 5 do
-            GoogleScrapingJob.perform_later(keyword.id, keyword.keyword)
-          end
+        assert_performed_jobs 5 do
+          GoogleScrapingJob.perform_later(keyword.id, keyword.keyword)
         end
       end
     end
