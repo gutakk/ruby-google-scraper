@@ -4,7 +4,7 @@ require 'httparty'
 require 'nokogiri'
 
 class GoogleScrapingJob < ApplicationJob
-  # default retry count is 5
+  # default retry attempts is 5 (https://edgeapi.rubyonrails.org/classes/ActiveJob/Exceptions/ClassMethods.html#method-i-retry_on)
   retry_on Exception do |job, error|
     keyword_id = job.arguments[0]
 
