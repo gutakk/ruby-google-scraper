@@ -8,11 +8,19 @@ describe 'views scraping result', type: :system do
   context 'given completed scraping status' do
     it 'displays google scraping result page' do
       user = Fabricate(:user)
-      keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
-
-      VCR.use_cassette('with_top_position_adwords', record: :none) do
-        GoogleScrapingJob.perform_now(keyword.id, keyword.keyword)
-      end
+      keyword = Fabricate(
+        :keyword,
+        user_id: user[:id],
+        keyword: 'AWS',
+        status: :completed,
+        top_pos_adwords: 2,
+        adwords: 3,
+        non_adwords: 3,
+        links: 99,
+        html_code: 'test',
+        top_pos_adword_links: ['http://hello.com', 'http://world.com'],
+        non_adword_links: ['http://my.com', 'http://name.com', 'http://is.com'],
+      )
 
       visit "#{keywords_path}/#{keyword.id}"
 
@@ -79,15 +87,7 @@ describe 'views scraping result', type: :system do
   context 'given failed scraping status' do
     it 'displays error message in result page' do
       user = Fabricate(:user)
-      keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
-
-      allow_any_instance_of(GoogleScrapingJob).to receive(:perform).and_raise(Timeout::Error)
-
-      VCR.use_cassette('with_top_position_adwords', record: :none) do
-        perform_enqueued_jobs(only: GoogleScrapingJob) do
-          GoogleScrapingJob.perform_later(keyword.id, keyword.keyword)
-        end
-      end
+      keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS', status: :failed)
 
       visit "#{keywords_path}/#{keyword.id}"
 
