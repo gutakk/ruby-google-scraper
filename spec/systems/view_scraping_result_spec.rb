@@ -3,8 +3,6 @@
 require 'rails_helper'
 
 describe 'views scraping result', type: :system do
-  include ActiveJob::TestHelper
-
   context 'given completed scraping status' do
     it 'displays google scraping result page' do
       user = Fabricate(:user)
