@@ -43,19 +43,17 @@ describe 'views keyword list', type: :system do
       expect(current_path).to eql(keywords_path)
       expect(page).to have_selector('table')
 
-      within 'table' do
-        within 'tbody' do
-          expect(page).to have_selector('tr', count: 6)
+      within 'table tbody' do
+        expect(page).to have_selector('tr', count: 6)
 
-          tr_list = all('tr')
+        tr_list = all('tr')
 
-          expect(tr_list[0]).to have_selector('td', text: 'Cristiano Ronaldo')
-          expect(tr_list[1]).to have_selector('td', text: 'Eden Hazard')
-          expect(tr_list[2]).to have_selector('td', text: 'Kevin De Bruyne')
-          expect(tr_list[3]).to have_selector('td', text: 'Kylian Mbappe')
-          expect(tr_list[4]).to have_selector('td', text: 'Lionel Messi')
-          expect(tr_list[5]).to have_selector('td', text: 'Neymar')
-        end
+        expect(tr_list[0]).to have_selector('td', text: 'Cristiano Ronaldo')
+        expect(tr_list[1]).to have_selector('td', text: 'Eden Hazard')
+        expect(tr_list[2]).to have_selector('td', text: 'Kevin De Bruyne')
+        expect(tr_list[3]).to have_selector('td', text: 'Kylian Mbappe')
+        expect(tr_list[4]).to have_selector('td', text: 'Lionel Messi')
+        expect(tr_list[5]).to have_selector('td', text: 'Neymar')
       end
     end
 
@@ -111,10 +109,8 @@ describe 'views keyword list', type: :system do
       expect(current_path).to eql(keywords_path)
       expect(page).to have_selector('table')
 
-      within 'table' do
-        within 'tbody' do
-          expect(page).to have_selector('tr', count: 50)
-        end
+      within 'table tbody' do
+        expect(page).to have_selector('tr', count: 50)
       end
     end
 
@@ -137,14 +133,12 @@ describe 'views keyword list', type: :system do
 
         visit keywords_path
 
-        within 'table' do
-          within 'tbody' do
-            expect(page).to have_selector('tr', count: 1)
+        within 'table tbody' do
+          expect(page).to have_selector('tr', count: 1)
 
-            tr_list = all('tr')
+          tr_list = all('tr')
 
-            expect(tr_list[0]).to have_selector('.fa-spinner')
-          end
+          expect(tr_list[0]).to have_selector('.fa-spinner')
         end
       end
     end
@@ -172,14 +166,12 @@ describe 'views keyword list', type: :system do
 
         visit keywords_path
 
-        within 'table' do
-          within 'tbody' do
-            expect(page).to have_selector('tr', count: 1)
+        within 'table tbody' do
+          expect(page).to have_selector('tr', count: 1)
 
-            tr_list = all('tr')
+          tr_list = all('tr')
 
-            expect(tr_list[0]).to have_selector('.fa-info-circle')
-          end
+          expect(tr_list[0]).to have_selector('.fa-info-circle')
         end
       end
     end
@@ -209,14 +201,12 @@ describe 'views keyword list', type: :system do
         expect(current_path).to eql(keywords_path)
         expect(page).to have_selector('table')
 
-        within 'table' do
-          within 'tbody' do
-            expect(page).to have_selector('tr', count: 1)
+        within 'table tbody' do
+          expect(page).to have_selector('tr', count: 1)
 
-            tr_list = all('tr')
+          tr_list = all('tr')
 
-            expect(tr_list[0]).to have_selector('.fa-exclamation-circle')
-          end
+          expect(tr_list[0]).to have_selector('.fa-exclamation-circle')
         end
       end
     end
