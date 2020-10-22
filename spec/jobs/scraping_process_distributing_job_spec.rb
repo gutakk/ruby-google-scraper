@@ -34,5 +34,31 @@ RSpec.describe ScrapingProcessDistributingJob, type: :job do
         assert_enqueued_with(job: GoogleScrapingJob, args: [2, 'world'])
       end
     end
+
+    context 'given NO inserted keyword' do
+      it 'enqueues scraping process distributing job when inserted keyword is nil' do
+        expect do
+          ScrapingProcessDistributingJob.perform_later(nil)
+        end.to have_enqueued_job(ScrapingProcessDistributingJob)
+      end
+
+      it 'raises error when enqueue google scraping job when inserted keyword is nil' do
+        expect do
+          ScrapingProcessDistributingJob.perform_now(nil)
+        end.to raise_error(NoMethodError)
+      end
+
+      it 'enqueues scraping process distributing job when inserted keyword is empty' do
+        expect do
+          ScrapingProcessDistributingJob.perform_later([])
+        end.to have_enqueued_job(ScrapingProcessDistributingJob)
+      end
+
+      it 'does NOT enqueue google scraping job when inserted keyword is empty' do
+        expect do
+          ScrapingProcessDistributingJob.perform_now([])
+        end.not_to have_enqueued_job(GoogleScrapingJob)
+      end
+    end
   end
 end
