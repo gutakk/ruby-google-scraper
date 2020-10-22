@@ -75,7 +75,7 @@ describe 'views keyword list', type: :system do
       expect(page).not_to have_selector('table')
     end
 
-    it 'displays ONLY 50 keywords' do
+    it 'displays ONLY 25 keywords' do
       user = Fabricate(:user)
       Fabricate.times(60, :keyword, user_id: user.id, keyword: FFaker::Name.name)
 
@@ -87,7 +87,7 @@ describe 'views keyword list', type: :system do
       expect(page).to have_selector('table')
 
       within 'table tbody' do
-        expect(page).to have_selector('tr', count: 50)
+        expect(page).to have_selector('tr', count: 25)
       end
     end
 
