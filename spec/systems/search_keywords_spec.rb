@@ -3,8 +3,6 @@
 require 'rails_helper'
 
 describe 'search keywords', type: :system do
-  ActiveJob::Base.queue_adapter = :test
-
   context 'given exactly match search keyword' do
     it 'displays searched keywords' do
       user = Fabricate(:user)
