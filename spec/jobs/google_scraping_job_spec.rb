@@ -28,6 +28,21 @@ RSpec.describe GoogleScrapingJob, type: :job do
           GoogleScrapingJob.perform_later(keyword.id, keyword.keyword)
         end
       end
+
+      it 'updates status to failed' do
+        user = Fabricate(:user)
+        keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
+
+        allow_any_instance_of(GoogleScrapingJob).to receive(:perform).and_raise(Timeout::Error)
+
+        perform_enqueued_jobs do
+          GoogleScrapingJob.perform_later(keyword.id, keyword.keyword)
+        end
+
+        result = Keyword.find(keyword.id)
+
+        expect(result.status).to eql('failed')
+      end
     end
   end
 end
