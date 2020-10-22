@@ -43,6 +43,21 @@ RSpec.describe GoogleScrapingJob, type: :job do
 
         expect(result.status).to eql('failed')
       end
+
+      it 'updates failed reason' do
+        user = Fabricate(:user)
+        keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
+
+        allow_any_instance_of(GoogleScrapingJob).to receive(:perform).and_raise(Timeout::Error)
+
+        perform_enqueued_jobs do
+          GoogleScrapingJob.perform_later(keyword.id, keyword.keyword)
+        end
+
+        result = Keyword.find(keyword.id)
+
+        expect(result.failed_reason).to eql('Timeout::Error')
+      end
     end
   end
 end
