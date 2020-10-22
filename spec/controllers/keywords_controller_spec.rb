@@ -114,7 +114,7 @@ RSpec.describe KeywordsController, type: :controller do
           expect(flash[:notice]).to eql(I18n.t('keyword.upload_csv_successfully'))
         end
 
-        it 'creates google scraping worker sidekiq job' do
+        it 'creates google scraping job' do
           user = Fabricate(:user)
           session[:user_id] = user[:id]
           file = fixture_file_upload('files/example.csv', 'text/csv')
