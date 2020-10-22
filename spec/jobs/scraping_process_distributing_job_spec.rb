@@ -4,7 +4,6 @@ require 'rails_helper'
 
 RSpec.describe ScrapingProcessDistributingJob, type: :job do
   include ActiveJob::TestHelper
-  ActiveJob::Base.queue_adapter = :test
 
   describe '#perform' do
     context 'given valid inserted keywords' do

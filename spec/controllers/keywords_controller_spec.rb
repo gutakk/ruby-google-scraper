@@ -4,8 +4,6 @@ require 'rails_helper'
 require 'sidekiq/testing'
 
 RSpec.describe KeywordsController, type: :controller do
-  ActiveJob::Base.queue_adapter = :test
-
   describe 'GET#index' do
     context 'given authenticated user' do
       it 'returns a successful response' do

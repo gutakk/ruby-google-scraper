@@ -4,7 +4,6 @@ require 'rails_helper'
 
 RSpec.describe GoogleScrapingJob, type: :job do
   include ActiveJob::TestHelper
-  ActiveJob::Base.queue_adapter = :test
 
   describe '#perform' do
     it 'enqueues google scraping job' do

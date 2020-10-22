@@ -4,7 +4,6 @@ require 'rails_helper'
 
 describe 'views keyword list', type: :system do
   include ActiveJob::TestHelper
-  ActiveJob::Base.queue_adapter = :test
 
   context 'given authenticated user' do
     it 'does NOT display table when no keywords' do

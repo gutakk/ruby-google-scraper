@@ -4,7 +4,6 @@ require 'rails_helper'
 
 RSpec.describe GoogleScrapingService, type: :service do
   include ActiveJob::TestHelper
-  ActiveJob::Base.queue_adapter = :test
 
   describe '#call' do
     context 'given valid keyword (with top position adwords)' do

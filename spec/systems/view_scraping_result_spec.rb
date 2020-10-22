@@ -4,7 +4,6 @@ require 'rails_helper'
 
 describe 'views scraping result', type: :system do
   include ActiveJob::TestHelper
-  ActiveJob::Base.queue_adapter = :test
 
   context 'given completed scraping status' do
     it 'displays google scraping result page' do
