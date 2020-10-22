@@ -10,12 +10,7 @@ describe 'uploads csv file', type: :system do
 
       visit keywords_path
 
-      within 'form' do
-        fill_in('username', with: user[:username])
-        fill_in('password', with: 'password')
-
-        click_button(I18n.t('auth.login'))
-      end
+      system_login(user.username, 'password')
 
       attach_file('csv_import_form[file]', file_path)
 

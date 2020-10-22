@@ -24,12 +24,7 @@ describe 'Login', type: :system do
 
       visit login_path
 
-      within 'form' do
-        fill_in('username', with: user.username)
-        fill_in('password', with: 'password')
-
-        click_button(I18n.t('auth.login'))
-      end
+      system_login(user.username, 'password')
 
       expect(current_path).to eql(root_path)
 

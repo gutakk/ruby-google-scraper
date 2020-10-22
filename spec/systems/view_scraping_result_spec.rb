@@ -24,12 +24,7 @@ describe 'views scraping result', type: :system do
 
       visit "#{keywords_path}/#{keyword.id}"
 
-      within 'form' do
-        fill_in('username', with: user[:username])
-        fill_in('password', with: 'password')
-
-        click_button(I18n.t('auth.login'))
-      end
+      system_login(user.username, 'password')
 
       expect(current_path).to eql("#{keywords_path}/#{keyword.id}")
 
@@ -62,12 +57,7 @@ describe 'views scraping result', type: :system do
 
       visit "#{keywords_path}/#{keyword.id}"
 
-      within 'form' do
-        fill_in('username', with: user[:username])
-        fill_in('password', with: 'password')
-
-        click_button(I18n.t('auth.login'))
-      end
+      system_login(user.username, 'password')
 
       expect(current_path).to eql("#{keywords_path}/#{keyword.id}")
 
@@ -91,12 +81,7 @@ describe 'views scraping result', type: :system do
 
       visit "#{keywords_path}/#{keyword.id}"
 
-      within 'form' do
-        fill_in('username', with: user[:username])
-        fill_in('password', with: 'password')
-
-        click_button(I18n.t('auth.login'))
-      end
+      system_login(user.username, 'password')
 
       expect(current_path).to eql("#{keywords_path}/#{keyword.id}")
 

@@ -9,12 +9,7 @@ describe 'views keyword list', type: :system do
 
       visit keywords_path
 
-      within 'form' do
-        fill_in('username', with: user[:username])
-        fill_in('password', with: 'password')
-
-        click_button(I18n.t('auth.login'))
-      end
+      system_login(user.username, 'password')
 
       expect(current_path).to eql(keywords_path)
       expect(page).not_to have_selector('table')
@@ -31,12 +26,7 @@ describe 'views keyword list', type: :system do
 
       visit keywords_path
 
-      within 'form' do
-        fill_in('username', with: user[:username])
-        fill_in('password', with: 'password')
-
-        click_button(I18n.t('auth.login'))
-      end
+      system_login(user.username, 'password')
 
       expect(current_path).to eql(keywords_path)
       expect(page).to have_selector('table')
@@ -62,12 +52,7 @@ describe 'views keyword list', type: :system do
 
       visit keywords_path
 
-      within 'form' do
-        fill_in('username', with: user1[:username])
-        fill_in('password', with: 'password')
-
-        click_button(I18n.t('auth.login'))
-      end
+      system_login(user1.username, 'password')
 
       expect(current_path).to eql(keywords_path)
       expect(page).to have_selector('table')
@@ -80,12 +65,7 @@ describe 'views keyword list', type: :system do
 
       visit keywords_path
 
-      within 'form' do
-        fill_in('username', with: user2[:username])
-        fill_in('password', with: 'password')
-
-        click_button(I18n.t('auth.login'))
-      end
+      system_login(user2.username, 'password')
 
       expect(current_path).to eql(keywords_path)
       expect(page).not_to have_selector('table')
@@ -97,12 +77,7 @@ describe 'views keyword list', type: :system do
 
       visit keywords_path
 
-      within 'form' do
-        fill_in('username', with: user[:username])
-        fill_in('password', with: 'password')
-
-        click_button(I18n.t('auth.login'))
-      end
+      system_login(user.username, 'password')
 
       expect(current_path).to eql(keywords_path)
       expect(page).to have_selector('table')
@@ -119,12 +94,7 @@ describe 'views keyword list', type: :system do
 
         visit keywords_path
 
-        within 'form' do
-          fill_in('username', with: user[:username])
-          fill_in('password', with: 'password')
-
-          click_button(I18n.t('auth.login'))
-        end
+        system_login(user.username, 'password')
 
         expect(current_path).to eql(keywords_path)
         expect(page).to have_selector('table')
@@ -148,12 +118,7 @@ describe 'views keyword list', type: :system do
 
         visit keywords_path
 
-        within 'form' do
-          fill_in('username', with: user[:username])
-          fill_in('password', with: 'password')
-
-          click_button(I18n.t('auth.login'))
-        end
+        system_login(user.username, 'password')
 
         expect(current_path).to eql(keywords_path)
         expect(page).to have_selector('table')
@@ -175,12 +140,7 @@ describe 'views keyword list', type: :system do
 
         visit keywords_path
 
-        within 'form' do
-          fill_in('username', with: user[:username])
-          fill_in('password', with: 'password')
-
-          click_button(I18n.t('auth.login'))
-        end
+        system_login(user.username, 'password')
 
         expect(current_path).to eql(keywords_path)
         expect(page).to have_selector('table')
