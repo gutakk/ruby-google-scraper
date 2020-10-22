@@ -118,35 +118,105 @@ describe 'views keyword list', type: :system do
       end
     end
 
-    it 'displays information link when background job completed' do
-      user = Fabricate(:user)
-      keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'Eden Hazard')
+    context 'given in_queue status' do
+      it 'displays spinning icon' do
+        user = Fabricate(:user)
+        Fabricate(:keyword, user_id: user[:id], keyword: 'Eden Hazard')
 
-      VCR.use_cassette('with_top_position_adwords', record: :none) do
-        GoogleScrapingJob.perform_now(keyword.id, keyword.keyword)
+        visit keywords_path
+
+        within 'form' do
+          fill_in('username', with: user[:username])
+          fill_in('password', with: 'password')
+
+          click_button(I18n.t('auth.login'))
+        end
+
+        expect(current_path).to eql(keywords_path)
+        expect(page).to have_selector('table')
+
+        visit keywords_path
+
+        within 'table' do
+          within 'tbody' do
+            expect(page).to have_selector('tr', count: 1)
+
+            tr_list = all('tr')
+
+            expect(tr_list[0]).to have_selector('.fa-spinner')
+          end
+        end
       end
+    end
 
-      visit keywords_path
+    context 'given completed status' do
+      it 'displays information icon' do
+        user = Fabricate(:user)
+        keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'Eden Hazard')
 
-      within 'form' do
-        fill_in('username', with: user[:username])
-        fill_in('password', with: 'password')
+        VCR.use_cassette('with_top_position_adwords', record: :none) do
+          GoogleScrapingJob.perform_now(keyword.id, keyword.keyword)
+        end
 
-        click_button(I18n.t('auth.login'))
+        visit keywords_path
+
+        within 'form' do
+          fill_in('username', with: user[:username])
+          fill_in('password', with: 'password')
+
+          click_button(I18n.t('auth.login'))
+        end
+
+        expect(current_path).to eql(keywords_path)
+        expect(page).to have_selector('table')
+
+        visit keywords_path
+
+        within 'table' do
+          within 'tbody' do
+            expect(page).to have_selector('tr', count: 1)
+
+            tr_list = all('tr')
+
+            expect(tr_list[0]).to have_selector('.fa-info-circle')
+          end
+        end
       end
+    end
 
-      expect(current_path).to eql(keywords_path)
-      expect(page).to have_selector('table')
+    context 'given failed status' do
+      it 'displays error icon' do
+        user = Fabricate(:user)
+        keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'Eden Hazard')
 
-      visit keywords_path
+        allow_any_instance_of(GoogleScrapingJob).to receive(:perform).and_raise(Timeout::Error)
 
-      within 'table' do
-        within 'tbody' do
-          expect(page).to have_selector('tr', count: 1)
+        VCR.use_cassette('with_top_position_adwords', record: :none) do
+          perform_enqueued_jobs(only: GoogleScrapingJob) do
+            GoogleScrapingJob.perform_later(keyword.id, keyword.keyword)
+          end
+        end
 
-          tr_list = all('tr')
+        visit keywords_path
 
-          expect(tr_list[0]).to have_selector('.fa-info-circle')
+        within 'form' do
+          fill_in('username', with: user[:username])
+          fill_in('password', with: 'password')
+
+          click_button(I18n.t('auth.login'))
+        end
+
+        expect(current_path).to eql(keywords_path)
+        expect(page).to have_selector('table')
+
+        within 'table' do
+          within 'tbody' do
+            expect(page).to have_selector('tr', count: 1)
+
+            tr_list = all('tr')
+
+            expect(tr_list[0]).to have_selector('.fa-exclamation-circle')
+          end
         end
       end
     end
