@@ -12,12 +12,7 @@ describe 'search keywords', type: :system do
 
       visit keywords_path
 
-      within 'form' do
-        fill_in('username', with: user[:username])
-        fill_in('password', with: 'password')
-
-        click_button(I18n.t('auth.login'))
-      end
+      system_login(user.username, 'password')
 
       expect(current_path).to eql(keywords_path)
       expect(page).to have_selector('table')
@@ -47,12 +42,7 @@ describe 'search keywords', type: :system do
 
       visit keywords_path
 
-      within 'form' do
-        fill_in('username', with: user[:username])
-        fill_in('password', with: 'password')
-
-        click_button(I18n.t('auth.login'))
-      end
+      system_login(user.username, 'password')
 
       expect(current_path).to eql(keywords_path)
       expect(page).to have_selector('table')
@@ -82,12 +72,7 @@ describe 'search keywords', type: :system do
 
       visit keywords_path
 
-      within 'form' do
-        fill_in('username', with: user[:username])
-        fill_in('password', with: 'password')
-
-        click_button(I18n.t('auth.login'))
-      end
+      system_login(user.username, 'password')
 
       expect(current_path).to eql(keywords_path)
       expect(page).to have_selector('table')
