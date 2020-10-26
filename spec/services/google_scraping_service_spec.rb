@@ -8,8 +8,8 @@ RSpec.describe GoogleScrapingService, type: :service do
       google_scraping = GoogleScrapingService.new(1, 'test')
 
       expect(google_scraping.class).to eq(GoogleScrapingService)
-      expect(google_scraping.keyword_id).to eql(1)
-      expect(google_scraping.keyword).to eql('test')
+      expect(google_scraping.send(:keyword_id)).to eql(1)
+      expect(google_scraping.send(:keyword)).to eql('test')
     end
   end
 
