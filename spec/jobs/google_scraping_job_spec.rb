@@ -16,7 +16,7 @@ RSpec.describe GoogleScrapingJob, type: :job do
         .and have_enqueued_job.with(keyword.id, 'AWS')
     end
 
-    it 'creates GoogleScrapingService instance' do
+    it 'performs GoogleScrapingService' do
       user = Fabricate(:user)
       keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
 
