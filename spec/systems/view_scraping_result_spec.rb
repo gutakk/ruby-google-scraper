@@ -22,7 +22,7 @@ describe 'views scraping result', type: :system do
 
       visit "#{keywords_path}/#{keyword.id}"
 
-      system_login(user.username, 'password')
+      system_login
 
       expect(current_path).to eql("#{keywords_path}/#{keyword.id}")
 
@@ -55,7 +55,7 @@ describe 'views scraping result', type: :system do
 
       visit "#{keywords_path}/#{keyword.id}"
 
-      system_login(user.username, 'password')
+      system_login
 
       expect(current_path).to eql("#{keywords_path}/#{keyword.id}")
 
@@ -79,7 +79,7 @@ describe 'views scraping result', type: :system do
 
       visit "#{keywords_path}/#{keyword.id}"
 
-      system_login(user.username, 'password')
+      system_login
 
       expect(current_path).to eql("#{keywords_path}/#{keyword.id}")
 

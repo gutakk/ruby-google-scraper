@@ -4,7 +4,7 @@ require 'rails_helper'
 
 describe 'Logout', type: :system do
   it 'redirects to home page, displays logged out message and does NOT show greeting message and logout link in nav dropdown' do
-    user = Fabricate(:user)
+    Fabricate(:user)
 
     visit root_path
 
@@ -12,7 +12,7 @@ describe 'Logout', type: :system do
       click_link(I18n.t('auth.login'))
     end
 
-    system_login(user.username, 'password')
+    system_login
 
     find('li.nav-item').click
 

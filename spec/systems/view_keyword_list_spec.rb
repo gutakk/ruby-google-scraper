@@ -5,11 +5,11 @@ require 'rails_helper'
 describe 'views keyword list', type: :system do
   context 'given authenticated user' do
     it 'does NOT display table when no keywords' do
-      user = Fabricate(:user)
+      Fabricate(:user)
 
       visit keywords_path
 
-      system_login(user.username, 'password')
+      system_login
 
       expect(current_path).to eql(keywords_path)
       expect(page).not_to have_selector('table')
@@ -26,7 +26,7 @@ describe 'views keyword list', type: :system do
 
       visit keywords_path
 
-      system_login(user.username, 'password')
+      system_login
 
       expect(current_path).to eql(keywords_path)
       expect(page).to have_selector('table')
@@ -77,7 +77,7 @@ describe 'views keyword list', type: :system do
 
       visit keywords_path
 
-      system_login(user.username, 'password')
+      system_login
 
       expect(current_path).to eql(keywords_path)
       expect(page).to have_selector('table')
@@ -94,7 +94,7 @@ describe 'views keyword list', type: :system do
 
         visit keywords_path
 
-        system_login(user.username, 'password')
+        system_login
 
         expect(current_path).to eql(keywords_path)
         expect(page).to have_selector('table')
@@ -118,7 +118,7 @@ describe 'views keyword list', type: :system do
 
         visit keywords_path
 
-        system_login(user.username, 'password')
+        system_login
 
         expect(current_path).to eql(keywords_path)
         expect(page).to have_selector('table')
@@ -140,7 +140,7 @@ describe 'views keyword list', type: :system do
 
         visit keywords_path
 
-        system_login(user.username, 'password')
+        system_login
 
         expect(current_path).to eql(keywords_path)
         expect(page).to have_selector('table')

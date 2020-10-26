@@ -24,7 +24,7 @@ describe 'Login', type: :system do
 
       visit login_path
 
-      system_login(user.username, 'password')
+      system_login
 
       expect(current_path).to eql(root_path)
 

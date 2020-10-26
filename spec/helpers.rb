@@ -5,7 +5,7 @@ module Helpers
     ActionController::Base.helpers.strip_tags(string)
   end
 
-  def system_login(username, password)
+  def system_login(username = 'nimblehq', password = 'password')
     within 'form' do
       fill_in('username', with: username)
       fill_in('password', with: password)

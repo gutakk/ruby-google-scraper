@@ -5,12 +5,12 @@ require 'rails_helper'
 describe 'uploads csv file', type: :system do
   context 'given valid csv and authenticated user' do
     it 'displays uploaded successfully message' do
-      user = Fabricate(:user)
+      Fabricate(:user)
       file_path = Rails.root.join('spec', 'fabricators', 'files', 'example.csv')
 
       visit keywords_path
 
-      system_login(user.username, 'password')
+      system_login
 
       attach_file('csv_import_form[file]', file_path)
 
