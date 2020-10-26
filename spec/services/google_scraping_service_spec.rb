@@ -17,7 +17,7 @@ RSpec.describe GoogleScrapingService, type: :service do
     context 'given top position adwords keyword' do
       it 'updates status to completed' do
         user = Fabricate(:user)
-        keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
+        keyword = Fabricate(:keyword, user_id: user.id, keyword: 'AWS')
         google_scraping = GoogleScrapingService.new(keyword.id, 'AWS')
 
         VCR.use_cassette('with_top_position_adwords', record: :none) do
@@ -29,7 +29,7 @@ RSpec.describe GoogleScrapingService, type: :service do
 
       it 'updates top position adword count scraping result' do
         user = Fabricate(:user)
-        keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
+        keyword = Fabricate(:keyword, user_id: user.id, keyword: 'AWS')
         google_scraping = GoogleScrapingService.new(keyword.id, 'AWS')
 
         VCR.use_cassette('with_top_position_adwords', record: :none) do
@@ -41,7 +41,7 @@ RSpec.describe GoogleScrapingService, type: :service do
 
       it 'updates adword count scraping result' do
         user = Fabricate(:user)
-        keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
+        keyword = Fabricate(:keyword, user_id: user.id, keyword: 'AWS')
         google_scraping = GoogleScrapingService.new(keyword.id, 'AWS')
 
         VCR.use_cassette('with_top_position_adwords', record: :none) do
@@ -53,7 +53,7 @@ RSpec.describe GoogleScrapingService, type: :service do
 
       it 'updates non adword count scraping result' do
         user = Fabricate(:user)
-        keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
+        keyword = Fabricate(:keyword, user_id: user.id, keyword: 'AWS')
         google_scraping = GoogleScrapingService.new(keyword.id, 'AWS')
 
         VCR.use_cassette('with_top_position_adwords', record: :none) do
@@ -65,7 +65,7 @@ RSpec.describe GoogleScrapingService, type: :service do
 
       it 'updates link count scraping result' do
         user = Fabricate(:user)
-        keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
+        keyword = Fabricate(:keyword, user_id: user.id, keyword: 'AWS')
         google_scraping = GoogleScrapingService.new(keyword.id, 'AWS')
 
         VCR.use_cassette('with_top_position_adwords', record: :none) do
@@ -77,7 +77,7 @@ RSpec.describe GoogleScrapingService, type: :service do
 
       it 'updates html code scraping result' do
         user = Fabricate(:user)
-        keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
+        keyword = Fabricate(:keyword, user_id: user.id, keyword: 'AWS')
         google_scraping = GoogleScrapingService.new(keyword.id, 'AWS')
 
         VCR.use_cassette('with_top_position_adwords', record: :none) do
@@ -89,7 +89,7 @@ RSpec.describe GoogleScrapingService, type: :service do
 
       it 'updates top position adword links' do
         user = Fabricate(:user)
-        keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
+        keyword = Fabricate(:keyword, user_id: user.id, keyword: 'AWS')
         google_scraping = GoogleScrapingService.new(keyword.id, 'AWS')
 
         VCR.use_cassette('with_top_position_adwords', record: :none) do
@@ -101,7 +101,7 @@ RSpec.describe GoogleScrapingService, type: :service do
 
       it 'updates non adword links' do
         user = Fabricate(:user)
-        keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
+        keyword = Fabricate(:keyword, user_id: user.id, keyword: 'AWS')
         google_scraping = GoogleScrapingService.new(keyword.id, 'AWS')
 
         VCR.use_cassette('with_top_position_adwords', record: :none) do
@@ -115,7 +115,7 @@ RSpec.describe GoogleScrapingService, type: :service do
     context 'given non ascii keyword' do
       it 'does NOT raise an error when construct URI' do
         user = Fabricate(:user)
-        keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'สวัสดี')
+        keyword = Fabricate(:keyword, user_id: user.id, keyword: 'สวัสดี')
         google_scraping = GoogleScrapingService.new(keyword.id, 'สวัสดี')
 
         expect do

@@ -8,7 +8,7 @@ describe 'views scraping result', type: :system do
       user = Fabricate(:user)
       keyword = Fabricate(
         :keyword,
-        user_id: user[:id],
+        user_id: user.id,
         keyword: 'AWS',
         status: :completed,
         top_pos_adwords: 2,
@@ -51,7 +51,7 @@ describe 'views scraping result', type: :system do
   context 'given in_queue scraping status' do
     it 'displays spinner in result page' do
       user = Fabricate(:user)
-      keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
+      keyword = Fabricate(:keyword, user_id: user.id, keyword: 'AWS')
 
       visit "#{keywords_path}/#{keyword.id}"
 
@@ -75,7 +75,7 @@ describe 'views scraping result', type: :system do
   context 'given failed scraping status' do
     it 'displays error message in result page' do
       user = Fabricate(:user)
-      keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS', status: :failed)
+      keyword = Fabricate(:keyword, user_id: user.id, keyword: 'AWS', status: :failed)
 
       visit "#{keywords_path}/#{keyword.id}"
 

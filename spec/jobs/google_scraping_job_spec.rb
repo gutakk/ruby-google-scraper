@@ -8,7 +8,7 @@ RSpec.describe GoogleScrapingJob, type: :job do
   describe '#perform' do
     it 'enqueues google scraping job' do
       user = Fabricate(:user)
-      keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
+      keyword = Fabricate(:keyword, user_id: user.id, keyword: 'AWS')
 
       expect do
         GoogleScrapingJob.perform_later(keyword.id, keyword.keyword)
@@ -18,7 +18,7 @@ RSpec.describe GoogleScrapingJob, type: :job do
 
     it 'performs GoogleScrapingService' do
       user = Fabricate(:user)
-      keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
+      keyword = Fabricate(:keyword, user_id: user.id, keyword: 'AWS')
 
       VCR.use_cassette('with_top_position_adwords', record: :none) do
         GoogleScrapingJob.perform_now(keyword.id, keyword.keyword)
@@ -32,7 +32,7 @@ RSpec.describe GoogleScrapingJob, type: :job do
     context 'given error raising' do
       it 'updates status to failed' do
         user = Fabricate(:user)
-        keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
+        keyword = Fabricate(:keyword, user_id: user.id, keyword: 'AWS')
 
         allow_any_instance_of(GoogleScrapingJob).to receive(:perform).and_raise(Timeout::Error)
 
@@ -47,7 +47,7 @@ RSpec.describe GoogleScrapingJob, type: :job do
 
       it 'updates failed reason' do
         user = Fabricate(:user)
-        keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
+        keyword = Fabricate(:keyword, user_id: user.id, keyword: 'AWS')
 
         allow_any_instance_of(GoogleScrapingJob).to receive(:perform).and_raise(Timeout::Error)
 

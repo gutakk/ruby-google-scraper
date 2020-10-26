@@ -17,12 +17,12 @@ describe 'views keyword list', type: :system do
 
     it 'displays ordered keyword list table' do
       user = Fabricate(:user)
-      Fabricate(:keyword, user_id: user[:id], keyword: 'Eden Hazard')
-      Fabricate(:keyword, user_id: user[:id], keyword: 'Lionel Messi')
-      Fabricate(:keyword, user_id: user[:id], keyword: 'Cristiano Ronaldo')
-      Fabricate(:keyword, user_id: user[:id], keyword: 'Kylian Mbappe')
-      Fabricate(:keyword, user_id: user[:id], keyword: 'Neymar')
-      Fabricate(:keyword, user_id: user[:id], keyword: 'Kevin De Bruyne')
+      Fabricate(:keyword, user_id: user.id, keyword: 'Eden Hazard')
+      Fabricate(:keyword, user_id: user.id, keyword: 'Lionel Messi')
+      Fabricate(:keyword, user_id: user.id, keyword: 'Cristiano Ronaldo')
+      Fabricate(:keyword, user_id: user.id, keyword: 'Kylian Mbappe')
+      Fabricate(:keyword, user_id: user.id, keyword: 'Neymar')
+      Fabricate(:keyword, user_id: user.id, keyword: 'Kevin De Bruyne')
 
       visit keywords_path
 
@@ -73,7 +73,7 @@ describe 'views keyword list', type: :system do
 
     it 'displays ONLY 50 keywords' do
       user = Fabricate(:user)
-      Fabricate.times(60, :keyword, user_id: user[:id], keyword: FFaker::Name.name)
+      Fabricate.times(60, :keyword, user_id: user.id, keyword: FFaker::Name.name)
 
       visit keywords_path
 
@@ -90,7 +90,7 @@ describe 'views keyword list', type: :system do
     context 'given in_queue status' do
       it 'displays spinning icon' do
         user = Fabricate(:user)
-        Fabricate(:keyword, user_id: user[:id], keyword: 'Eden Hazard')
+        Fabricate(:keyword, user_id: user.id, keyword: 'Eden Hazard')
 
         visit keywords_path
 
@@ -114,7 +114,7 @@ describe 'views keyword list', type: :system do
     context 'given completed status' do
       it 'displays information icon' do
         user = Fabricate(:user)
-        Fabricate(:keyword, user_id: user[:id], keyword: 'Eden Hazard', status: :completed)
+        Fabricate(:keyword, user_id: user.id, keyword: 'Eden Hazard', status: :completed)
 
         visit keywords_path
 
@@ -136,7 +136,7 @@ describe 'views keyword list', type: :system do
     context 'given failed status' do
       it 'displays error icon' do
         user = Fabricate(:user)
-        Fabricate(:keyword, user_id: user[:id], keyword: 'Eden Hazard', status: :failed)
+        Fabricate(:keyword, user_id: user.id, keyword: 'Eden Hazard', status: :failed)
 
         visit keywords_path
 
