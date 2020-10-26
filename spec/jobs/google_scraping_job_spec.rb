@@ -31,17 +31,6 @@ RSpec.describe GoogleScrapingJob, type: :job do
     end
 
     context 'given error raising' do
-      it 'retrys the job 5 times' do
-        user = Fabricate(:user)
-        keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
-
-        allow_any_instance_of(GoogleScrapingJob).to receive(:perform).and_raise(Timeout::Error)
-
-        assert_performed_jobs 5 do
-          GoogleScrapingJob.perform_later(keyword.id, keyword.keyword)
-        end
-      end
-
       it 'updates status to failed' do
         user = Fabricate(:user)
         keyword = Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
