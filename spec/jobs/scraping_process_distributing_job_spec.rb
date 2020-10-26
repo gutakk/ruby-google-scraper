@@ -3,8 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe ScrapingProcessDistributingJob, type: :job do
-  include ActiveJob::TestHelper
-
   describe '#perform' do
     context 'given valid inserted keywords' do
       it 'enqueues scraping process distributing job' do
@@ -16,8 +14,7 @@ RSpec.describe ScrapingProcessDistributingJob, type: :job do
         expect do
           ScrapingProcessDistributingJob.perform_later(inserted_keywords)
         end.to have_enqueued_job(ScrapingProcessDistributingJob)
-
-        assert_enqueued_with(job: ScrapingProcessDistributingJob, args: [[[1, 'hello'], [2, 'world']]])
+          .and have_enqueued_job.with([[1, 'hello'], [2, 'world']])
       end
 
       it 'enqueues google scraping jobs' do
@@ -25,12 +22,14 @@ RSpec.describe ScrapingProcessDistributingJob, type: :job do
           [1, 'hello'],
           [2, 'world']
         ]
+
+        # rubocop:disable Layout/MultilineMethodCallIndentation
         expect do
           ScrapingProcessDistributingJob.perform_now(inserted_keywords)
         end.to change { ActiveJob::Base.queue_adapter.enqueued_jobs.size }.by(2)
-
-        assert_enqueued_with(job: GoogleScrapingJob, args: [1, 'hello'])
-        assert_enqueued_with(job: GoogleScrapingJob, args: [2, 'world'])
+          .and have_enqueued_job.with(1, 'hello')
+          .and have_enqueued_job.with(2, 'world')
+        # rubocop:enable Layout/MultilineMethodCallIndentation
       end
     end
 

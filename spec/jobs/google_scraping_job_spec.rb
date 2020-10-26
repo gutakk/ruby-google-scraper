@@ -13,8 +13,7 @@ RSpec.describe GoogleScrapingJob, type: :job do
       expect do
         GoogleScrapingJob.perform_later(keyword.id, keyword.keyword)
       end.to have_enqueued_job(GoogleScrapingJob)
-
-      assert_enqueued_with(job: GoogleScrapingJob, args: [keyword.id, 'AWS'])
+        .and have_enqueued_job.with(keyword.id, 'AWS')
     end
 
     it 'creates GoogleScrapingService instance' do
