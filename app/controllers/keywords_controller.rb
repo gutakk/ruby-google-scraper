@@ -5,9 +5,10 @@ class KeywordsController < ApplicationController
   before_action :set_csv_import_form
 
   def index
+    # TODOs pagination (new ticket)
     render locals: {
       csv_import_form: @csv_import_form,
-      keywords: current_user.keywords.order(keyword: :asc).limit(50) # TODOs pagination (new ticket)
+      keywords: search_keyword
     }
   end
 
@@ -37,5 +38,9 @@ class KeywordsController < ApplicationController
 
   def create_params
     params.require(:csv_import_form).permit(:file)
+  end
+
+  def search_keyword
+    current_user.keywords.where("keyword ILIKE '%#{params[:search]}%'").order(keyword: :asc).limit(50)
   end
 end
