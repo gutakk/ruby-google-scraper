@@ -6,12 +6,6 @@ describe 'Logout', type: :system do
   it 'redirects to home page, displays logged out message and does NOT show greeting message and logout link in nav dropdown' do
     Fabricate(:user)
 
-    visit root_path
-
-    within 'nav' do
-      click_link(I18n.t('auth.login'))
-    end
-
     system_login
 
     find('li.nav-item').click

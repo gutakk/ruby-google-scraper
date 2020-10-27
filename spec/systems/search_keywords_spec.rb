@@ -8,9 +8,9 @@ describe 'search keywords', type: :system do
       user = Fabricate(:user)
       Fabricate(:keyword, user_id: user.id, keyword: 'AWS')
 
-      visit keywords_path
-
       system_login
+
+      visit keywords_path
 
       expect(current_path).to eql(keywords_path)
       expect(page).to have_selector('table')
@@ -38,9 +38,9 @@ describe 'search keywords', type: :system do
       user = Fabricate(:user)
       Fabricate(:keyword, user_id: user.id, keyword: 'AWS')
 
-      visit keywords_path
-
       system_login
+
+      visit keywords_path
 
       expect(current_path).to eql(keywords_path)
       expect(page).to have_selector('table')
@@ -68,9 +68,9 @@ describe 'search keywords', type: :system do
       user = Fabricate(:user)
       Fabricate(:keyword, user_id: user.id, keyword: 'AWS')
 
-      visit keywords_path
-
       system_login
+
+      visit keywords_path
 
       expect(current_path).to eql(keywords_path)
       expect(page).to have_selector('table')

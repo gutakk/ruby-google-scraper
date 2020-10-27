@@ -9,9 +9,9 @@ describe 'pagination', type: :system do
       user = Fabricate(:user)
       Fabricate.times(60, :keyword, user_id: user.id, keyword: FFaker::Name.name)
 
-      visit keywords_path
-
       system_login
+
+      visit keywords_path
 
       paginations = find('.pagination')
 
@@ -34,9 +34,9 @@ describe 'pagination', type: :system do
       user = Fabricate(:user)
       Fabricate.times(60, :keyword, user_id: user.id, keyword: FFaker::Name.name)
 
-      visit keywords_path(page: 2)
-
       system_login
+
+      visit keywords_path(page: 2)
 
       expect(page).to have_current_path(keywords_path(page: 2))
 
@@ -59,9 +59,9 @@ describe 'pagination', type: :system do
       user = Fabricate(:user)
       Fabricate.times(60, :keyword, user_id: user.id, keyword: FFaker::Name.name)
 
-      visit keywords_path(page: 3)
-
       system_login
+
+      visit keywords_path(page: 3)
 
       expect(page).to have_current_path(keywords_path(page: 3))
 
@@ -85,9 +85,9 @@ describe 'pagination', type: :system do
       user = Fabricate(:user)
       Fabricate.times(60, :keyword, user_id: user.id, keyword: FFaker::Name.name)
 
-      visit keywords_path(page: 4)
-
       system_login
+
+      visit keywords_path(page: 4)
 
       expect(page).not_to have_selector('table')
 

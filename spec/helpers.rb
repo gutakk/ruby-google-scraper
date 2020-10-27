@@ -6,6 +6,8 @@ module Helpers
   end
 
   def system_login(username = 'nimblehq', password = 'password')
+    visit login_path
+
     within 'form' do
       fill_in('username', with: username)
       fill_in('password', with: password)

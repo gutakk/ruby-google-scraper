@@ -22,8 +22,6 @@ describe 'Login', type: :system do
     it 'redirects to home page with greeting message' do
       user = Fabricate(:user)
 
-      visit login_path
-
       system_login
 
       expect(current_path).to eql(root_path)
