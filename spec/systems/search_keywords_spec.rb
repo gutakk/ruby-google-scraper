@@ -6,11 +6,11 @@ describe 'search keywords', type: :system do
   context 'given exactly match search keyword' do
     it 'displays searched keywords' do
       user = Fabricate(:user)
-      Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
+      Fabricate(:keyword, user_id: user.id, keyword: 'AWS')
 
       visit keywords_path
 
-      system_login(user.username, 'password')
+      system_login
 
       expect(current_path).to eql(keywords_path)
       expect(page).to have_selector('table')
@@ -36,11 +36,11 @@ describe 'search keywords', type: :system do
   context 'given partially match search keyword' do
     it 'displays searched keywords' do
       user = Fabricate(:user)
-      Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
+      Fabricate(:keyword, user_id: user.id, keyword: 'AWS')
 
       visit keywords_path
 
-      system_login(user.username, 'password')
+      system_login
 
       expect(current_path).to eql(keywords_path)
       expect(page).to have_selector('table')
@@ -66,11 +66,11 @@ describe 'search keywords', type: :system do
   context 'given unmatch search keyword' do
     it 'displays searched keywords' do
       user = Fabricate(:user)
-      Fabricate(:keyword, user_id: user[:id], keyword: 'AWS')
+      Fabricate(:keyword, user_id: user.id, keyword: 'AWS')
 
       visit keywords_path
 
-      system_login(user.username, 'password')
+      system_login
 
       expect(current_path).to eql(keywords_path)
       expect(page).to have_selector('table')
