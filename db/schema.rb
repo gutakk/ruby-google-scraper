@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 2020_10_27_065748) do
     t.json "top_pos_adword_links"
     t.json "non_adword_links"
     t.text "failed_reason"
+    t.index ["keyword"], name: "index_keywords_on_keyword"
     t.index ["user_id"], name: "index_keywords_on_user_id"
   end
 
@@ -85,5 +86,7 @@ ActiveRecord::Schema.define(version: 2020_10_27_065748) do
 
   add_foreign_key "keywords", "users"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
+  add_foreign_key "oauth_access_grants", "users", column: "id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
+  add_foreign_key "oauth_access_tokens", "users", column: "id"
 end
