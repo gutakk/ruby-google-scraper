@@ -2,6 +2,8 @@
 
 class User < ApplicationRecord
   has_many :keywords, dependent: :destroy
+  has_many :access_grants, class_name: 'Doorkeeper::AccessGrant', dependent: :delete_all
+  has_many :access_tokens, class_name: 'Doorkeeper::AccessToken', dependent: :delete_all
 
   has_secure_password
 
