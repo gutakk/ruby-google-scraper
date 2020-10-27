@@ -20,6 +20,7 @@ gem 'kaminari' # A pagination library
 # Authentications & Authorizations
 gem 'devise' # Authentication solution for Rails with Warden
 gem 'pundit' # Minimal authorization through OO design and pure Ruby classes
+gem 'doorkeeper' # OAuth 2 provider functionality to Ruby on Rails
 
 # Templating
 gem 'slim'
