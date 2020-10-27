@@ -7,11 +7,11 @@ describe 'pagination', type: :system do
     # 25 keywords per page
     it 'displays first page' do
       user = Fabricate(:user)
-      Fabricate.times(60, :keyword, user_id: user[:id], keyword: FFaker::Name.name)
+      Fabricate.times(60, :keyword, user_id: user.id, keyword: FFaker::Name.name)
 
       visit keywords_path
 
-      system_login(user.username, 'password')
+      system_login
 
       paginations = find('.pagination')
 
@@ -32,11 +32,11 @@ describe 'pagination', type: :system do
 
     it 'displays second page' do
       user = Fabricate(:user)
-      Fabricate.times(60, :keyword, user_id: user[:id], keyword: FFaker::Name.name)
+      Fabricate.times(60, :keyword, user_id: user.id, keyword: FFaker::Name.name)
 
       visit keywords_path(page: 2)
 
-      system_login(user.username, 'password')
+      system_login
 
       expect(page).to have_current_path(keywords_path(page: 2))
 
@@ -57,11 +57,11 @@ describe 'pagination', type: :system do
 
     it 'displays third page' do
       user = Fabricate(:user)
-      Fabricate.times(60, :keyword, user_id: user[:id], keyword: FFaker::Name.name)
+      Fabricate.times(60, :keyword, user_id: user.id, keyword: FFaker::Name.name)
 
       visit keywords_path(page: 3)
 
-      system_login(user.username, 'password')
+      system_login
 
       expect(page).to have_current_path(keywords_path(page: 3))
 
@@ -83,11 +83,11 @@ describe 'pagination', type: :system do
 
     it 'does NOT display keywords table when go to page 4' do
       user = Fabricate(:user)
-      Fabricate.times(60, :keyword, user_id: user[:id], keyword: FFaker::Name.name)
+      Fabricate.times(60, :keyword, user_id: user.id, keyword: FFaker::Name.name)
 
       visit keywords_path(page: 4)
 
-      system_login(user.username, 'password')
+      system_login
 
       expect(page).not_to have_selector('table')
 
