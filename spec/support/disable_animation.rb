@@ -28,7 +28,6 @@ module Rack
       @headers['Content-Type'] =~ /html/
     end
 
-    # rubocop:disable Metrics/MethodLength
     # rubocop:disable Naming/HeredocDelimiterNaming
     # rubocop:disable Layout/HeredocIndentation
     def inject(fragment)
@@ -56,7 +55,6 @@ module Rack
       EOF
       fragment.gsub(%r{</head>}, "#{disable_animations}</head>")
     end
-    # rubocop:enable Metrics/MethodLength
     # rubocop:enable Naming/HeredocDelimiterNaming
     # rubocop:enable Layout/HeredocIndentation
   end

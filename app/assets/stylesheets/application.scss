@@ -2,7 +2,8 @@
 @import 'variables';
 
 // Dependencies
-@import '../../../node_modules/bootstrap/scss/bootstrap';
+@import 'bootstrap/scss/bootstrap';
+@import '@fortawesome/fontawesome-free/scss/fontawesome';
 
 // Functions
 @import 'functions/sizing';
@@ -10,10 +11,11 @@
 // Mixins
 
 // Base
-@import 'base/forms';
+@import 'base/*';
 
 // Layouts
 
 // Components
+@import 'components/card';
 
 // Screens

@@ -11,8 +11,18 @@ class KeywordsController < ApplicationController
     }
   end
 
+  def show
+    keyword = Keyword.find(params[:id])
+
+    render locals: {
+      keyword: keyword
+    }
+  end
+
   def create
     if @csv_import_form.save(create_params)
+      ScrapingProcessDistributingJob.perform_later(@csv_import_form.inserted_keywords.rows)
+
       redirect_to keywords_path, notice: t('keyword.upload_csv_successfully')
     else
       redirect_to keywords_path, alert: @csv_import_form.errors.messages[:base][0]

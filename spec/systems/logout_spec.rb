@@ -12,12 +12,7 @@ describe 'Logout', type: :system do
       click_link(I18n.t('auth.login'))
     end
 
-    within 'form' do
-      fill_in('username', with: 'nimblehq')
-      fill_in('password', with: 'password')
-
-      click_button(I18n.t('auth.login'))
-    end
+    system_login
 
     find('li.nav-item').click
 

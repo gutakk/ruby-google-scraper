@@ -24,8 +24,8 @@ module RubyGoogleScraper
     config.active_job.queue_adapter = :sidekiq
 
     # Prefix the queue name of all jobs with Rails ENV
-    config.active_job.queue_name_prefix = Rails.env
-  
+    # config.active_job.queue_name_prefix = Rails.env
+
     # Compress the responses to reduce the size of html/json controller responses.
     config.middleware.use Rack::Deflater
 

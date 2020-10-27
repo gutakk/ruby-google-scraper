@@ -1,0 +1,53 @@
+.d-flex.flex-column.align-items-center.mt-4
+
+  h1.display-3 == keyword.keyword
+
+  - if keyword.completed?
+    .d-flex.mt-5.w-100.justify-content-center
+      .card id="topPosAdwordsCount"
+        .card__body
+          .display-4 = keyword.top_pos_adwords
+        .card__info = t('keyword.top_pos_adwords')
+
+      .card id="adwordsCount"
+        .card__body
+          .display-4 = keyword.adwords
+        .card__info = t('keyword.adwords')
+
+      .card id="nonAdwordsCount"
+        .card__body
+          .display-4 = keyword.non_adwords
+        .card__info = t('keyword.non_adwords')
+
+      .card id="linksCount"
+        .card__body
+          .display-4 = keyword.links
+        .card__info = t('keyword.links')
+
+    - if keyword.top_pos_adword_links.present?
+      hr class="w-75 my-5"
+      h2 = t('keyword.top_pos_adword_links').titleize
+      ul id="topPosAdwordLinks" class="mt-4 w-75 text-break"
+        - keyword.top_pos_adword_links.each do |link|
+          li = link_to nil, link, target: :_blank
+
+    - if keyword.non_adword_links.present?
+      hr class="w-75 my-5"
+      h2 = t('keyword.non_adword_links').titleize
+      ul id="nonAdwordLinks" class="mt-4 w-75 text-break"
+        - keyword.non_adword_links.each do |link|
+          li = link_to nil, link, target: :_blank
+
+    hr class="w-75 my-5"
+    h2 = t('keyword.google_html')
+    #googleHtml.w-100.overflow-hidden
+      == keyword.html_code
+      
+  - elsif keyword.in_queue?
+    .display-2.mt-5
+      i class="fas fa-spinner fa-spin text-secondary"
+
+  - elsif keyword.failed?
+    .mt-5
+      .alert.alert-danger
+        = t('app.something_went_wrong')

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_28_092143) do
+ActiveRecord::Schema.define(version: 2020_10_05_065240) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,15 @@ ActiveRecord::Schema.define(version: 2020_09_28_092143) do
     t.string "keyword", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "status", default: 0
+    t.integer "top_pos_adwords"
+    t.integer "adwords"
+    t.integer "non_adwords"
+    t.integer "links"
+    t.text "html_code"
+    t.json "top_pos_adword_links"
+    t.json "non_adword_links"
+    t.text "failed_reason"
     t.index ["user_id"], name: "index_keywords_on_user_id"
   end
 

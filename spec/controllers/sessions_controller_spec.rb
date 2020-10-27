@@ -65,7 +65,7 @@ RSpec.describe SessionsController, type: :controller do
         user = Fabricate(:user)
         session[:return_to] = keywords_path
 
-        post :create, params: { username: user[:username], password: 'password' }
+        post :create, params: { username: user.username, password: 'password' }
 
         expect(response).to redirect_to(keywords_path)
       end
@@ -74,7 +74,7 @@ RSpec.describe SessionsController, type: :controller do
         user = Fabricate(:user)
         session[:return_to] = keywords_path
 
-        post :create, params: { username: user[:username], password: 'password' }
+        post :create, params: { username: user.username, password: 'password' }
 
         expect(session[:return_to]).to be_nil
       end
