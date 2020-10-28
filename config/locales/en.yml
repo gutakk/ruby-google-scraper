@@ -56,7 +56,8 @@ en:
   auth:
     confirm_password: "Confirm password"
     login: "Login"
-    login_failed: "Username or password is invalid"
+    login_successfully: "Login successfully"
+    login_unsuccessfully: "Login unsuccessfully"
     logout: "Logout"
     login_required: "Login required"
     logout_successfully: "You've been logged out"
@@ -65,6 +66,8 @@ en:
     signup_successfully: "Account was successfully created"
     signup_unsuccessfully: "Account was unsuccessfully created"
     username: "Username"
+    username_or_password_is_invalid: "Username or password is invalid"
+    username_or_password_is_missing: "Username or Password is missing"
       
   keyword:
     adwords: "Adwords"
