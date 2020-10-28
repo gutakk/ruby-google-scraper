@@ -7,15 +7,13 @@ module Api
         user = User.new(create_params)
 
         if user.save
-          render json: {
-            messages: I18n.t('auth.signup_successfully'),
-            data: { user: user.attributes.except('password_digest') }
-          }, status: :created
+          render_successful_response(
+            I18n.t('auth.signup_successfully'),
+            :created,
+            data: user.attributes.except('password_digest')
+          )
         else
-          render json: {
-            message: I18n.t('auth.signup_unsuccessfully'),
-            errors: user.errors.full_messages
-          }, status: :bad_request
+          render_error(I18n.t('auth.signup_unsuccessfully'), user.errors.full_messages, :bad_request)
         end
       end
 

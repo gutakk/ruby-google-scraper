@@ -86,6 +86,7 @@ en:
     top_pos_adword_links: "Top position adword links"
     upload: "Upload"
     upload_csv_successfully: "CSV uploaded successfully"
+    upload_csv_unsuccessfully: "CSV uploaded unsuccessfully"
     upload_keywords_csv_file: "Upload keywords CSV file"
 
   pagination:
