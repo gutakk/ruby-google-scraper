@@ -8,9 +8,9 @@ describe 'uploads csv file', type: :system do
       Fabricate(:user)
       file_path = Rails.root.join('spec', 'fabricators', 'files', 'example.csv')
 
-      visit keywords_path
-
       system_login
+
+      visit keywords_path
 
       attach_file('csv_import_form[file]', file_path)
 

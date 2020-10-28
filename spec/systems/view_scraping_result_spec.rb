@@ -20,9 +20,9 @@ describe 'views scraping result', type: :system do
         non_adword_links: ['http://my.com', 'http://name.com', 'http://is.com']
       )
 
-      visit "#{keywords_path}/#{keyword.id}"
-
       system_login
+
+      visit "#{keywords_path}/#{keyword.id}"
 
       expect(current_path).to eql("#{keywords_path}/#{keyword.id}")
 
@@ -53,9 +53,9 @@ describe 'views scraping result', type: :system do
       user = Fabricate(:user)
       keyword = Fabricate(:keyword, user_id: user.id, keyword: 'AWS')
 
-      visit "#{keywords_path}/#{keyword.id}"
-
       system_login
+
+      visit "#{keywords_path}/#{keyword.id}"
 
       expect(current_path).to eql("#{keywords_path}/#{keyword.id}")
 
@@ -77,9 +77,9 @@ describe 'views scraping result', type: :system do
       user = Fabricate(:user)
       keyword = Fabricate(:keyword, user_id: user.id, keyword: 'AWS', status: :failed)
 
-      visit "#{keywords_path}/#{keyword.id}"
-
       system_login
+
+      visit "#{keywords_path}/#{keyword.id}"
 
       expect(current_path).to eql("#{keywords_path}/#{keyword.id}")
 

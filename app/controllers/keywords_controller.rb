@@ -4,8 +4,8 @@ class KeywordsController < ApplicationController
   before_action :ensure_authentication
   before_action :set_csv_import_form
 
+  # Kaminari default item per page is 25
   def index
-    # TODOs pagination (new ticket)
     render locals: {
       csv_import_form: @csv_import_form,
       keywords: search_keyword
@@ -41,6 +41,6 @@ class KeywordsController < ApplicationController
   end
 
   def search_keyword
-    current_user.keywords.where("keyword ILIKE '%#{params[:search]}%'").order(keyword: :asc).limit(50)
+    current_user.keywords.where("keyword ILIKE '%#{params[:search]}%'").order(keyword: :asc).page(params[:page])
   end
 end

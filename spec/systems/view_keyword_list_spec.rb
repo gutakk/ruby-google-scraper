@@ -7,9 +7,9 @@ describe 'views keyword list', type: :system do
     it 'does NOT display table when no keywords' do
       Fabricate(:user)
 
-      visit keywords_path
-
       system_login
+
+      visit keywords_path
 
       expect(current_path).to eql(keywords_path)
       expect(page).to have_content(I18n.t('keyword.no_keywords'))
@@ -26,9 +26,9 @@ describe 'views keyword list', type: :system do
       Fabricate(:keyword, user_id: user.id, keyword: 'Neymar')
       Fabricate(:keyword, user_id: user.id, keyword: 'Kevin De Bruyne')
 
-      visit keywords_path
-
       system_login
+
+      visit keywords_path
 
       expect(current_path).to eql(keywords_path)
       expect(page).to have_selector('table')
@@ -52,9 +52,9 @@ describe 'views keyword list', type: :system do
       user2 = Fabricate(:user, username: 'hello', password: 'password', password_confirmation: 'password')
       Fabricate(:keyword, user_id: user1[:id], keyword: 'Eden Hazard')
 
-      visit keywords_path
-
       system_login(user1.username, 'password')
+
+      visit keywords_path
 
       expect(current_path).to eql(keywords_path)
       expect(page).to have_selector('table')
@@ -65,9 +65,9 @@ describe 'views keyword list', type: :system do
         click_link(I18n.t('auth.logout'))
       end
 
-      visit keywords_path
-
       system_login(user2.username, 'password')
+
+      visit keywords_path
 
       expect(current_path).to eql(keywords_path)
       expect(page).to have_content(I18n.t('keyword.no_keywords'))
@@ -75,19 +75,19 @@ describe 'views keyword list', type: :system do
       expect(page).not_to have_selector('table')
     end
 
-    it 'displays ONLY 50 keywords' do
+    it 'displays ONLY 25 keywords' do
       user = Fabricate(:user)
       Fabricate.times(60, :keyword, user_id: user.id, keyword: FFaker::Name.name)
 
-      visit keywords_path
-
       system_login
+
+      visit keywords_path
 
       expect(current_path).to eql(keywords_path)
       expect(page).to have_selector('table')
 
       within 'table tbody' do
-        expect(page).to have_selector('tr', count: 50)
+        expect(page).to have_selector('tr', count: 25)
       end
     end
 
@@ -96,9 +96,9 @@ describe 'views keyword list', type: :system do
         user = Fabricate(:user)
         Fabricate(:keyword, user_id: user.id, keyword: 'Eden Hazard')
 
-        visit keywords_path
-
         system_login
+
+        visit keywords_path
 
         expect(current_path).to eql(keywords_path)
         expect(page).to have_selector('table')
@@ -120,9 +120,9 @@ describe 'views keyword list', type: :system do
         user = Fabricate(:user)
         Fabricate(:keyword, user_id: user.id, keyword: 'Eden Hazard', status: :completed)
 
-        visit keywords_path
-
         system_login
+
+        visit keywords_path
 
         expect(current_path).to eql(keywords_path)
         expect(page).to have_selector('table')
@@ -142,9 +142,9 @@ describe 'views keyword list', type: :system do
         user = Fabricate(:user)
         Fabricate(:keyword, user_id: user.id, keyword: 'Eden Hazard', status: :failed)
 
-        visit keywords_path
-
         system_login
+
+        visit keywords_path
 
         expect(current_path).to eql(keywords_path)
         expect(page).to have_selector('table')

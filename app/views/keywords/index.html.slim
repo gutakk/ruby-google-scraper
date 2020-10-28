@@ -13,5 +13,8 @@
           th.text-center = t('keyword.status')
       tbody
         = render(partial: 'keyword', collection: keywords)
+
+    == paginate keywords, left: 2, right: 2
+
   - else
     h2 class="mt-5 text-secondary" = t('keyword.no_keywords')

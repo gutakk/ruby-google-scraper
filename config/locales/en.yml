@@ -85,3 +85,7 @@ en:
     upload: "Upload"
     upload_csv_successfully: "CSV uploaded successfully"
     upload_keywords_csv_file: "Upload keywords CSV file"
+
+  pagination:
+    next: "Next ›"
+    prev: "‹ Prev"
