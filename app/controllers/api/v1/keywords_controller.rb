@@ -10,6 +10,10 @@ module Api
         render json: search_keyword, status: :ok
       end
 
+      def show
+        render json: @user.keywords.find(params[:id])
+      end
+
       private
 
       def current_user
