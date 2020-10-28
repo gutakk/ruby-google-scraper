@@ -13,7 +13,7 @@ module Api
             data: user.attributes.except('password_digest')
           )
         else
-          render_error(I18n.t('auth.signup_unsuccessfully'), user.errors.full_messages, :bad_request)
+          render_error_response(I18n.t('auth.signup_unsuccessfully'), user.errors.full_messages, :bad_request)
         end
       end
 

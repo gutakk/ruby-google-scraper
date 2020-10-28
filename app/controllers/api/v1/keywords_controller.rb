@@ -23,7 +23,7 @@ module Api
 
           render_successful_response(I18n.t('keyword.upload_csv_successfully'), :ok)
         else
-          render_error(
+          render_error_response(
             I18n.t('keyword.upload_csv_unsuccessfully'),
             @csv_import_form.errors.messages[:base][0],
             :bad_request
