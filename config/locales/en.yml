@@ -36,12 +36,13 @@ en:
         user:
           attributes:
             password:
-              too_short: "Password is too short (min is %{count} characters)"
+              too_short: "is too short (min is %{count} characters)"
             password_confirmation:
-              confirmation: "Password not match"
+              confirmation: "not match"
             username:
-              taken: "Username has already been taken"
-
+              taken: "has already been taken"
+          blank: "can't be blank"
+                  
   app:
     already_have_account_html: "Already have an account? %{link}"
     description: "Gathering Google search information with your own keywords"
@@ -62,6 +63,7 @@ en:
     password: "Password"
     signup: "Signup"
     signup_successfully: "Account was successfully created"
+    signup_unsuccessfully: "Account was unsuccessfully created"
     username: "Username"
       
   keyword:

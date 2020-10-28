@@ -13,7 +13,7 @@ module Api
           }, status: :ok
         else
           render json: {
-            message: 'Unable to create user',
+            message: I18n.t('auth.signup_unsuccessfully'),
             errors: user.errors.full_messages
           }, status: :bad_request
         end
