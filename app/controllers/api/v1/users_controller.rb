@@ -10,7 +10,7 @@ module Api
           render json: {
             messages: I18n.t('auth.signup_successfully'),
             data: { user: user }
-          }, status: :ok
+          }, status: :created
         else
           render json: {
             message: I18n.t('auth.signup_unsuccessfully'),
