@@ -25,6 +25,15 @@ Doorkeeper.configure do
   # every time somebody will try to access the admin web interface.
   #
   admin_authenticator do 
+    BASIC_AUTHENTICATION_USERNAME = ENV.fetch('BASIC_AUTHENTICATION_USERNAME')
+    BASIC_AUTHENTICATION_PASSWORD = ENV.fetch('BASIC_AUTHENTICATION_PASSWORD')
+
+    if Rails.env.production?
+      http_basic_authenticate_or_request_with(
+        name: BASIC_AUTHENTICATION_USERNAME,
+        password: BASIC_AUTHENTICATION_PASSWORD
+      )
+    end
   end
 
   # You can use your own model classes if you need to extend (or even override) default

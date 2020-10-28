@@ -10,6 +10,8 @@ ARG SECRET_KEY_BASE=secret_key_base
 # Because it initializes the app, so all variables need to exist in the build stage.
 ARG MAILER_DEFAULT_HOST=http://localhost
 ARG MAILER_DEFAULT_PORT=3000
+ARG BASIC_AUTHENTICATION_USERNAME
+ARG BASIC_AUTHENTICATION_PASSWORD
 
 # Define all the envs here
 ENV ASSET_HOST=$ASSET_HOST \
