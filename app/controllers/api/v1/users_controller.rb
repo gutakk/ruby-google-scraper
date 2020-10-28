@@ -9,7 +9,7 @@ module Api
         if user.save
           render json: {
             messages: I18n.t('auth.signup_successfully'),
-            data: { user: user }
+            data: { user: user.attributes.except('password_digest') }
           }, status: :created
         else
           render json: {
