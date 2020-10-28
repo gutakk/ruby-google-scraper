@@ -12,4 +12,10 @@ Rails.application.routes.draw do
   get '/login', to: 'sessions#new'
 
   resources :keywords, only: %i[index show create]
+
+  namespace :api do
+    namespace :v1 do
+      resource :users, only: :create
+    end
+  end
 end
