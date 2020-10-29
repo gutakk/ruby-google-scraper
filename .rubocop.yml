@@ -29,6 +29,7 @@ Metrics/BlockLength:
     - 'spec/**/*'
 
 Metrics/MethodLength:
+  Max: 20
   CountAsOne:
     - array
     - heredoc

@@ -18,8 +18,8 @@ module Api
       rescue ActiveRecord::RecordNotFound => e
         render_error_response(
           I18n.t('keyword.not_found'),
-          e.to_s,
-          :not_found
+          :not_found,
+          reasons: e.to_s
         )
       end
 
@@ -31,8 +31,8 @@ module Api
         else
           render_error_response(
             I18n.t('keyword.upload_csv_unsuccessfully'),
-            @csv_import_form.errors.messages[:base][0],
-            :bad_request
+            :bad_request,
+            reasons: @csv_import_form.errors.messages[:base][0]
           )
         end
       end
