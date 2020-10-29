@@ -8,8 +8,8 @@ module Api
       private
 
       # Render successful response in json format
-      def render_successful_response(message, status, data: nil)
-        response_body = { message: message }
+      def render_successful_response(messages, status, data: nil)
+        response_body = { messages: messages }
 
         response_body[:data] = data if data.present?
 
@@ -17,8 +17,8 @@ module Api
       end
 
       # Render error response in json format
-      def render_error_response(message, reasons, status)
-        render json: { message: message, reasons: reasons }, status: status
+      def render_error_response(messages, reasons, status)
+        render json: { messages: messages, reasons: reasons }, status: status
       end
     end
   end

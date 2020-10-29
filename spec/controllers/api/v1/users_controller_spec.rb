@@ -22,7 +22,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 
         response_body = JSON.parse(response.body)
 
-        expect(response_body['message']).to eql(I18n.t('auth.signup_successfully'))
+        expect(response_body['messages']).to eql(I18n.t('auth.signup_successfully'))
         expect(response_body['data']['username']).to eql('nimblehq')
       end
     end
@@ -81,7 +81,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 
         response_body = JSON.parse(response.body)
 
-        expect(response_body['message']).to eql(I18n.t('auth.signup_unsuccessfully'))
+        expect(response_body['messages']).to eql(I18n.t('auth.signup_unsuccessfully'))
         expect(response_body['reasons']).to include("Password #{I18n.t('activerecord.errors.models.user.blank')}")
         expect(response_body['reasons']).to include("Password confirmation #{I18n.t('activerecord.errors.models.user.blank')}")
         expect(response_body['reasons']).to include("Username #{I18n.t('activerecord.errors.models.user.blank')}")
