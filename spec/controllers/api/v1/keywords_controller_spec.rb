@@ -45,6 +45,87 @@ RSpec.describe Api::V1::KeywordsController, type: :controller do
 
         expect(JSON.parse(response.body).count).to eql 0
       end
+
+      it 'returns ascending ordered keywords' do
+        user = Fabricate(:user)
+        application = Fabricate(:application)
+        access_token = Fabricate(:access_token, resource_owner_id: user.id, application_id: application.id)
+        Fabricate(:keyword, user_id: user.id, keyword: 'Eden Hazard')
+        Fabricate(:keyword, user_id: user.id, keyword: 'Lionel Messi')
+        Fabricate(:keyword, user_id: user.id, keyword: 'Cristiano Ronaldo')
+        Fabricate(:keyword, user_id: user.id, keyword: 'Kylian Mbappe')
+        Fabricate(:keyword, user_id: user.id, keyword: 'Neymar')
+        Fabricate(:keyword, user_id: user.id, keyword: 'Kevin De Bruyne')
+
+        request.headers['Authorization'] = "Bearer #{access_token.token}"
+
+        get :index
+
+        response_body = JSON.parse(response.body)
+
+        expect(response_body.count).to eql 6
+        expect(response_body[0]['keyword']).to eql('Cristiano Ronaldo')
+        expect(response_body[1]['keyword']).to eql('Eden Hazard')
+        expect(response_body[2]['keyword']).to eql('Kevin De Bruyne')
+        expect(response_body[3]['keyword']).to eql('Kylian Mbappe')
+        expect(response_body[4]['keyword']).to eql('Lionel Messi')
+        expect(response_body[5]['keyword']).to eql('Neymar')
+      end
+
+      it 'returns only 25 keywords per page' do
+        user = Fabricate(:user)
+        application = Fabricate(:application)
+        access_token = Fabricate(:access_token, resource_owner_id: user.id, application_id: application.id)
+        Fabricate.times(60, :keyword, user_id: user.id, keyword: FFaker::Name.name)
+
+        request.headers['Authorization'] = "Bearer #{access_token.token}"
+
+        get :index
+
+        expect(JSON.parse(response.body).count).to eql 25
+      end
+
+      it 'returns only keywords that match with search params' do
+        user = Fabricate(:user)
+        application = Fabricate(:application)
+        access_token = Fabricate(:access_token, resource_owner_id: user.id, application_id: application.id)
+        Fabricate(:keyword, user_id: user.id, keyword: 'Eden Hazard')
+        Fabricate(:keyword, user_id: user.id, keyword: 'Lionel Messi')
+        Fabricate(:keyword, user_id: user.id, keyword: 'Cristiano Ronaldo')
+        Fabricate(:keyword, user_id: user.id, keyword: 'Kylian Mbappe')
+        Fabricate(:keyword, user_id: user.id, keyword: 'Neymar')
+        Fabricate(:keyword, user_id: user.id, keyword: 'Kevin De Bruyne')
+
+        request.headers['Authorization'] = "Bearer #{access_token.token}"
+
+        get :index, params: { search: 'ian' }
+
+        response_body = JSON.parse(response.body)
+
+        expect(response_body.count).to eql 2
+        expect(response_body[0]['keyword']).to eql('Cristiano Ronaldo')
+        expect(response_body[1]['keyword']).to eql('Kylian Mbappe')
+      end
+
+      it 'returns nothing when given page 2 but keywords less than 25' do
+        user = Fabricate(:user)
+        application = Fabricate(:application)
+        access_token = Fabricate(:access_token, resource_owner_id: user.id, application_id: application.id)
+        Fabricate(:keyword, user_id: user.id, keyword: 'Eden Hazard')
+        Fabricate(:keyword, user_id: user.id, keyword: 'Lionel Messi')
+        Fabricate(:keyword, user_id: user.id, keyword: 'Cristiano Ronaldo')
+        Fabricate(:keyword, user_id: user.id, keyword: 'Kylian Mbappe')
+        Fabricate(:keyword, user_id: user.id, keyword: 'Neymar')
+        Fabricate(:keyword, user_id: user.id, keyword: 'Kevin De Bruyne')
+
+        request.headers['Authorization'] = "Bearer #{access_token.token}"
+
+        get :index, params: { page: 2 }
+
+        response_body = JSON.parse(response.body)
+
+        expect(response_body.count).to eql 0
+      end
     end
 
     context 'given NO access token' do
