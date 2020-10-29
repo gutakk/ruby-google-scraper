@@ -15,6 +15,12 @@ module Api
 
       def show
         render json: @user.keywords.find(params[:id]), status: :ok
+      rescue ActiveRecord::RecordNotFound => e
+        render_error_response(
+          I18n.t('keyword.not_found'),
+          e,
+          :not_found
+        )
       end
 
       def create
