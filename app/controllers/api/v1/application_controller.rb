@@ -7,7 +7,12 @@ module Api
       include Api::V1::ResponseHandler
 
       def doorkeeper_unauthorized_render_options(error: nil)
-        { json: error }
+        {
+          json: {
+            messages: I18n.t('doorkeeper.errors.messages.unauthorized_client'),
+            reasons: error.description
+          }
+        }
       end
     end
   end

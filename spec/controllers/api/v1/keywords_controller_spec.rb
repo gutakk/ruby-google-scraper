@@ -59,8 +59,8 @@ RSpec.describe Api::V1::KeywordsController, type: :controller do
 
         response_body = JSON.parse(response.body)
 
-        expect(response_body['error']['name']).to eql('invalid_token')
-        expect(response_body['description']).to eql(I18n.t('doorkeeper.errors.messages.invalid_token.unknown'))
+        expect(response_body['messages']).to eql(I18n.t('doorkeeper.errors.messages.unauthorized_client'))
+        expect(response_body['reasons']).to eql(I18n.t('doorkeeper.errors.messages.invalid_token.unknown'))
       end
     end
 
@@ -80,8 +80,8 @@ RSpec.describe Api::V1::KeywordsController, type: :controller do
 
         response_body = JSON.parse(response.body)
 
-        expect(response_body['error']['name']).to eql('invalid_token')
-        expect(response_body['description']).to eql(I18n.t('doorkeeper.errors.messages.invalid_token.unknown'))
+        expect(response_body['messages']).to eql(I18n.t('doorkeeper.errors.messages.unauthorized_client'))
+        expect(response_body['reasons']).to eql(I18n.t('doorkeeper.errors.messages.invalid_token.unknown'))
       end
     end
 
@@ -107,8 +107,8 @@ RSpec.describe Api::V1::KeywordsController, type: :controller do
 
         response_body = JSON.parse(response.body)
 
-        expect(response_body['error']['name']).to eql('invalid_token')
-        expect(response_body['description']).to eql(I18n.t('doorkeeper.errors.messages.invalid_token.revoked'))
+        expect(response_body['messages']).to eql(I18n.t('doorkeeper.errors.messages.unauthorized_client'))
+        expect(response_body['reasons']).to eql(I18n.t('doorkeeper.errors.messages.invalid_token.revoked'))
       end
     end
 
@@ -134,8 +134,8 @@ RSpec.describe Api::V1::KeywordsController, type: :controller do
 
         response_body = JSON.parse(response.body)
 
-        expect(response_body['error']['name']).to eql('invalid_token')
-        expect(response_body['description']).to eql(I18n.t('doorkeeper.errors.messages.invalid_token.expired'))
+        expect(response_body['messages']).to eql(I18n.t('doorkeeper.errors.messages.unauthorized_client'))
+        expect(response_body['reasons']).to eql(I18n.t('doorkeeper.errors.messages.invalid_token.expired'))
       end
     end
   end
@@ -199,7 +199,7 @@ RSpec.describe Api::V1::KeywordsController, type: :controller do
 
           response_body = JSON.parse(response.body)
 
-          expect(response_body['message']).to eql(I18n.t('keyword.not_found'))
+          expect(response_body['messages']).to eql(I18n.t('keyword.not_found'))
           expect(response_body['reasons']).to include("Couldn't find Keyword with 'id'=9999")
         end
       end
@@ -243,7 +243,7 @@ RSpec.describe Api::V1::KeywordsController, type: :controller do
 
           post :create, params: { file: file }
 
-          expect(JSON.parse(response.body)['message']).to eql(I18n.t('keyword.upload_csv_successfully'))
+          expect(JSON.parse(response.body)['messages']).to eql(I18n.t('keyword.upload_csv_successfully'))
         end
 
         it 'inserts keywords to database' do
@@ -300,7 +300,7 @@ RSpec.describe Api::V1::KeywordsController, type: :controller do
 
             response_body = JSON.parse(response.body)
 
-            expect(response_body['message']).to eql(I18n.t('keyword.upload_csv_unsuccessfully'))
+            expect(response_body['messages']).to eql(I18n.t('keyword.upload_csv_unsuccessfully'))
             expect(response_body['reasons']).to eql(I18n.t('keyword.file_must_be_csv'))
           end
 
@@ -357,7 +357,7 @@ RSpec.describe Api::V1::KeywordsController, type: :controller do
 
             response_body = JSON.parse(response.body)
 
-            expect(response_body['message']).to eql(I18n.t('keyword.upload_csv_unsuccessfully'))
+            expect(response_body['messages']).to eql(I18n.t('keyword.upload_csv_unsuccessfully'))
             expect(response_body['reasons']).to eql(I18n.t('keyword.keyword_range'))
           end
 
@@ -414,7 +414,7 @@ RSpec.describe Api::V1::KeywordsController, type: :controller do
 
             response_body = JSON.parse(response.body)
 
-            expect(response_body['message']).to eql(I18n.t('keyword.upload_csv_unsuccessfully'))
+            expect(response_body['messages']).to eql(I18n.t('keyword.upload_csv_unsuccessfully'))
             expect(response_body['reasons']).to eql(I18n.t('keyword.keyword_range'))
           end
 
