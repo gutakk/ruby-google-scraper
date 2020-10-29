@@ -57,8 +57,10 @@ RSpec.describe Api::V1::KeywordsController, type: :controller do
       it 'returns invalid token message' do
         get :index
 
-        expect(JSON.parse(response.body)['error']['name']).to eql('invalid_token')
-        expect(JSON.parse(response.body)['description']).to eql(I18n.t('doorkeeper.errors.messages.invalid_token.unknown'))
+        response_body = JSON.parse(response.body)
+
+        expect(response_body['error']['name']).to eql('invalid_token')
+        expect(response_body['description']).to eql(I18n.t('doorkeeper.errors.messages.invalid_token.unknown'))
       end
     end
 
@@ -76,8 +78,10 @@ RSpec.describe Api::V1::KeywordsController, type: :controller do
 
         get :index
 
-        expect(JSON.parse(response.body)['error']['name']).to eql('invalid_token')
-        expect(JSON.parse(response.body)['description']).to eql(I18n.t('doorkeeper.errors.messages.invalid_token.unknown'))
+        response_body = JSON.parse(response.body)
+
+        expect(response_body['error']['name']).to eql('invalid_token')
+        expect(response_body['description']).to eql(I18n.t('doorkeeper.errors.messages.invalid_token.unknown'))
       end
     end
 
@@ -101,8 +105,10 @@ RSpec.describe Api::V1::KeywordsController, type: :controller do
 
         get :index
 
-        expect(JSON.parse(response.body)['error']['name']).to eql('invalid_token')
-        expect(JSON.parse(response.body)['description']).to eql(I18n.t('doorkeeper.errors.messages.invalid_token.revoked'))
+        response_body = JSON.parse(response.body)
+
+        expect(response_body['error']['name']).to eql('invalid_token')
+        expect(response_body['description']).to eql(I18n.t('doorkeeper.errors.messages.invalid_token.revoked'))
       end
     end
 
@@ -126,59 +132,90 @@ RSpec.describe Api::V1::KeywordsController, type: :controller do
 
         get :index
 
-        expect(JSON.parse(response.body)['error']['name']).to eql('invalid_token')
-        expect(JSON.parse(response.body)['description']).to eql(I18n.t('doorkeeper.errors.messages.invalid_token.expired'))
+        response_body = JSON.parse(response.body)
+
+        expect(response_body['error']['name']).to eql('invalid_token')
+        expect(response_body['description']).to eql(I18n.t('doorkeeper.errors.messages.invalid_token.expired'))
       end
     end
   end
 
-  # describe 'GET#show' do
-  #   context 'given the authenticated user' do
-  #     context 'given correct keyword id' do
-  #       it 'returns a successful response' do
-  #         user = Fabricate(:user)
-  #         keyword = Fabricate(:keyword, user_id: user.id, keyword: 'test')
-  #         session[:user_id] = user.id
+  describe 'GET#show' do
+    context 'given access token' do
+      context 'given correct keyword id' do
+        it 'returns ok status code' do
+          user = Fabricate(:user)
+          application = Fabricate(:application)
+          access_token = Fabricate(:access_token, resource_owner_id: user.id, application_id: application.id)
+          keyword = Fabricate(:keyword, user_id: user.id, keyword: 'test')
 
-  #         get :show, params: { id: keyword.id }
+          request.headers['Authorization'] = "Bearer #{access_token.token}"
 
-  #         expect(response).to be_successful
-  #       end
+          get :show, params: { id: keyword.id }
 
-  #       it 'renders the template of :show action' do
-  #         user = Fabricate(:user)
-  #         keyword = Fabricate(:keyword, user_id: user.id, keyword: 'test')
-  #         session[:user_id] = user.id
+          expect(response).to have_http_status(:ok)
+        end
 
-  #         get :show, params: { id: keyword.id }
+        it 'returns correct keyword' do
+          user = Fabricate(:user)
+          application = Fabricate(:application)
+          access_token = Fabricate(:access_token, resource_owner_id: user.id, application_id: application.id)
+          keyword = Fabricate(:keyword, user_id: user.id, keyword: 'test')
 
-  #         expect(response).to render_template(:show)
-  #       end
-  #     end
+          request.headers['Authorization'] = "Bearer #{access_token.token}"
 
-  #     context 'given incorrect keyword id' do
-  #       it 'raises ActiveRecord::RecordNotFound' do
-  #         user = Fabricate(:user)
-  #         session[:user_id] = user.id
+          get :show, params: { id: keyword.id }
 
-  #         expect do
-  #           get :show, params: { id: 'not_found_id' }
-  #         end.to raise_error(ActiveRecord::RecordNotFound)
-  #       end
-  #     end
-  #   end
+          response_body = JSON.parse(response.body)
 
-  #   context 'given unauthenticated user' do
-  #     it 'redirects to login' do
-  #       user = Fabricate(:user)
-  #       keyword = Fabricate(:keyword, user_id: user.id, keyword: 'test')
+          expect(response_body['id']).to eql(keyword.id)
+          expect(response_body['keyword']).to eql('test')
+        end
+      end
 
-  #       get :show, params: { id: keyword.id }
+      context 'given incorrect keyword id' do
+        it 'returns not found status code' do
+          user = Fabricate(:user)
+          application = Fabricate(:application)
+          access_token = Fabricate(:access_token, resource_owner_id: user.id, application_id: application.id)
+          Fabricate(:keyword, user_id: user.id, keyword: 'test')
 
-  #       expect(response).to redirect_to(login_path)
-  #     end
-  #   end
-  # end
+          request.headers['Authorization'] = "Bearer #{access_token.token}"
+
+          get :show, params: { id: 9999 }
+
+          expect(response).to have_http_status(:not_found)
+        end
+
+        it 'returns not found message' do
+          user = Fabricate(:user)
+          application = Fabricate(:application)
+          access_token = Fabricate(:access_token, resource_owner_id: user.id, application_id: application.id)
+          Fabricate(:keyword, user_id: user.id, keyword: 'test')
+
+          request.headers['Authorization'] = "Bearer #{access_token.token}"
+
+          get :show, params: { id: 9999 }
+
+          response_body = JSON.parse(response.body)
+
+          expect(response_body['message']).to eql(I18n.t('keyword.not_found'))
+          expect(response_body['reasons']).to include("Couldn't find Keyword with 'id'=9999")
+        end
+      end
+    end
+
+    context 'given NO access token' do
+      it 'returns unauthorized status code' do
+        user = Fabricate(:user)
+        keyword = Fabricate(:keyword, user_id: user.id, keyword: 'test')
+
+        get :show, params: { id: keyword.id }
+
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+  end
 
   # describe 'POST#create' do
   #   context 'given authenticated user' do
