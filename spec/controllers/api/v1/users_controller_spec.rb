@@ -11,13 +11,13 @@ RSpec.describe Api::V1::UsersController, type: :controller do
         end.to change(User, :count).by(1)
       end
 
-      it 'renders created status' do
+      it 'returns created status' do
         post :create, params: { username: 'nimblehq', password: 'password', password_confirmation: 'password' }
 
         expect(response).to have_http_status(:created)
       end
 
-      it 'renders successful response body' do
+      it 'returns successful response body' do
         post :create, params: { username: 'nimblehq', password: 'password', password_confirmation: 'password' }
 
         expect(JSON.parse(response.body)['message']).to eql(I18n.t('auth.signup_successfully'))
@@ -68,13 +68,13 @@ RSpec.describe Api::V1::UsersController, type: :controller do
         end.to change(User, :count).by(0)
       end
 
-      it 'renders bad request status' do
+      it 'returns bad request status' do
         post :create, params: { username: nil, password: nil, password_confirmation: nil }
 
         expect(response).to have_http_status(:bad_request)
       end
 
-      it 'renders error response body' do
+      it 'returns error response body' do
         post :create, params: { username: nil, password: nil, password_confirmation: nil }
 
         expect(JSON.parse(response.body)['message']).to eql(I18n.t('auth.signup_unsuccessfully'))
