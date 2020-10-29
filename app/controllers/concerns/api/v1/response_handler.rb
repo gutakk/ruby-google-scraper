@@ -17,8 +17,8 @@ module Api
       end
 
       # Render error response in json format
-      def render_error_response(message, errors, status)
-        render json: { message: message, errors: errors }, status: status
+      def render_error_response(message, reasons, status)
+        render json: { message: message, reasons: reasons }, status: status
       end
     end
   end
