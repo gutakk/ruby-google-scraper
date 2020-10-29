@@ -6,6 +6,8 @@ module Api
       include Localization
       include Api::V1::ResponseHandler
 
+      private
+
       def doorkeeper_unauthorized_render_options(error: nil)
         {
           json: {
