@@ -217,177 +217,234 @@ RSpec.describe Api::V1::KeywordsController, type: :controller do
     end
   end
 
-  # describe 'POST#create' do
-  #   context 'given authenticated user' do
-  #     context 'given valid parameters (file)' do
-  #       it 'inserts keywords to database' do
-  #         user = Fabricate(:user)
-  #         session[:user_id] = user.id
-  #         file = fixture_file_upload('files/example.csv', 'text/csv')
+  describe 'POST#create' do
+    context 'given access token' do
+      context 'given valid parameters (file)' do
+        it 'returns ok status code' do
+          user = Fabricate(:user)
+          application = Fabricate(:application)
+          access_token = Fabricate(:access_token, resource_owner_id: user.id, application_id: application.id)
+          file = fixture_file_upload('files/example.csv', 'text/csv')
 
-  #         expect do
-  #           post :create, params: { csv_import_form: { file: file } }
-  #         end.to change(Keyword, :count).by(6)
-  #       end
+          request.headers['Authorization'] = "Bearer #{access_token.token}"
 
-  #       it 'redirects to keywords path' do
-  #         user = Fabricate(:user)
-  #         session[:user_id] = user.id
-  #         file = fixture_file_upload('files/example.csv', 'text/csv')
+          post :create, params: { file: file }
 
-  #         post :create, params: { csv_import_form: { file: file } }
+          expect(response).to have_http_status(:ok)
+        end
 
-  #         expect(response).to redirect_to(keywords_path)
-  #       end
+        it 'returns upload successfully message' do
+          user = Fabricate(:user)
+          application = Fabricate(:application)
+          access_token = Fabricate(:access_token, resource_owner_id: user.id, application_id: application.id)
+          file = fixture_file_upload('files/example.csv', 'text/csv')
 
-  #       it 'shows a notice flash' do
-  #         user = Fabricate(:user)
-  #         session[:user_id] = user.id
-  #         file = fixture_file_upload('files/example.csv', 'text/csv')
+          request.headers['Authorization'] = "Bearer #{access_token.token}"
 
-  #         post :create, params: { csv_import_form: { file: file } }
+          post :create, params: { file: file }
 
-  #         expect(flash[:notice]).to eql(I18n.t('keyword.upload_csv_successfully'))
-  #       end
+          expect(JSON.parse(response.body)['message']).to eql(I18n.t('keyword.upload_csv_successfully'))
+        end
 
-  #       it 'creates google scraping job' do
-  #         user = Fabricate(:user)
-  #         session[:user_id] = user.id
-  #         file = fixture_file_upload('files/example.csv', 'text/csv')
+        it 'inserts keywords to database' do
+          user = Fabricate(:user)
+          application = Fabricate(:application)
+          access_token = Fabricate(:access_token, resource_owner_id: user.id, application_id: application.id)
+          file = fixture_file_upload('files/example.csv', 'text/csv')
 
-  #         expect do
-  #           post :create, params: { csv_import_form: { file: file } }
-  #         end.to have_enqueued_job(ScrapingProcessDistributingJob)
-  #       end
-  #     end
+          request.headers['Authorization'] = "Bearer #{access_token.token}"
 
-  #     context 'given invalid parameters (file)' do
-  #       context 'given invalid file type' do
-  #         it 'redirects to keywords path' do
-  #           user = Fabricate(:user)
-  #           session[:user_id] = user.id
-  #           file = fixture_file_upload('files/nimble.png')
+          expect do
+            post :create, params: { file: file }
+          end.to change(Keyword, :count).by(6)
+        end
 
-  #           post :create, params: { csv_import_form: { file: file } }
+        it 'creates google scraping job' do
+          user = Fabricate(:user)
+          application = Fabricate(:application)
+          access_token = Fabricate(:access_token, resource_owner_id: user.id, application_id: application.id)
+          file = fixture_file_upload('files/example.csv', 'text/csv')
 
-  #           expect(response).to redirect_to(keywords_path)
-  #         end
+          request.headers['Authorization'] = "Bearer #{access_token.token}"
 
-  #         it 'shows an alert flash' do
-  #           user = Fabricate(:user)
-  #           session[:user_id] = user.id
-  #           file = fixture_file_upload('files/nimble.png')
+          expect do
+            post :create, params: { file: file }
+          end.to have_enqueued_job(ScrapingProcessDistributingJob)
+        end
+      end
 
-  #           post :create, params: { csv_import_form: { file: file } }
+      context 'given invalid parameters (file)' do
+        context 'given invalid file type' do
+          it 'returns bad request status code' do
+            user = Fabricate(:user)
+            application = Fabricate(:application)
+            access_token = Fabricate(:access_token, resource_owner_id: user.id, application_id: application.id)
+            file = fixture_file_upload('files/nimble.png')
 
-  #           expect(flash[:alert]).to eql(I18n.t('keyword.file_must_be_csv'))
-  #         end
+            request.headers['Authorization'] = "Bearer #{access_token.token}"
 
-  #         it 'does NOT insert keywords to database' do
-  #           user = Fabricate(:user)
-  #           session[:user_id] = user.id
-  #           file = fixture_file_upload('files/nimble.png')
+            post :create, params: { file: file }
 
-  #           expect do
-  #             post :create, params: { csv_import_form: { file: file } }
-  #           end.to change(Keyword, :count).by(0)
-  #         end
+            expect(response).to have_http_status(:bad_request)
+          end
 
-  #         it 'does NOT create google scraping worker sidekiq job' do
-  #           user = Fabricate(:user)
-  #           session[:user_id] = user.id
-  #           file = fixture_file_upload('files/nimble.png')
+          it 'returns invalid file type message' do
+            user = Fabricate(:user)
+            application = Fabricate(:application)
+            access_token = Fabricate(:access_token, resource_owner_id: user.id, application_id: application.id)
+            file = fixture_file_upload('files/nimble.png')
 
-  #           expect do
-  #             post :create, params: { csv_import_form: { file: file } }
-  #           end.not_to have_enqueued_job(ScrapingProcessDistributingJob)
-  #         end
-  #       end
+            request.headers['Authorization'] = "Bearer #{access_token.token}"
 
-  #       context 'given no keyword csv' do
-  #         it 'redirects to keywords path' do
-  #           user = Fabricate(:user)
-  #           session[:user_id] = user.id
-  #           file = fixture_file_upload('files/no_keywords.csv', 'text/csv')
+            post :create, params: { file: file }
 
-  #           post :create, params: { csv_import_form: { file: file } }
+            response_body = JSON.parse(response.body)
 
-  #           expect(response).to redirect_to(keywords_path)
-  #         end
+            expect(response_body['message']).to eql(I18n.t('keyword.upload_csv_unsuccessfully'))
+            expect(response_body['reasons']).to eql(I18n.t('keyword.file_must_be_csv'))
+          end
 
-  #         it 'shows an alert flash' do
-  #           user = Fabricate(:user)
-  #           session[:user_id] = user.id
-  #           file = fixture_file_upload('files/no_keywords.csv', 'text/csv')
+          it 'does NOT insert keywords to database' do
+            user = Fabricate(:user)
+            application = Fabricate(:application)
+            access_token = Fabricate(:access_token, resource_owner_id: user.id, application_id: application.id)
+            file = fixture_file_upload('files/nimble.png')
 
-  #           post :create, params: { csv_import_form: { file: file } }
+            request.headers['Authorization'] = "Bearer #{access_token.token}"
 
-  #           expect(flash[:alert]).to eql(I18n.t('keyword.keyword_range'))
-  #         end
+            expect do
+              post :create, params: { file: file }
+            end.to change(Keyword, :count).by(0)
+          end
 
-  #         it 'does NOT insert keywords to database' do
-  #           user = Fabricate(:user)
-  #           session[:user_id] = user.id
-  #           file = fixture_file_upload('files/no_keywords.csv')
+          it 'does NOT create google scraping job' do
+            user = Fabricate(:user)
+            application = Fabricate(:application)
+            access_token = Fabricate(:access_token, resource_owner_id: user.id, application_id: application.id)
+            file = fixture_file_upload('files/nimble.png')
 
-  #           expect do
-  #             post :create, params: { csv_import_form: { file: file } }
-  #           end.to change(Keyword, :count).by(0)
-  #         end
+            request.headers['Authorization'] = "Bearer #{access_token.token}"
 
-  #         it 'does NOT create google scraping worker sidekiq job' do
-  #           user = Fabricate(:user)
-  #           session[:user_id] = user.id
-  #           file = fixture_file_upload('files/no_keywords.csv')
+            expect do
+              post :create, params: { file: file }
+            end.not_to have_enqueued_job(ScrapingProcessDistributingJob)
+          end
+        end
 
-  #           expect do
-  #             post :create, params: { csv_import_form: { file: file } }
-  #           end.not_to have_enqueued_job(ScrapingProcessDistributingJob)
-  #         end
-  #       end
+        context 'given no keyword csv' do
+          it 'returns bad request status code' do
+            user = Fabricate(:user)
+            application = Fabricate(:application)
+            access_token = Fabricate(:access_token, resource_owner_id: user.id, application_id: application.id)
+            file = fixture_file_upload('files/no_keywords.csv', 'text/csv')
 
-  #       context 'given more than 1,000 keywords csv' do
-  #         it 'redirects to keywords path' do
-  #           user = Fabricate(:user)
-  #           session[:user_id] = user.id
-  #           file = fixture_file_upload('files/more_than_thoudsand_keywords.csv', 'text/csv')
+            request.headers['Authorization'] = "Bearer #{access_token.token}"
 
-  #           post :create, params: { csv_import_form: { file: file } }
+            post :create, params: { file: file }
 
-  #           expect(response).to redirect_to(keywords_path)
-  #         end
+            expect(response).to have_http_status(:bad_request)
+          end
 
-  #         it 'shows an alert flash' do
-  #           user = Fabricate(:user)
-  #           session[:user_id] = user.id
-  #           file = fixture_file_upload('files/more_than_thoudsand_keywords.csv', 'text/csv')
+          it 'returns invalid csv message' do
+            user = Fabricate(:user)
+            application = Fabricate(:application)
+            access_token = Fabricate(:access_token, resource_owner_id: user.id, application_id: application.id)
+            file = fixture_file_upload('files/no_keywords.csv', 'text/csv')
 
-  #           post :create, params: { csv_import_form: { file: file } }
+            request.headers['Authorization'] = "Bearer #{access_token.token}"
 
-  #           expect(flash[:alert]).to eql(I18n.t('keyword.keyword_range'))
-  #         end
+            post :create, params: { file: file }
 
-  #         it 'does NOT insert keywords to database' do
-  #           user = Fabricate(:user)
-  #           session[:user_id] = user.id
-  #           file = fixture_file_upload('files/more_than_thoudsand_keywords.csv')
+            response_body = JSON.parse(response.body)
 
-  #           expect do
-  #             post :create, params: { csv_import_form: { file: file } }
-  #           end.to change(Keyword, :count).by(0)
-  #         end
+            expect(response_body['message']).to eql(I18n.t('keyword.upload_csv_unsuccessfully'))
+            expect(response_body['reasons']).to eql(I18n.t('keyword.keyword_range'))
+          end
 
-  #         it 'does NOT create google scraping worker sidekiq job' do
-  #           user = Fabricate(:user)
-  #           session[:user_id] = user.id
-  #           file = fixture_file_upload('files/more_than_thoudsand_keywords.csv')
+          it 'does NOT insert keywords to database' do
+            user = Fabricate(:user)
+            application = Fabricate(:application)
+            access_token = Fabricate(:access_token, resource_owner_id: user.id, application_id: application.id)
+            file = fixture_file_upload('files/no_keywords.csv', 'text/csv')
 
-  #           expect do
-  #             post :create, params: { csv_import_form: { file: file } }
-  #           end.not_to have_enqueued_job(ScrapingProcessDistributingJob)
-  #         end
-  #       end
-  #     end
-  #   end
-  # end
+            request.headers['Authorization'] = "Bearer #{access_token.token}"
+
+            expect do
+              post :create, params: { file: file }
+            end.to change(Keyword, :count).by(0)
+          end
+
+          it 'does NOT create google scraping job' do
+            user = Fabricate(:user)
+            application = Fabricate(:application)
+            access_token = Fabricate(:access_token, resource_owner_id: user.id, application_id: application.id)
+            file = fixture_file_upload('files/no_keywords.csv', 'text/csv')
+
+            request.headers['Authorization'] = "Bearer #{access_token.token}"
+
+            expect do
+              post :create, params: { file: file }
+            end.not_to have_enqueued_job(ScrapingProcessDistributingJob)
+          end
+        end
+
+        context 'given more than 1,000 keywords csv' do
+          it 'returns bad request status code' do
+            user = Fabricate(:user)
+            application = Fabricate(:application)
+            access_token = Fabricate(:access_token, resource_owner_id: user.id, application_id: application.id)
+            file = fixture_file_upload('files/more_than_thoudsand_keywords.csv', 'text/csv')
+
+            request.headers['Authorization'] = "Bearer #{access_token.token}"
+
+            post :create, params: { file: file }
+
+            expect(response).to have_http_status(:bad_request)
+          end
+
+          it 'returns invalid csv message' do
+            user = Fabricate(:user)
+            application = Fabricate(:application)
+            access_token = Fabricate(:access_token, resource_owner_id: user.id, application_id: application.id)
+            file = fixture_file_upload('files/more_than_thoudsand_keywords.csv', 'text/csv')
+
+            request.headers['Authorization'] = "Bearer #{access_token.token}"
+
+            post :create, params: { file: file }
+
+            response_body = JSON.parse(response.body)
+
+            expect(response_body['message']).to eql(I18n.t('keyword.upload_csv_unsuccessfully'))
+            expect(response_body['reasons']).to eql(I18n.t('keyword.keyword_range'))
+          end
+
+          it 'does NOT insert keywords to database' do
+            user = Fabricate(:user)
+            application = Fabricate(:application)
+            access_token = Fabricate(:access_token, resource_owner_id: user.id, application_id: application.id)
+            file = fixture_file_upload('files/more_than_thoudsand_keywords.csv', 'text/csv')
+
+            request.headers['Authorization'] = "Bearer #{access_token.token}"
+
+            expect do
+              post :create, params: { file: file }
+            end.to change(Keyword, :count).by(0)
+          end
+
+          it 'does NOT create google scraping job' do
+            user = Fabricate(:user)
+            application = Fabricate(:application)
+            access_token = Fabricate(:access_token, resource_owner_id: user.id, application_id: application.id)
+            file = fixture_file_upload('files/more_than_thoudsand_keywords.csv', 'text/csv')
+
+            request.headers['Authorization'] = "Bearer #{access_token.token}"
+
+            expect do
+              post :create, params: { file: file }
+            end.not_to have_enqueued_job(ScrapingProcessDistributingJob)
+          end
+        end
+      end
+    end
+  end
 end

@@ -18,7 +18,7 @@ module Api
       rescue ActiveRecord::RecordNotFound => e
         render_error_response(
           I18n.t('keyword.not_found'),
-          e,
+          e.to_s,
           :not_found
         )
       end
