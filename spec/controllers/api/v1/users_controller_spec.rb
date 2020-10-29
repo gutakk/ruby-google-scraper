@@ -14,7 +14,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       it 'renders created status' do
         post :create, params: { username: 'nimblehq', password: 'password', password_confirmation: 'password' }
 
-        expect(response.status).to eql(201)
+        expect(response).to have_http_status(:created)
       end
 
       it 'renders successful response body' do
@@ -71,7 +71,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       it 'renders bad request status' do
         post :create, params: { username: nil, password: nil, password_confirmation: nil }
 
-        expect(response.status).to eql(400)
+        expect(response).to have_http_status(:bad_request)
       end
 
       it 'renders error response body' do
