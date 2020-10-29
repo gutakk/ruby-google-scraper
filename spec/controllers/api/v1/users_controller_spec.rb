@@ -20,8 +20,10 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       it 'returns successful response body' do
         post :create, params: { username: 'nimblehq', password: 'password', password_confirmation: 'password' }
 
-        expect(JSON.parse(response.body)['message']).to eql(I18n.t('auth.signup_successfully'))
-        expect(JSON.parse(response.body)['data']['username']).to eql('nimblehq')
+        response_body = JSON.parse(response.body)
+
+        expect(response_body['message']).to eql(I18n.t('auth.signup_successfully'))
+        expect(response_body['data']['username']).to eql('nimblehq')
       end
     end
 
@@ -77,11 +79,13 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       it 'returns error response body' do
         post :create, params: { username: nil, password: nil, password_confirmation: nil }
 
-        expect(JSON.parse(response.body)['message']).to eql(I18n.t('auth.signup_unsuccessfully'))
-        expect(JSON.parse(response.body)['errors']).to include("Password #{I18n.t('activerecord.errors.models.user.blank')}")
-        expect(JSON.parse(response.body)['errors']).to include("Password confirmation #{I18n.t('activerecord.errors.models.user.blank')}")
-        expect(JSON.parse(response.body)['errors']).to include("Username #{I18n.t('activerecord.errors.models.user.blank')}")
-        expect(JSON.parse(response.body)['errors']).to include("Password #{I18n.t('activerecord.errors.models.user.attributes.password.too_short', count: 6)}")
+        response_body = JSON.parse(response.body)
+
+        expect(response_body['message']).to eql(I18n.t('auth.signup_unsuccessfully'))
+        expect(response_body['errors']).to include("Password #{I18n.t('activerecord.errors.models.user.blank')}")
+        expect(response_body['errors']).to include("Password confirmation #{I18n.t('activerecord.errors.models.user.blank')}")
+        expect(response_body['errors']).to include("Username #{I18n.t('activerecord.errors.models.user.blank')}")
+        expect(response_body['errors']).to include("Password #{I18n.t('activerecord.errors.models.user.attributes.password.too_short', count: 6)}")
       end
     end
   end
