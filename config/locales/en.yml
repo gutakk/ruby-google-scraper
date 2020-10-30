@@ -69,6 +69,7 @@ en:
   keyword:
     adwords: "Adwords"
     created_at: "Created at"
+    file_cannot_be_blank: "File can't be blank"
     file_must_be_csv: "File must be CSV format"
     google_html: "Google HTML"
     keyword: "Keyword"

@@ -355,6 +355,59 @@ RSpec.describe Api::V1::KeywordsController, type: :controller do
       end
 
       context 'given invalid parameters (file)' do
+        context 'given NO file' do
+          it 'returns bad request status code' do
+            user = Fabricate(:user)
+            application = Fabricate(:application)
+            access_token = Fabricate(:access_token, resource_owner_id: user.id, application_id: application.id)
+
+            request.headers['Authorization'] = "Bearer #{access_token.token}"
+
+            post :create
+
+            expect(response).to have_http_status(:bad_request)
+          end
+
+          it 'returns invalid file type message' do
+            user = Fabricate(:user)
+            application = Fabricate(:application)
+            access_token = Fabricate(:access_token, resource_owner_id: user.id, application_id: application.id)
+
+            request.headers['Authorization'] = "Bearer #{access_token.token}"
+
+            post :create
+
+            response_body = JSON.parse(response.body)
+
+            expect(response_body['messages']).to eql(I18n.t('keyword.upload_csv_unsuccessfully'))
+            expect(response_body['reasons']).to eql(I18n.t('keyword.file_cannot_be_blank'))
+          end
+
+          it 'does NOT insert keywords to database' do
+            user = Fabricate(:user)
+            application = Fabricate(:application)
+            access_token = Fabricate(:access_token, resource_owner_id: user.id, application_id: application.id)
+
+            request.headers['Authorization'] = "Bearer #{access_token.token}"
+
+            expect do
+              post :create
+            end.to change(Keyword, :count).by(0)
+          end
+
+          it 'does NOT create google scraping job' do
+            user = Fabricate(:user)
+            application = Fabricate(:application)
+            access_token = Fabricate(:access_token, resource_owner_id: user.id, application_id: application.id)
+
+            request.headers['Authorization'] = "Bearer #{access_token.token}"
+
+            expect do
+              post :create
+            end.not_to have_enqueued_job(ScrapingProcessDistributingJob)
+          end
+        end
+
         context 'given invalid file type' do
           it 'returns bad request status code' do
             user = Fabricate(:user)
