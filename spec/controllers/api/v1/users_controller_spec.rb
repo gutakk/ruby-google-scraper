@@ -17,13 +17,13 @@ RSpec.describe Api::V1::UsersController, type: :controller do
         expect(response).to have_http_status(:created)
       end
 
-      it 'returns successful response body' do
+      it 'returns JSON API response body' do
         post :create, params: { username: 'nimblehq', password: 'password', password_confirmation: 'password' }
 
         response_body = JSON.parse(response.body)
 
-        expect(response_body['messages']).to eql(I18n.t('auth.signup_successfully'))
-        expect(response_body['data']['username']).to eql('nimblehq')
+        expect(response_body['data']['type']).to eql('user')
+        expect(response_body['data']['attributes']['username']).to eql('nimblehq')
       end
     end
 

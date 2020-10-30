@@ -7,11 +7,7 @@ module Api
         user = User.new(create_params)
 
         if user.save
-          render_successful_response(
-            I18n.t('auth.signup_successfully'),
-            :created,
-            data: user.attributes.except('password_digest')
-          )
+          render json: UserSerializer.new(user).serializable_hash, status: :created
         else
           render_error_response(
             I18n.t('auth.signup_unsuccessfully'),
