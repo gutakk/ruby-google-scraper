@@ -9,10 +9,11 @@ module Api
       private
 
       def doorkeeper_unauthorized_render_options(error: nil)
+        return unless error
+
         {
           json: {
-            messages: I18n.t('doorkeeper.errors.messages.unauthorized_client'),
-            reasons: error.description
+            errors: build_errors(detail: error.description, source: error.state, code: error.name)
           }
         }
       end
