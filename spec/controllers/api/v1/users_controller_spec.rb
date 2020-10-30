@@ -81,11 +81,10 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 
         response_body = JSON.parse(response.body)
 
-        expect(response_body['messages']).to eql(I18n.t('auth.signup_unsuccessfully'))
-        expect(response_body['reasons']).to include("Password #{I18n.t('activerecord.errors.models.user.blank')}")
-        expect(response_body['reasons']).to include("Password confirmation #{I18n.t('activerecord.errors.models.user.blank')}")
-        expect(response_body['reasons']).to include("Username #{I18n.t('activerecord.errors.models.user.blank')}")
-        expect(response_body['reasons']).to include("Password #{I18n.t('activerecord.errors.models.user.attributes.password.too_short', count: 6)}")
+        expect(response_body['errors'][0]['detail']).to include("Password #{I18n.t('activerecord.errors.models.user.blank')}")
+        expect(response_body['errors'][0]['detail']).to include("Password confirmation #{I18n.t('activerecord.errors.models.user.blank')}")
+        expect(response_body['errors'][0]['detail']).to include("Username #{I18n.t('activerecord.errors.models.user.blank')}")
+        expect(response_body['errors'][0]['detail']).to include("Password #{I18n.t('activerecord.errors.models.user.attributes.password.too_short', count: 6)}")
       end
     end
   end

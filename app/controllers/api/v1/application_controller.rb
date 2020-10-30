@@ -4,7 +4,7 @@ module Api
   module V1
     class ApplicationController < ActionController::API
       include Localization
-      include Api::V1::ResponseHandler
+      include Api::V1::ErrorHandler
 
       private
 

@@ -10,9 +10,8 @@ module Api
           render json: UserSerializer.new(user).serializable_hash, status: :created
         else
           render_error_response(
-            I18n.t('auth.signup_unsuccessfully'),
-            :bad_request,
-            reasons: user.errors.full_messages
+            detail: user.errors.full_messages.to_sentence,
+            status: :bad_request
           )
         end
       end
