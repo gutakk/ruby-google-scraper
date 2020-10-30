@@ -122,9 +122,7 @@ RSpec.describe Api::V1::KeywordsController, type: :controller do
 
         get :index, params: { page: 2 }
 
-        response_body = JSON.parse(response.body)
-
-        expect(response_body['data'].count).to eql 0
+        expect(JSON.parse(response.body)['data'].count).to eql 0
       end
     end
 
@@ -138,9 +136,7 @@ RSpec.describe Api::V1::KeywordsController, type: :controller do
       it 'returns invalid token message' do
         get :index
 
-        response_body = JSON.parse(response.body)
-
-        expect(response_body['errors'][0]['detail']).to eql(I18n.t('doorkeeper.errors.messages.invalid_token.unknown'))
+        expect(JSON.parse(response.body)['errors'][0]['detail']).to eql(I18n.t('doorkeeper.errors.messages.invalid_token.unknown'))
       end
     end
 
