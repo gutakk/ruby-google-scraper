@@ -158,9 +158,7 @@ RSpec.describe Api::V1::KeywordsController, type: :controller do
 
         get :index
 
-        response_body = JSON.parse(response.body)
-
-        expect(response_body['errors'][0]['detail']).to eql(I18n.t('doorkeeper.errors.messages.invalid_token.unknown'))
+        expect(JSON.parse(response.body)['errors'][0]['detail']).to eql(I18n.t('doorkeeper.errors.messages.invalid_token.unknown'))
       end
     end
 
@@ -184,9 +182,7 @@ RSpec.describe Api::V1::KeywordsController, type: :controller do
 
         get :index
 
-        response_body = JSON.parse(response.body)
-
-        expect(response_body['errors'][0]['detail']).to eql(I18n.t('doorkeeper.errors.messages.invalid_token.revoked'))
+        expect(JSON.parse(response.body)['errors'][0]['detail']).to eql(I18n.t('doorkeeper.errors.messages.invalid_token.revoked'))
       end
     end
 
@@ -210,9 +206,7 @@ RSpec.describe Api::V1::KeywordsController, type: :controller do
 
         get :index
 
-        response_body = JSON.parse(response.body)
-
-        expect(response_body['errors'][0]['detail']).to eql(I18n.t('doorkeeper.errors.messages.invalid_token.expired'))
+        expect(JSON.parse(response.body)['errors'][0]['detail']).to eql(I18n.t('doorkeeper.errors.messages.invalid_token.expired'))
       end
     end
   end
@@ -274,9 +268,7 @@ RSpec.describe Api::V1::KeywordsController, type: :controller do
 
           get :show, params: { id: 9999 }
 
-          response_body = JSON.parse(response.body)
-
-          expect(response_body['errors'][0]['detail']).to include(I18n.t('keyword.not_found_with_id', id: 9999))
+          expect(JSON.parse(response.body)['errors'][0]['detail']).to include(I18n.t('keyword.not_found_with_id', id: 9999))
         end
       end
     end
@@ -306,20 +298,7 @@ RSpec.describe Api::V1::KeywordsController, type: :controller do
 
           post :create, params: { file: file }
 
-          expect(response).to have_http_status(:ok)
-        end
-
-        it 'returns upload successfully message' do
-          user = Fabricate(:user)
-          application = Fabricate(:application)
-          access_token = Fabricate(:access_token, resource_owner_id: user.id, application_id: application.id)
-          file = fixture_file_upload('files/example.csv', 'text/csv')
-
-          request.headers['Authorization'] = "Bearer #{access_token.token}"
-
-          post :create, params: { file: file }
-
-          expect(JSON.parse(response.body)['messages']).to eql(I18n.t('keyword.upload_csv_successfully'))
+          expect(response).to have_http_status(:no_content)
         end
 
         it 'inserts keywords to database' do
@@ -372,10 +351,7 @@ RSpec.describe Api::V1::KeywordsController, type: :controller do
 
             post :create
 
-            response_body = JSON.parse(response.body)
-
-            expect(response_body['messages']).to eql(I18n.t('keyword.upload_csv_unsuccessfully'))
-            expect(response_body['errors'][0]['detail']).to eql(I18n.t('keyword.file_cannot_be_blank'))
+            expect(JSON.parse(response.body)['errors'][0]['detail']).to eql(I18n.t('keyword.file_cannot_be_blank'))
           end
 
           it 'does NOT insert keywords to database' do
@@ -427,10 +403,7 @@ RSpec.describe Api::V1::KeywordsController, type: :controller do
 
             post :create, params: { file: file }
 
-            response_body = JSON.parse(response.body)
-
-            expect(response_body['messages']).to eql(I18n.t('keyword.upload_csv_unsuccessfully'))
-            expect(response_body['errors'][0]['detail']).to eql(I18n.t('keyword.file_must_be_csv'))
+            expect(JSON.parse(response.body)['errors'][0]['detail']).to eql(I18n.t('keyword.file_must_be_csv'))
           end
 
           it 'does NOT insert keywords to database' do
@@ -484,10 +457,7 @@ RSpec.describe Api::V1::KeywordsController, type: :controller do
 
             post :create, params: { file: file }
 
-            response_body = JSON.parse(response.body)
-
-            expect(response_body['messages']).to eql(I18n.t('keyword.upload_csv_unsuccessfully'))
-            expect(response_body['errors'][0]['detail']).to eql(I18n.t('keyword.keyword_range'))
+            expect(JSON.parse(response.body)['errors'][0]['detail']).to eql(I18n.t('keyword.keyword_range'))
           end
 
           it 'does NOT insert keywords to database' do
@@ -541,10 +511,7 @@ RSpec.describe Api::V1::KeywordsController, type: :controller do
 
             post :create, params: { file: file }
 
-            response_body = JSON.parse(response.body)
-
-            expect(response_body['messages']).to eql(I18n.t('keyword.upload_csv_unsuccessfully'))
-            expect(response_body['errors'][0]['detail']).to eql(I18n.t('keyword.keyword_range'))
+            expect(JSON.parse(response.body)['errors'][0]['detail']).to eql(I18n.t('keyword.keyword_range'))
           end
 
           it 'does NOT insert keywords to database' do

@@ -26,12 +26,11 @@ module Api
         if @csv_import_form.save(create_params)
           ScrapingProcessDistributingJob.perform_later(@csv_import_form.inserted_keywords.rows)
 
-          render json: I18n.t('keyword.upload_csv_successfully'), status: :ok
+          render status: :no_content
         else
           render_error_response(
-            I18n.t('keyword.upload_csv_unsuccessfully'),
-            :bad_request,
-            reasons: @csv_import_form.errors.messages[:base][0]
+            detail: @csv_import_form.errors.messages[:base][0],
+            status: :bad_request
           )
         end
       end
