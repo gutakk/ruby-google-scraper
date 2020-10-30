@@ -28,7 +28,7 @@ RSpec.describe Api::V1::KeywordsController, type: :controller do
 
         get :index
 
-        expect(JSON.parse(response.body).count).to eql 2
+        expect(JSON.parse(response.body)['data'].count).to eql 2
       end
 
       it 'does NOT return keywords for invalid resource owner' do
@@ -43,7 +43,7 @@ RSpec.describe Api::V1::KeywordsController, type: :controller do
 
         get :index
 
-        expect(JSON.parse(response.body).count).to eql 0
+        expect(JSON.parse(response.body)['data'].count).to eql 0
       end
 
       it 'returns ascending ordered keywords' do
@@ -63,13 +63,13 @@ RSpec.describe Api::V1::KeywordsController, type: :controller do
 
         response_body = JSON.parse(response.body)
 
-        expect(response_body.count).to eql 6
-        expect(response_body[0]['keyword']).to eql('Cristiano Ronaldo')
-        expect(response_body[1]['keyword']).to eql('Eden Hazard')
-        expect(response_body[2]['keyword']).to eql('Kevin De Bruyne')
-        expect(response_body[3]['keyword']).to eql('Kylian Mbappe')
-        expect(response_body[4]['keyword']).to eql('Lionel Messi')
-        expect(response_body[5]['keyword']).to eql('Neymar')
+        expect(response_body['data'].count).to eql 6
+        expect(response_body['data'][0]['attributes']['keyword']).to eql('Cristiano Ronaldo')
+        expect(response_body['data'][1]['attributes']['keyword']).to eql('Eden Hazard')
+        expect(response_body['data'][2]['attributes']['keyword']).to eql('Kevin De Bruyne')
+        expect(response_body['data'][3]['attributes']['keyword']).to eql('Kylian Mbappe')
+        expect(response_body['data'][4]['attributes']['keyword']).to eql('Lionel Messi')
+        expect(response_body['data'][5]['attributes']['keyword']).to eql('Neymar')
       end
 
       it 'returns only 25 keywords per page' do
@@ -82,7 +82,7 @@ RSpec.describe Api::V1::KeywordsController, type: :controller do
 
         get :index
 
-        expect(JSON.parse(response.body).count).to eql 25
+        expect(JSON.parse(response.body)['data'].count).to eql 25
       end
 
       it 'returns only keywords that match with search params' do
@@ -102,9 +102,9 @@ RSpec.describe Api::V1::KeywordsController, type: :controller do
 
         response_body = JSON.parse(response.body)
 
-        expect(response_body.count).to eql 2
-        expect(response_body[0]['keyword']).to eql('Cristiano Ronaldo')
-        expect(response_body[1]['keyword']).to eql('Kylian Mbappe')
+        expect(response_body['data'].count).to eql 2
+        expect(response_body['data'][0]['attributes']['keyword']).to eql('Cristiano Ronaldo')
+        expect(response_body['data'][1]['attributes']['keyword']).to eql('Kylian Mbappe')
       end
 
       it 'returns nothing when given page 2 but keywords less than 25' do
@@ -124,7 +124,7 @@ RSpec.describe Api::V1::KeywordsController, type: :controller do
 
         response_body = JSON.parse(response.body)
 
-        expect(response_body.count).to eql 0
+        expect(response_body['data'].count).to eql 0
       end
     end
 
@@ -140,8 +140,7 @@ RSpec.describe Api::V1::KeywordsController, type: :controller do
 
         response_body = JSON.parse(response.body)
 
-        expect(response_body['messages']).to eql(I18n.t('doorkeeper.errors.messages.unauthorized_client'))
-        expect(response_body['reasons']).to eql(I18n.t('doorkeeper.errors.messages.invalid_token.unknown'))
+        expect(response_body['errors'][0]['detail']).to eql(I18n.t('doorkeeper.errors.messages.invalid_token.unknown'))
       end
     end
 
@@ -161,8 +160,7 @@ RSpec.describe Api::V1::KeywordsController, type: :controller do
 
         response_body = JSON.parse(response.body)
 
-        expect(response_body['messages']).to eql(I18n.t('doorkeeper.errors.messages.unauthorized_client'))
-        expect(response_body['reasons']).to eql(I18n.t('doorkeeper.errors.messages.invalid_token.unknown'))
+        expect(response_body['errors'][0]['detail']).to eql(I18n.t('doorkeeper.errors.messages.invalid_token.unknown'))
       end
     end
 
@@ -188,8 +186,7 @@ RSpec.describe Api::V1::KeywordsController, type: :controller do
 
         response_body = JSON.parse(response.body)
 
-        expect(response_body['messages']).to eql(I18n.t('doorkeeper.errors.messages.unauthorized_client'))
-        expect(response_body['reasons']).to eql(I18n.t('doorkeeper.errors.messages.invalid_token.revoked'))
+        expect(response_body['errors'][0]['detail']).to eql(I18n.t('doorkeeper.errors.messages.invalid_token.revoked'))
       end
     end
 
@@ -215,8 +212,7 @@ RSpec.describe Api::V1::KeywordsController, type: :controller do
 
         response_body = JSON.parse(response.body)
 
-        expect(response_body['messages']).to eql(I18n.t('doorkeeper.errors.messages.unauthorized_client'))
-        expect(response_body['reasons']).to eql(I18n.t('doorkeeper.errors.messages.invalid_token.expired'))
+        expect(response_body['errors'][0]['detail']).to eql(I18n.t('doorkeeper.errors.messages.invalid_token.expired'))
       end
     end
   end
@@ -249,8 +245,8 @@ RSpec.describe Api::V1::KeywordsController, type: :controller do
 
           response_body = JSON.parse(response.body)
 
-          expect(response_body['id']).to eql(keyword.id)
-          expect(response_body['keyword']).to eql('test')
+          expect(response_body['data']['id']).to eql(keyword.id.to_s)
+          expect(response_body['data']['attributes']['keyword']).to eql('test')
         end
       end
 
@@ -280,8 +276,7 @@ RSpec.describe Api::V1::KeywordsController, type: :controller do
 
           response_body = JSON.parse(response.body)
 
-          expect(response_body['messages']).to eql(I18n.t('keyword.not_found'))
-          expect(response_body['reasons']).to include("Couldn't find Keyword with 'id'=9999")
+          expect(response_body['errors'][0]['detail']).to include(I18n.t('keyword.not_found_with_id', id: 9999))
         end
       end
     end
@@ -380,7 +375,7 @@ RSpec.describe Api::V1::KeywordsController, type: :controller do
             response_body = JSON.parse(response.body)
 
             expect(response_body['messages']).to eql(I18n.t('keyword.upload_csv_unsuccessfully'))
-            expect(response_body['reasons']).to eql(I18n.t('keyword.file_cannot_be_blank'))
+            expect(response_body['errors'][0]['detail']).to eql(I18n.t('keyword.file_cannot_be_blank'))
           end
 
           it 'does NOT insert keywords to database' do
@@ -435,7 +430,7 @@ RSpec.describe Api::V1::KeywordsController, type: :controller do
             response_body = JSON.parse(response.body)
 
             expect(response_body['messages']).to eql(I18n.t('keyword.upload_csv_unsuccessfully'))
-            expect(response_body['reasons']).to eql(I18n.t('keyword.file_must_be_csv'))
+            expect(response_body['errors'][0]['detail']).to eql(I18n.t('keyword.file_must_be_csv'))
           end
 
           it 'does NOT insert keywords to database' do
@@ -492,7 +487,7 @@ RSpec.describe Api::V1::KeywordsController, type: :controller do
             response_body = JSON.parse(response.body)
 
             expect(response_body['messages']).to eql(I18n.t('keyword.upload_csv_unsuccessfully'))
-            expect(response_body['reasons']).to eql(I18n.t('keyword.keyword_range'))
+            expect(response_body['errors'][0]['detail']).to eql(I18n.t('keyword.keyword_range'))
           end
 
           it 'does NOT insert keywords to database' do
@@ -549,7 +544,7 @@ RSpec.describe Api::V1::KeywordsController, type: :controller do
             response_body = JSON.parse(response.body)
 
             expect(response_body['messages']).to eql(I18n.t('keyword.upload_csv_unsuccessfully'))
-            expect(response_body['reasons']).to eql(I18n.t('keyword.keyword_range'))
+            expect(response_body['errors'][0]['detail']).to eql(I18n.t('keyword.keyword_range'))
           end
 
           it 'does NOT insert keywords to database' do

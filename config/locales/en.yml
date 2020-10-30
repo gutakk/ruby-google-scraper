@@ -80,6 +80,7 @@ en:
     non_adwords: "Non adwords"
     non_adword_links: "Non adword links"
     not_found: "Keyword not found"
+    not_found_with_id: "Couldn't find Keyword with 'id'=%{id}"
     search: "Search"
     search_keywords: "Search keywords"
     status: "Status"
