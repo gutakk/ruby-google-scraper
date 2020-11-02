@@ -1,9 +1,7 @@
 Rails.application.routes.draw do
   use_doorkeeper do
     # Only use applications_controller to manage OAuth2 applications
-    # and mount it outside api/v1 as it has the views
-
-    skip_controllers :tokens, :authorizations, :token_info, :authorized_applications
+    skip_controllers :tokens, :token_info, :authorized_applications
   end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
