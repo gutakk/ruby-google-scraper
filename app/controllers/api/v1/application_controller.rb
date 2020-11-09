@@ -9,8 +9,6 @@ module Api
       private
 
       def doorkeeper_unauthorized_render_options(error: nil)
-        return unless error
-
         {
           json: {
             errors: build_errors(detail: error.description, source: error.state, code: error.name)
