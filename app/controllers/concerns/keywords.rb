@@ -6,6 +6,8 @@ module Keywords
   private
 
   def search_keyword(user)
-    user.keywords.where("keyword ILIKE '%#{params[:search]}%'").order(keyword: :asc).page(params[:page])
+    search_query = "%#{params[:search]}%"
+
+    user.keywords.where('keyword ILIKE ?', search_query).order(keyword: :asc).page(params[:page])
   end
 end
