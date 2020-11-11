@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-class UserSerializer
-  include FastJsonapi::ObjectSerializer
-
+class UserSerializer < ApplicationSerializer
   attributes :username
 
   has_many :keywords
