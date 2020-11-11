@@ -10,7 +10,7 @@ class KeywordsController < ApplicationController
   def index
     render locals: {
       csv_import_form: @csv_import_form,
-      keywords: search_keyword(current_user)
+      keywords: search_keyword
     }
   end
 
@@ -40,5 +40,9 @@ class KeywordsController < ApplicationController
 
   def create_params
     params.require(:csv_import_form).permit(:file)
+  end
+
+  def search_keyword
+    current_user.keywords.where("keyword ILIKE '%#{params[:search]}%'").order(keyword: :asc).page(params[:page])
   end
 end

@@ -21,31 +21,6 @@ RSpec.describe CsvImportForm, type: :form do
     end
 
     context 'given invalid parameters' do
-      context 'given NO file' do
-        it 'does NOT create keyword' do
-          file = nil
-          csv_import_form = described_class.new(user: Fabricate(:user))
-
-          expect { csv_import_form.save(file: file) }.to change(Keyword, :count).by(0)
-        end
-
-        it 'returns false' do
-          file = nil
-          csv_import_form = described_class.new(user: Fabricate(:user))
-
-          expect(csv_import_form.save(file: file)).to be_falsy
-        end
-
-        it 'contains error message' do
-          file = nil
-          csv_import_form = described_class.new(user: Fabricate(:user))
-
-          csv_import_form.save(file: file)
-
-          expect(csv_import_form.errors.messages).to eql(base: [I18n.t('keyword.file_cannot_be_blank')])
-        end
-      end
-
       context 'given invalid file type' do
         it 'does NOT create keyword' do
           file = fixture_file_upload('files/nimble.png')
