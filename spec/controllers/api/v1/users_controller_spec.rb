@@ -34,39 +34,9 @@ RSpec.describe Api::V1::UsersController, type: :controller do
         end.to change(User, :count).by(0)
       end
 
-      it 'does NOT create a new user when username is empty string' do
-        expect do
-          post :create, params: { username: '', password: 'password', password_confirmation: 'password' }
-        end.to change(User, :count).by(0)
-      end
-
       it 'does NOT create a new user when password and password confirmation are NOT match' do
         expect do
           post :create, params: { username: 'nimblehq', password: 'password', password_confirmation: 'drowssap' }
-        end.to change(User, :count).by(0)
-      end
-
-      it 'does NOT create a new user when password is nil' do
-        expect do
-          post :create, params: { username: 'nimblehq', password: nil, password_confirmation: 'password' }
-        end.to change(User, :count).by(0)
-      end
-
-      it 'does NOT create a new user when password is empty string' do
-        expect do
-          post :create, params: { username: 'nimblehq', password: '', password_confirmation: 'password' }
-        end.to change(User, :count).by(0)
-      end
-
-      it 'does NOT create a new user when password confirmation is nil' do
-        expect do
-          post :create, params: { username: 'nimblehq', password: 'password', password_confirmation: nil }
-        end.to change(User, :count).by(0)
-      end
-
-      it 'does NOT create a new user when password confirmation is empty string' do
-        expect do
-          post :create, params: { username: 'nimblehq', password: 'password', password_confirmation: '' }
         end.to change(User, :count).by(0)
       end
 
