@@ -20,6 +20,9 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       use_doorkeeper do
+        # Only need the tokens_controller for API V1
+        controllers tokens: 'tokens'
+        
         skip_controllers :applications, :authorizations, :token_info, :authorized_applications
       end
     end
