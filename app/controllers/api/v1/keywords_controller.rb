@@ -5,16 +5,14 @@ module Api
     class KeywordsController < ApplicationController
       include Keywords
 
-      before_action :doorkeeper_authorize!
-      before_action :load_user
       before_action :set_csv_import_form, only: :create
 
       def index
-        render json: KeywordSerializer.new(search_keyword(@user)).serializable_hash, status: :ok
+        render json: KeywordSerializer.new(search_keyword(current_user)).serializable_hash, status: :ok
       end
 
       def show
-        render json: KeywordSerializer.new(@user.keywords.find(params[:id])).serializable_hash, status: :ok
+        render json: KeywordSerializer.new(current_user.keywords.find(params[:id])).serializable_hash, status: :ok
       rescue ActiveRecord::RecordNotFound
         render_error_response(
           detail: I18n.t('keyword.not_found_with_id', id: params[:id]),
@@ -37,12 +35,8 @@ module Api
 
       private
 
-      def load_user
-        @user = User.find(doorkeeper_token.resource_owner_id)
-      end
-
       def set_csv_import_form
-        @csv_import_form = CsvImportForm.new(user: @user)
+        @csv_import_form = CsvImportForm.new(user: current_user)
       end
 
       def create_params
