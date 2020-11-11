@@ -1,14 +1,16 @@
 # frozen_string_literal: true
 
 class KeywordsController < ApplicationController
+  include Keywords
+
   before_action :ensure_authentication
-  before_action :set_csv_import_form
+  before_action :set_csv_import_form, only: %i[index create]
 
   # Kaminari default item per page is 25
   def index
     render locals: {
       csv_import_form: @csv_import_form,
-      keywords: search_keyword
+      keywords: search_keyword(current_user)
     }
   end
 
@@ -38,9 +40,5 @@ class KeywordsController < ApplicationController
 
   def create_params
     params.require(:csv_import_form).permit(:file)
-  end
-
-  def search_keyword
-    current_user.keywords.where("keyword ILIKE '%#{params[:search]}%'").order(keyword: :asc).page(params[:page])
   end
 end
