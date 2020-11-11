@@ -7,7 +7,7 @@ module Api
 
       private
 
-      # Render error response in json format
+      # Render error response in JSON:API format
       def render_error_response(detail:, source: nil, meta: nil, status: :unprocessable_entity, code: nil)
         errors = build_errors(detail: detail, source: source, meta: meta, code: code)
 
