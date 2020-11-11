@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 class KeywordsController < ApplicationController
-  include Keywords
-
   before_action :ensure_authentication
-  before_action :set_csv_import_form, only: %i[index create]
+  before_action :set_csv_import_form
 
   # Kaminari default item per page is 25
   def index
