@@ -3,6 +3,8 @@
 module Api
   module V1
     class UsersController < ApplicationController
+      skip_before_action :doorkeeper_authorize!, :load_current_user
+
       def create
         user = User.new(create_params)
 
