@@ -16,7 +16,7 @@ class SessionsController < ApplicationController
 
       redirect_to_target_or_default(root_path)
     else
-      flash.now[:alert] = t('auth.login_failed')
+      flash.now[:alert] = t('auth.username_or_password_is_invalid')
 
       render :new
     end

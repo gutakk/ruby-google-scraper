@@ -25,6 +25,8 @@ services:
         - RUBY_ENV=production
         - NODE_ENV=production
         - ASSET_HOST
+        - BASIC_AUTHENTICATION_USERNAME
+        - BASIC_AUTHENTICATION_PASSWORD
     image: ${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${BRANCH_TAG}
     container_name: ruby_google_scraper_web
     command: bin/start.sh

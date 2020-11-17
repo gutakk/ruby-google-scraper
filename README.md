@@ -7,6 +7,8 @@
 
 ### [Project Backlog](https://github.com/gutakk/ruby-google-scraper/projects/1)
 
+### [APIs Documentation](https://github.com/gutakk/ruby-google-scraper/wiki/Ruby-Google-Scraper-API-endpoints)
+
 ## Required Tools
 * Docker and Docker Compose
     * [Docker for Mac](https://docs.docker.com/docker-for-mac/install/)

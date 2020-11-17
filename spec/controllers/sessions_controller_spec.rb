@@ -95,7 +95,7 @@ RSpec.describe SessionsController, type: :controller do
 
           post :create, params: { username: 'qhelbmin', password: 'password' }
 
-          expect(flash[:alert]).to eql(I18n.t('auth.login_failed'))
+          expect(flash[:alert]).to eql(I18n.t('auth.username_or_password_is_invalid'))
         end
 
         it 'renders the template of :new action' do
@@ -121,7 +121,7 @@ RSpec.describe SessionsController, type: :controller do
 
           post :create, params: { username: 'nimblehq', password: 'drowssap' }
 
-          expect(flash[:alert]).to eql(I18n.t('auth.login_failed'))
+          expect(flash[:alert]).to eql(I18n.t('auth.username_or_password_is_invalid'))
         end
 
         it 'renders the template of :new action' do
@@ -147,7 +147,7 @@ RSpec.describe SessionsController, type: :controller do
 
           post :create, params: { username: 'qhelbmin', password: 'drowssap' }
 
-          expect(flash[:alert]).to eql(I18n.t('auth.login_failed'))
+          expect(flash[:alert]).to eql(I18n.t('auth.username_or_password_is_invalid'))
         end
 
         it 'renders the template of :new action' do
