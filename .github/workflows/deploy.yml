@@ -21,7 +21,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Branch Tag Action
-        uses: nimblehq/branch-tag-action@v1.1
+        uses: nimblehq/branch-tag-action@v1.2
 
       - name: Set HEROKU_APP
         run: |
