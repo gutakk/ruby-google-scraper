@@ -1,0 +1,26 @@
+.card {
+  width: 12rem;
+  margin: 0 1rem;
+  text-align: center;
+  border-radius: 0.5rem;
+
+  &__body {
+    display: flex;
+    height: 11rem;
+    color: $light;
+    background-color: $secondary;
+    border-radius: 0.5rem 0.5rem 0 0;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__info {
+    display: flex;
+    height: 5rem;
+    font-size: 80%;
+    font-weight: bold;
+    text-transform: uppercase;
+    justify-content: center;
+    align-items: center;
+  }
+}

@@ -1,0 +1,4 @@
+- if user.errors.any?
+  ul id="errorExplanation" class="alert alert-danger pl-5"
+    - user.errors.full_messages.each do |error_msg|
+      li = error_msg

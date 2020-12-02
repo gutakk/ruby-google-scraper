@@ -1,0 +1,23 @@
+- content_for(:title_suffix) { t('auth.signup') }
+
+h1 class="text-secondary mt-5" = t('auth.signup')
+
+= form_with(model: user, local: true, url: signup_path) do |form|
+  = render partial: 'users/shared/error_messages', locals: { user: user }
+  .form-group
+    = form.label t('auth.username')
+    = form.text_field :username, required: true
+
+  .form-group
+    = form.label t('auth.password')
+    = form.password_field :password, required: true
+
+  .form-group
+    = form.label t('auth.confirm_password')
+    = form.password_field :password_confirmation, required: true
+
+  .actions
+    = form.submit t('auth.signup'), class: "btn btn-dark"
+
+  .small.mt-3
+    = t('app.already_have_account_html', link: link_to(t('auth.login'), login_path))

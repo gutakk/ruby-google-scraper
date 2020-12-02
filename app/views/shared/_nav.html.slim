@@ -1,0 +1,17 @@
+nav class="navbar py-4 px-5 bg-dark"
+  == link_to t('app.title'), root_path, class: "text-white"
+
+  .menu
+    - if authenticated?
+      span.text-white
+        == t('app.greeting_html', username: current_user.username)
+
+      li class="nav-item dropdown d-inline-block align-middle"
+        a class="nav-link dropdown-toggle text-white" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"
+        .dropdown-menu.dropdown-menu-right
+          == link_to t('keyword.keywords'), keywords_path, class: "dropdown-item"
+          == link_to t('auth.logout'), sessions_path, method: :delete, class: "dropdown-item"
+          
+    - else
+      == link_to t('auth.login'), login_path, class: "text-white mr-4"
+      == link_to t('auth.signup'), signup_path, class: "btn btn-outline-light align-baseline"

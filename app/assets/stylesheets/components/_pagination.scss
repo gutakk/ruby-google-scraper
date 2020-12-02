@@ -1,0 +1,12 @@
+.pagination {
+  margin-bottom: 3rem;
+
+  .page-link {
+    color: $secondary;
+  }
+
+  .page-item.active .page-link {
+    background-color: $secondary;
+    border-color: $secondary;
+  }
+}
